@@ -40,9 +40,9 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['product_id', 'primary_name', 'currency_id'], 'required'],
-            [['product_id', 'currency_id'], 'integer'],
+            [['primary_name', 'currency_id'], 'required'],
             [['length', 'width', 'height', 'volume', 'weight', 'amount', 'minimum_stock', 'maximum_stock'], 'number'],
+            [['currency_id'], 'integer'],
             [['primary_name', 'secondary_name', 'short_name'], 'string', 'max' => 255],
             [['remarks'], 'string', 'max' => 1000]
         ];

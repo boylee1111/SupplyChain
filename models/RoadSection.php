@@ -37,8 +37,8 @@ class RoadSection extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['road_section_id', 'serial_number', 'name', 'road_section_type_id'], 'required'],
-            [['road_section_id', 'road_section_type_id'], 'integer'],
+            [['serial_number', 'name', 'road_section_type_id'], 'required'],
+            [['road_section_type_id'], 'integer'],
             [['time_cost', 'basic_cost', 'volume_based_cost', 'weight_based_cost', 'minimum_volume_limit', 'maximum_volume_limit'], 'number'],
             [['serial_number', 'name'], 'string', 'max' => 255],
             [['remarks'], 'string', 'max' => 1000]

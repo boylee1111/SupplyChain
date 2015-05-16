@@ -28,8 +28,7 @@ class RoadSectionType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['road_section_type_id', 'name'], 'required'],
-            [['road_section_type_id'], 'integer'],
+            [['name'], 'required'],
             [['name'], 'string', 'max' => 255]
         ];
     }

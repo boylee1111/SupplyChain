@@ -28,8 +28,6 @@ class SupplierType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['supplier_type_id'], 'required'],
-            [['supplier_type_id'], 'integer'],
             [['supplier_type_name'], 'string', 'max' => 255]
         ];
     }

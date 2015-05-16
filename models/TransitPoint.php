@@ -35,9 +35,9 @@ class TransitPoint extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['transit_point_id', 'serial_number', 'name', 'transit_point_type_id'], 'required'],
-            [['transit_point_id', 'status', 'transit_point_type_id'], 'integer'],
+            [['serial_number', 'name', 'transit_point_type_id'], 'required'],
             [['longitude', 'altitude'], 'number'],
+            [['status', 'transit_point_type_id'], 'integer'],
             [['serial_number', 'name', 'short_name'], 'string', 'max' => 255],
             [['remarks'], 'string', 'max' => 1000]
         ];

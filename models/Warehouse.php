@@ -40,9 +40,9 @@ class Warehouse extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['warehouse_id', 'serial_number', 'name', 'warehouse_type_id'], 'required'],
-            [['warehouse_id', 'status', 'warehouse_type_id'], 'integer'],
+            [['serial_number', 'name', 'warehouse_type_id'], 'required'],
             [['longitude', 'altitude', 'area', 'rent', 'summary_salary', 'max_quantity_limit', 'max_cost_limit'], 'number'],
+            [['status', 'warehouse_type_id'], 'integer'],
             [['serial_number', 'name', 'short_name'], 'string', 'max' => 255],
             [['remarks'], 'string', 'max' => 1000]
         ];

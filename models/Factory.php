@@ -35,9 +35,9 @@ class Factory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['factory_id', 'serial_number', 'name', 'factory_type_id'], 'required'],
-            [['factory_id', 'status', 'factory_type_id'], 'integer'],
+            [['serial_number', 'name', 'factory_type_id'], 'required'],
             [['longitude', 'altitude'], 'number'],
+            [['status', 'factory_type_id'], 'integer'],
             [['serial_number', 'name', 'short_name'], 'string', 'max' => 255],
             [['remarks'], 'string', 'max' => 1000]
         ];

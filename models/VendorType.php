@@ -28,8 +28,6 @@ class VendorType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['vendor_type_id'], 'required'],
-            [['vendor_type_id'], 'integer'],
             [['vendor_type_name'], 'string', 'max' => 255]
         ];
     }

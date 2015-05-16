@@ -33,8 +33,8 @@ class Vendor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['vendor_id', 'serial_number', 'primary_name', 'vendor_type_id'], 'required'],
-            [['vendor_id', 'vendor_type_id'], 'integer'],
+            [['serial_number', 'primary_name', 'vendor_type_id'], 'required'],
+            [['vendor_type_id'], 'integer'],
             [['serial_number', 'primary_name', 'secondary_name', 'short_name'], 'string', 'max' => 255],
             [['remarks'], 'string', 'max' => 1000]
         ];

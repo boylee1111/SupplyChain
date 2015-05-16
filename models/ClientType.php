@@ -28,8 +28,6 @@ class ClientType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['client_type_id'], 'required'],
-            [['client_type_id'], 'integer'],
             [['client_type_name'], 'string', 'max' => 255]
         ];
     }

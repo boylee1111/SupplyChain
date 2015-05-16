@@ -28,8 +28,6 @@ class StationType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['station_type_id'], 'required'],
-            [['station_type_id'], 'integer'],
             [['station_type_name'], 'string', 'max' => 255]
         ];
     }

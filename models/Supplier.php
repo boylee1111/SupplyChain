@@ -33,8 +33,8 @@ class Supplier extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['supplier_id', 'serial_number', 'primary_name', 'supplier_type_id'], 'required'],
-            [['supplier_id', 'supplier_type_id'], 'integer'],
+            [['serial_number', 'primary_name', 'supplier_type_id'], 'required'],
+            [['supplier_type_id'], 'integer'],
             [['serial_number', 'primary_name', 'secondary_name', 'remarkds', 'short_name'], 'string', 'max' => 255]
         ];
     }

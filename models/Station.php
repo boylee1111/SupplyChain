@@ -35,9 +35,9 @@ class Station extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['station_id', 'serial_number', 'name', 'station_type_id'], 'required'],
-            [['station_id', 'status', 'station_type_id'], 'integer'],
+            [['serial_number', 'name', 'station_type_id'], 'required'],
             [['longitude', 'altitude'], 'number'],
+            [['status', 'station_type_id'], 'integer'],
             [['serial_number', 'name', 'short_name'], 'string', 'max' => 255],
             [['remarks'], 'string', 'max' => 1000]
         ];
