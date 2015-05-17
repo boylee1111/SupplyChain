@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+use yii\helpers\ArrayHelper;
+use app\models\ClientType;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Client */
 /* @var $form yii\widgets\ActiveForm */
@@ -19,6 +22,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'secondary_name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'short_name')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'client_type_id')->dropDownList(
+        ArrayHelper::map(ClientType::find()->all(), 'client_type_id', 'client_type_name')
+    )?>
 
     <?= $form->field($model, 'remarks')->textInput(['maxlength' => true]) ?>
 

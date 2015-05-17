@@ -10,7 +10,7 @@ use Yii;
  * @property integer $warehouse_type_id
  * @property string $warehouse_type_name
  *
- * @property Warehouse $warehouse
+ * @property Warehouse[] $warehouses
  */
 class WarehouseType extends \yii\db\ActiveRecord
 {
@@ -46,8 +46,8 @@ class WarehouseType extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getWarehouse()
+    public function getWarehouses()
     {
-        return $this->hasOne(Warehouse::className(), ['warehouse_id' => 'warehouse_type_id']);
+        return $this->hasMany(Warehouse::className(), ['warehouse_type_id' => 'warehouse_type_id']);
     }
 }

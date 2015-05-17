@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'longitude',
             'altitude',
             'status',
-            'station_type_id',
+            'stationType.station_type_name',
             'remarks',
 
             ['class' => 'yii\grid\ActionColumn'],

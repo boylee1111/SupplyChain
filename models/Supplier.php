@@ -15,7 +15,7 @@ use Yii;
  * @property string $short_name
  * @property integer $supplier_type_id
  *
- * @property SupplierType $supplier
+ * @property SupplierType $supplierType
  */
 class Supplier extends \yii\db\ActiveRecord
 {
@@ -58,8 +58,8 @@ class Supplier extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSupplier()
+    public function getSupplierType()
     {
-        return $this->hasOne(SupplierType::className(), ['supplier_type_id' => 'supplier_id']);
+        return $this->hasOne(SupplierType::className(), ['supplier_type_id' => 'supplier_type_id']);
     }
 }

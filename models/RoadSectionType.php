@@ -8,9 +8,9 @@ use Yii;
  * This is the model class for table "road_section_type".
  *
  * @property integer $road_section_type_id
- * @property string $name
+ * @property string $road_section_type_name
  *
- * @property RoadSection $roadSection
+ * @property RoadSection[] $roadSections
  */
 class RoadSectionType extends \yii\db\ActiveRecord
 {
@@ -28,8 +28,8 @@ class RoadSectionType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [['name'], 'string', 'max' => 255]
+            [['road_section_type_name'], 'required'],
+            [['road_section_type_name'], 'string', 'max' => 255]
         ];
     }
 
@@ -40,15 +40,15 @@ class RoadSectionType extends \yii\db\ActiveRecord
     {
         return [
             'road_section_type_id' => 'Road Section Type ID',
-            'name' => 'Name',
+            'road_section_type_name' => 'Road Section Type Name',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRoadSection()
+    public function getRoadSections()
     {
-        return $this->hasOne(RoadSection::className(), ['road_section_id' => 'road_section_type_id']);
+        return $this->hasMany(RoadSection::className(), ['road_section_type_id' => 'road_section_type_id']);
     }
 }

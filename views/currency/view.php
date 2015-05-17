@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'currency_id',
+            // 'currency_id',
             'currency_name',
             'currency_code',
         ],

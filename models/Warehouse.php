@@ -22,7 +22,7 @@ use Yii;
  * @property string $max_quantity_limit
  * @property string $max_cost_limit
  *
- * @property WarehouseType $warehouse
+ * @property WarehouseType $warehouseType
  */
 class Warehouse extends \yii\db\ActiveRecord
 {
@@ -74,8 +74,8 @@ class Warehouse extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getWarehouse()
+    public function getWarehouseType()
     {
-        return $this->hasOne(WarehouseType::className(), ['warehouse_type_id' => 'warehouse_id']);
+        return $this->hasOne(WarehouseType::className(), ['warehouse_type_id' => 'warehouse_type_id']);
     }
 }

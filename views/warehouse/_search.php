@@ -25,9 +25,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'longitude') ?>
 
-    <?= $form->field($model, 'altitude') ?>
+    <?php // echo $form->field($model, 'altitude') ?>
 
-    <?= $form->field($model, 'status') ?>
+    <?php // echo $form->field($model, 'status') ?>
 
     <?php // echo $form->field($model, 'warehouse_type_id') ?>
 

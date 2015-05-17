@@ -19,7 +19,7 @@ use Yii;
  * @property string $maximum_volume_limit
  * @property string $remarks
  *
- * @property RoadSectionType $roadSection
+ * @property RoadSectionType $roadSectionType
  */
 class RoadSection extends \yii\db\ActiveRecord
 {
@@ -68,8 +68,8 @@ class RoadSection extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRoadSection()
+    public function getRoadSectionType()
     {
-        return $this->hasOne(RoadSectionType::className(), ['road_section_type_id' => 'road_section_id']);
+        return $this->hasOne(RoadSectionType::className(), ['road_section_type_id' => 'road_section_type_id']);
     }
 }

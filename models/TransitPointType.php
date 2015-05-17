@@ -10,7 +10,7 @@ use Yii;
  * @property integer $transit_point_type_id
  * @property string $transit_point_type_name
  *
- * @property TransitPoint $transitPoint
+ * @property TransitPoint[] $transitPoints
  */
 class TransitPointType extends \yii\db\ActiveRecord
 {
@@ -46,8 +46,8 @@ class TransitPointType extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTransitPoint()
+    public function getTransitPoints()
     {
-        return $this->hasOne(TransitPoint::className(), ['transit_point_id' => 'transit_point_type_id']);
+        return $this->hasMany(TransitPoint::className(), ['transit_point_type_id' => 'transit_point_type_id']);
     }
 }

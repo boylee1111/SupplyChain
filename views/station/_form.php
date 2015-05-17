@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+use yii\helpers\ArrayHelper;
+use app\models\StationType;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Station */
 /* @var $form yii\widgets\ActiveForm */
@@ -24,7 +27,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'status')->textInput() ?>
 
-    <?= $form->field($model, 'station_type_id')->textInput() ?>
+    <?= $form->field($model, 'station_type_id')->dropDownList(
+        ArrayHelper::map(StationType::find()->all(), 'station_type_id', 'station_type_name')
+    )?>
 
     <?= $form->field($model, 'remarks')->textInput(['maxlength' => true]) ?>
 

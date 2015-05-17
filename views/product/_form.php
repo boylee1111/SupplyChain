@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+use yii\helpers\ArrayHelper;
+use app\models\Currency;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Product */
 /* @var $form yii\widgets\ActiveForm */
@@ -30,7 +33,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'amount')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'currency_id')->textInput() ?>
+    <?= $form->field($model, 'currency_id')->dropDownList(
+        ArrayHelper::map(Currency::find()->all(), 'currency_id', 'currency_name')
+    ) ?>
 
     <?= $form->field($model, 'minimum_stock')->textInput(['maxlength' => true]) ?>
 

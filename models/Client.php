@@ -15,7 +15,7 @@ use Yii;
  * @property string $remarks
  * @property integer $client_type_id
  *
- * @property ClientType $client
+ * @property ClientType $clientType
  */
 class Client extends \yii\db\ActiveRecord
 {
@@ -59,8 +59,8 @@ class Client extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getClient()
+    public function getClientType()
     {
-        return $this->hasOne(ClientType::className(), ['client_type_id' => 'client_id']);
+        return $this->hasOne(ClientType::className(), ['client_type_id' => 'client_type_id']);
     }
 }

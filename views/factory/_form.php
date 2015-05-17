@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+use yii\helpers\ArrayHelper;
+use app\models\FactoryType;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Factory */
 /* @var $form yii\widgets\ActiveForm */
@@ -24,7 +27,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'status')->textInput() ?>
 
-    <?= $form->field($model, 'factory_type_id')->textInput() ?>
+    <?= $form->field($model, 'factory_type_id')->dropDownList(
+        ArrayHelper::map(FactoryType::find()->all(), 'factory_type_id', 'factory_type_name')
+    )?>
 
     <?= $form->field($model, 'remarks')->textInput(['maxlength' => true]) ?>
 

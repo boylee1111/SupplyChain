@@ -17,7 +17,7 @@ use Yii;
  * @property integer $station_type_id
  * @property string $remarks
  *
- * @property StationType $station
+ * @property StationType $stationType
  */
 class Station extends \yii\db\ActiveRecord
 {
@@ -64,8 +64,8 @@ class Station extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStation()
+    public function getStationType()
     {
-        return $this->hasOne(StationType::className(), ['station_type_id' => 'station_id']);
+        return $this->hasOne(StationType::className(), ['station_type_id' => 'station_type_id']);
     }
 }

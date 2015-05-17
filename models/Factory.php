@@ -17,7 +17,7 @@ use Yii;
  * @property integer $factory_type_id
  * @property string $remarks
  *
- * @property FactoryType $factory
+ * @property FactoryType $factoryType
  */
 class Factory extends \yii\db\ActiveRecord
 {
@@ -64,8 +64,8 @@ class Factory extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getFactory()
+    public function getFactoryType()
     {
-        return $this->hasOne(FactoryType::className(), ['factory_type_id' => 'factory_id']);
+        return $this->hasOne(FactoryType::className(), ['factory_type_id' => 'factory_type_id']);
     }
 }
