@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 
 use yii\helpers\ArrayHelper;
 use app\models\Currency;
+use app\models\Client;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Product */
@@ -40,6 +41,10 @@ use app\models\Currency;
     <?= $form->field($model, 'minimum_stock')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'maximum_stock')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'client_id')->dropDownList(
+        ArrayHelper::map(Client::find()->all(), 'client_id', 'primary_name')
+    )?>
 
     <?= $form->field($model, 'remarks')->textInput(['maxlength' => true]) ?>
 

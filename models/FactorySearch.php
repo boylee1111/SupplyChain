@@ -18,7 +18,7 @@ class FactorySearch extends Factory
     public function rules()
     {
         return [
-            [['factory_id', 'status', 'factory_type_id'], 'integer'],
+            [['factory_id', 'status', 'factory_type_id', 'road_section_id'], 'integer'],
             [['serial_number', 'name', 'short_name', 'remarks'], 'safe'],
             [['longitude', 'altitude'], 'number'],
         ];
@@ -62,6 +62,7 @@ class FactorySearch extends Factory
             'altitude' => $this->altitude,
             'status' => $this->status,
             'factory_type_id' => $this->factory_type_id,
+            'road_section_id' => $this->road_section_id,
         ]);
 
         $query->andFilterWhere(['like', 'serial_number', $this->serial_number])

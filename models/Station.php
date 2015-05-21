@@ -16,7 +16,11 @@ use Yii;
  * @property integer $status
  * @property integer $station_type_id
  * @property string $remarks
+ * @property integer $road_section_id
+ * @property integer $vendor_id
  *
+ * @property Vendor $vendor
+ * @property RoadSection $roadSection
  * @property StationType $stationType
  */
 class Station extends \yii\db\ActiveRecord
@@ -35,9 +39,9 @@ class Station extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['serial_number', 'name', 'station_type_id'], 'required'],
+            [['serial_number', 'name', 'station_type_id', 'road_section_id', 'vendor_id'], 'required'],
             [['longitude', 'altitude'], 'number'],
-            [['status', 'station_type_id'], 'integer'],
+            [['status', 'station_type_id', 'road_section_id', 'vendor_id'], 'integer'],
             [['serial_number', 'name', 'short_name'], 'string', 'max' => 255],
             [['remarks'], 'string', 'max' => 1000]
         ];
@@ -58,7 +62,25 @@ class Station extends \yii\db\ActiveRecord
             'status' => 'Status',
             'station_type_id' => 'Station Type ID',
             'remarks' => 'Remarks',
+            'road_section_id' => 'Road Section ID',
+            'vendor_id' => 'Vendor ID',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVendor()
+    {
+        return $this->hasOne(Vendor::className(), ['vendor_id' => 'vendor_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRoadSection()
+    {
+        return $this->hasOne(RoadSection::className(), ['road_section_id' => 'road_section_id']);
     }
 
     /**

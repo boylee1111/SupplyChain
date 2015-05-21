@@ -27,15 +27,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
             // 'road_section_id',
             'serial_number',
-            'name',
-            'roadSectionType.road_section_type_name',
+            'road_section_name',
             'time_cost',
-            // 'basic_cost',
+            'basic_cost',
             // 'volume_based_cost',
             // 'weight_based_cost',
             // 'minimum_volume_limit',
             // 'maximum_volume_limit',
             // 'remarks',
+            'roadSectionType.road_section_type_name',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

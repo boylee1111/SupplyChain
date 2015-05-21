@@ -18,7 +18,7 @@ class StationSearch extends Station
     public function rules()
     {
         return [
-            [['station_id', 'status', 'station_type_id'], 'integer'],
+            [['station_id', 'status', 'station_type_id', 'road_section_id', 'vendor_id'], 'integer'],
             [['serial_number', 'name', 'short_name', 'remarks'], 'safe'],
             [['longitude', 'altitude'], 'number'],
         ];
@@ -62,6 +62,8 @@ class StationSearch extends Station
             'altitude' => $this->altitude,
             'status' => $this->status,
             'station_type_id' => $this->station_type_id,
+            'road_section_id' => $this->road_section_id,
+            'vendor_id' => $this->vendor_id,
         ]);
 
         $query->andFilterWhere(['like', 'serial_number', $this->serial_number])

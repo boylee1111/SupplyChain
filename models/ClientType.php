@@ -10,7 +10,7 @@ use Yii;
  * @property integer $client_type_id
  * @property string $client_type_name
  *
- * @property Client $client
+ * @property Client[] $clients
  */
 class ClientType extends \yii\db\ActiveRecord
 {
@@ -46,8 +46,8 @@ class ClientType extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getClient()
+    public function getClients()
     {
-        return $this->hasOne(Client::className(), ['client_id' => 'client_type_id']);
+        return $this->hasMany(Client::className(), ['client_type_id' => 'client_type_id']);
     }
 }

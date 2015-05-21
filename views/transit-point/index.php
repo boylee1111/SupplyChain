@@ -34,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'status',
             'transitPointType.transit_point_type_name',
             // 'remarks',
+            'roadSection.road_section_name',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

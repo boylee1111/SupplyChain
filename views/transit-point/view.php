@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'altitude',
             'status',
             'transitPointType.transit_point_type_name',
+            'roadSection.road_section_name',
             'remarks',
         ],
     ]) ?>

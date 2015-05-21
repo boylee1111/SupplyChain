@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 
 use yii\helpers\ArrayHelper;
 use app\models\TransitPointType;
+use app\models\RoadSection;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\TransitPoint */
@@ -29,6 +30,10 @@ use app\models\TransitPointType;
 
     <?= $form->field($model, 'transit_point_type_id')->dropDownList(
         ArrayHelper::map(TransitPointType::find()->all(), 'transit_point_type_id', 'transit_point_type_name')
+    )?>
+
+    <?= $form->field($model, 'road_section_id')->dropDownList(
+        ArrayHelper::map(RoadSection::find()->all(), 'road_section_id', 'road_section_name')
     )?>
 
     <?= $form->field($model, 'remarks')->textInput(['maxlength' => true]) ?>

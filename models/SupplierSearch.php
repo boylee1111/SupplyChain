@@ -19,7 +19,7 @@ class SupplierSearch extends Supplier
     {
         return [
             [['supplier_id', 'supplier_type_id'], 'integer'],
-            [['serial_number', 'primary_name', 'secondary_name', 'remarkds', 'short_name'], 'safe'],
+            [['serial_number', 'primary_name', 'secondary_name', 'short_name', 'remarkds'], 'safe'],
         ];
     }
 
@@ -63,8 +63,8 @@ class SupplierSearch extends Supplier
         $query->andFilterWhere(['like', 'serial_number', $this->serial_number])
             ->andFilterWhere(['like', 'primary_name', $this->primary_name])
             ->andFilterWhere(['like', 'secondary_name', $this->secondary_name])
-            ->andFilterWhere(['like', 'remarkds', $this->remarkds])
-            ->andFilterWhere(['like', 'short_name', $this->short_name]);
+            ->andFilterWhere(['like', 'short_name', $this->short_name])
+            ->andFilterWhere(['like', 'remarkds', $this->remarkds]);
 
         return $dataProvider;
     }

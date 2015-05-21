@@ -18,7 +18,7 @@ class TransitPointSearch extends TransitPoint
     public function rules()
     {
         return [
-            [['transit_point_id', 'status', 'transit_point_type_id'], 'integer'],
+            [['transit_point_id', 'status', 'transit_point_type_id', 'road_section_id'], 'integer'],
             [['serial_number', 'name', 'short_name', 'remarks'], 'safe'],
             [['longitude', 'altitude'], 'number'],
         ];
@@ -62,6 +62,7 @@ class TransitPointSearch extends TransitPoint
             'altitude' => $this->altitude,
             'status' => $this->status,
             'transit_point_type_id' => $this->transit_point_type_id,
+            'road_section_id' => $this->road_section_id,
         ]);
 
         $query->andFilterWhere(['like', 'serial_number', $this->serial_number])

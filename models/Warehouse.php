@@ -14,14 +14,16 @@ use Yii;
  * @property string $longitude
  * @property string $altitude
  * @property integer $status
- * @property integer $warehouse_type_id
- * @property string $remarks
  * @property string $area
  * @property string $rent
  * @property string $summary_salary
  * @property string $max_quantity_limit
  * @property string $max_cost_limit
+ * @property string $remarks
+ * @property integer $warehouse_type_id
+ * @property integer $road_section_id
  *
+ * @property RoadSection $roadSection
  * @property WarehouseType $warehouseType
  */
 class Warehouse extends \yii\db\ActiveRecord
@@ -40,9 +42,9 @@ class Warehouse extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['serial_number', 'name', 'warehouse_type_id'], 'required'],
+            [['serial_number', 'name', 'warehouse_type_id', 'road_section_id'], 'required'],
             [['longitude', 'altitude', 'area', 'rent', 'summary_salary', 'max_quantity_limit', 'max_cost_limit'], 'number'],
-            [['status', 'warehouse_type_id'], 'integer'],
+            [['status', 'warehouse_type_id', 'road_section_id'], 'integer'],
             [['serial_number', 'name', 'short_name'], 'string', 'max' => 255],
             [['remarks'], 'string', 'max' => 1000]
         ];
@@ -61,14 +63,23 @@ class Warehouse extends \yii\db\ActiveRecord
             'longitude' => 'Longitude',
             'altitude' => 'Altitude',
             'status' => 'Status',
-            'warehouse_type_id' => 'Warehouse Type ID',
-            'remarks' => 'Remarks',
             'area' => 'Area',
             'rent' => 'Rent',
             'summary_salary' => 'Summary Salary',
             'max_quantity_limit' => 'Max Quantity Limit',
             'max_cost_limit' => 'Max Cost Limit',
+            'remarks' => 'Remarks',
+            'warehouse_type_id' => 'Warehouse Type ID',
+            'road_section_id' => 'Road Section ID',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRoadSection()
+    {
+        return $this->hasOne(RoadSection::className(), ['road_section_id' => 'road_section_id']);
     }
 
     /**

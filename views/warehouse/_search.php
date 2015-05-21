@@ -29,10 +29,6 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'status') ?>
 
-    <?php // echo $form->field($model, 'warehouse_type_id') ?>
-
-    <?php // echo $form->field($model, 'remarks') ?>
-
     <?php // echo $form->field($model, 'area') ?>
 
     <?php // echo $form->field($model, 'rent') ?>
@@ -42,6 +38,12 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'max_quantity_limit') ?>
 
     <?php // echo $form->field($model, 'max_cost_limit') ?>
+
+    <?php // echo $form->field($model, 'remarks') ?>
+
+    <?php // echo $form->field($model, 'warehouse_type_id') ?>
+
+    <?php // echo $form->field($model, 'road_section_id') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

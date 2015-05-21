@@ -21,8 +21,12 @@ use Yii;
  * @property string $minimum_stock
  * @property string $maximum_stock
  * @property string $remarks
+ * @property integer $client_id
  *
+ * @property Client $client
  * @property Currency $currency
+ * @property SupplierProduct[] $supplierProducts
+ * @property Supplier[] $suppliers
  */
 class Product extends \yii\db\ActiveRecord
 {
@@ -40,9 +44,9 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['primary_name', 'currency_id'], 'required'],
+            [['primary_name', 'currency_id', 'client_id'], 'required'],
             [['length', 'width', 'height', 'volume', 'weight', 'amount', 'minimum_stock', 'maximum_stock'], 'number'],
-            [['currency_id'], 'integer'],
+            [['currency_id', 'client_id'], 'integer'],
             [['primary_name', 'secondary_name', 'short_name'], 'string', 'max' => 255],
             [['remarks'], 'string', 'max' => 1000]
         ];
@@ -68,7 +72,16 @@ class Product extends \yii\db\ActiveRecord
             'minimum_stock' => 'Minimum Stock',
             'maximum_stock' => 'Maximum Stock',
             'remarks' => 'Remarks',
+            'client_id' => 'Client ID',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getClient()
+    {
+        return $this->hasOne(Client::className(), ['client_id' => 'client_id']);
     }
 
     /**
@@ -77,5 +90,21 @@ class Product extends \yii\db\ActiveRecord
     public function getCurrency()
     {
         return $this->hasOne(Currency::className(), ['currency_id' => 'currency_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSupplierProducts()
+    {
+        return $this->hasMany(SupplierProduct::className(), ['product_id' => 'product_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSuppliers()
+    {
+        return $this->hasMany(Supplier::className(), ['supplier_id' => 'supplier_id'])->viaTable('supplier_product', ['product_id' => 'product_id']);
     }
 }

@@ -15,6 +15,7 @@ use Yii;
  * @property string $remarks
  * @property integer $vendor_type_id
  *
+ * @property Station[] $stations
  * @property VendorType $vendorType
  */
 class Vendor extends \yii\db\ActiveRecord
@@ -54,6 +55,14 @@ class Vendor extends \yii\db\ActiveRecord
             'remarks' => 'Remarks',
             'vendor_type_id' => 'Vendor Type ID',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStations()
+    {
+        return $this->hasMany(Station::className(), ['vendor_id' => 'vendor_id']);
     }
 
     /**

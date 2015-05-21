@@ -19,7 +19,7 @@ class CurrencySearch extends Currency
     {
         return [
             [['currency_id'], 'integer'],
-            [['currency_name', 'currency_code'], 'safe'],
+            [['currency_code', 'currency_name'], 'safe'],
         ];
     }
 
@@ -59,8 +59,8 @@ class CurrencySearch extends Currency
             'currency_id' => $this->currency_id,
         ]);
 
-        $query->andFilterWhere(['like', 'currency_name', $this->currency_name])
-            ->andFilterWhere(['like', 'currency_code', $this->currency_code]);
+        $query->andFilterWhere(['like', 'currency_code', $this->currency_code])
+            ->andFilterWhere(['like', 'currency_name', $this->currency_name]);
 
         return $dataProvider;
     }

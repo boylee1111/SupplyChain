@@ -35,10 +35,12 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'volume',
             // 'weight',
             // 'amount',
-            'currency.currency_name',
+            // 'currency_id',
             // 'minimum_stock',
             // 'maximum_stock',
             // 'remarks',
+            'client.primary_name',
+
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

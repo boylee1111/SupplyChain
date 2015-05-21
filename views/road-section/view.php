@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\RoadSection */
 
-$this->title = $model->name;
+$this->title = $model->road_section_id;
 $this->params['breadcrumbs'][] = ['label' => 'Road Sections', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -30,14 +30,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             // 'road_section_id',
             'serial_number',
-            'name',
-            'roadSectionType.road_section_type_name',
+            'road_section_name',
             'time_cost',
             'basic_cost',
             'volume_based_cost',
             'weight_based_cost',
             'minimum_volume_limit',
             'maximum_volume_limit',
+            'roadSectionType.road_section_type_name',
             'remarks',
         ],
     ]) ?>

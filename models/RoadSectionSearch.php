@@ -19,7 +19,7 @@ class RoadSectionSearch extends RoadSection
     {
         return [
             [['road_section_id', 'road_section_type_id'], 'integer'],
-            [['serial_number', 'name', 'remarks'], 'safe'],
+            [['serial_number', 'road_section_name', 'remarks'], 'safe'],
             [['time_cost', 'basic_cost', 'volume_based_cost', 'weight_based_cost', 'minimum_volume_limit', 'maximum_volume_limit'], 'number'],
         ];
     }
@@ -58,17 +58,17 @@ class RoadSectionSearch extends RoadSection
 
         $query->andFilterWhere([
             'road_section_id' => $this->road_section_id,
-            'road_section_type_id' => $this->road_section_type_id,
             'time_cost' => $this->time_cost,
             'basic_cost' => $this->basic_cost,
             'volume_based_cost' => $this->volume_based_cost,
             'weight_based_cost' => $this->weight_based_cost,
             'minimum_volume_limit' => $this->minimum_volume_limit,
             'maximum_volume_limit' => $this->maximum_volume_limit,
+            'road_section_type_id' => $this->road_section_type_id,
         ]);
 
         $query->andFilterWhere(['like', 'serial_number', $this->serial_number])
-            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'road_section_name', $this->road_section_name])
             ->andFilterWhere(['like', 'remarks', $this->remarks]);
 
         return $dataProvider;

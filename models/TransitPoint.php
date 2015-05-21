@@ -16,7 +16,9 @@ use Yii;
  * @property integer $status
  * @property integer $transit_point_type_id
  * @property string $remarks
+ * @property integer $road_section_id
  *
+ * @property RoadSection $roadSection
  * @property TransitPointType $transitPointType
  */
 class TransitPoint extends \yii\db\ActiveRecord
@@ -35,9 +37,9 @@ class TransitPoint extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['serial_number', 'name', 'transit_point_type_id'], 'required'],
+            [['serial_number', 'name', 'transit_point_type_id', 'road_section_id'], 'required'],
             [['longitude', 'altitude'], 'number'],
-            [['status', 'transit_point_type_id'], 'integer'],
+            [['status', 'transit_point_type_id', 'road_section_id'], 'integer'],
             [['serial_number', 'name', 'short_name'], 'string', 'max' => 255],
             [['remarks'], 'string', 'max' => 1000]
         ];
@@ -58,7 +60,16 @@ class TransitPoint extends \yii\db\ActiveRecord
             'status' => 'Status',
             'transit_point_type_id' => 'Transit Point Type ID',
             'remarks' => 'Remarks',
+            'road_section_id' => 'Road Section ID',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRoadSection()
+    {
+        return $this->hasOne(RoadSection::className(), ['road_section_id' => 'road_section_id']);
     }
 
     /**

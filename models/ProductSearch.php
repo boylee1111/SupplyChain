@@ -18,7 +18,7 @@ class ProductSearch extends Product
     public function rules()
     {
         return [
-            [['product_id', 'currency_id'], 'integer'],
+            [['product_id', 'currency_id', 'client_id'], 'integer'],
             [['primary_name', 'secondary_name', 'short_name', 'remarks'], 'safe'],
             [['length', 'width', 'height', 'volume', 'weight', 'amount', 'minimum_stock', 'maximum_stock'], 'number'],
         ];
@@ -67,6 +67,7 @@ class ProductSearch extends Product
             'currency_id' => $this->currency_id,
             'minimum_stock' => $this->minimum_stock,
             'maximum_stock' => $this->maximum_stock,
+            'client_id' => $this->client_id,
         ]);
 
         $query->andFilterWhere(['like', 'primary_name', $this->primary_name])

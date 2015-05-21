@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            // 'product_id',
+            'product_id',
             'primary_name',
             'secondary_name',
             'short_name',
@@ -41,6 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'currency.currency_name',
             'minimum_stock',
             'maximum_stock',
+            'client.primary_name',
             'remarks',
         ],
     ]) ?>

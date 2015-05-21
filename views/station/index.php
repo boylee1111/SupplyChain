@@ -25,15 +25,17 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            // 'station_id',
+            'station_id',
             'serial_number',
             'name',
             'short_name',
             'longitude',
-            'altitude',
-            'status',
-            'stationType.station_type_name',
-            'remarks',
+            // 'altitude',
+            // 'status',
+            // 'station_type_id',
+            // 'remarks',
+            // 'road_section_id',
+            // 'vendor_id',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

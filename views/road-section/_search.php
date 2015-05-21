@@ -19,13 +19,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'serial_number') ?>
 
-    <?= $form->field($model, 'name') ?>
-
-    <?= $form->field($model, 'road_section_type_id') ?>
+    <?= $form->field($model, 'road_section_name') ?>
 
     <?= $form->field($model, 'time_cost') ?>
 
-    <?php // echo $form->field($model, 'basic_cost') ?>
+    <?= $form->field($model, 'basic_cost') ?>
 
     <?php // echo $form->field($model, 'volume_based_cost') ?>
 
@@ -36,6 +34,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'maximum_volume_limit') ?>
 
     <?php // echo $form->field($model, 'remarks') ?>
+
+    <?php // echo $form->field($model, 'road_section_type_id') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

@@ -16,6 +16,7 @@ use Yii;
  * @property integer $client_type_id
  *
  * @property ClientType $clientType
+ * @property Product[] $products
  */
 class Client extends \yii\db\ActiveRecord
 {
@@ -62,5 +63,13 @@ class Client extends \yii\db\ActiveRecord
     public function getClientType()
     {
         return $this->hasOne(ClientType::className(), ['client_type_id' => 'client_type_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProducts()
+    {
+        return $this->hasMany(Product::className(), ['client_id' => 'client_id']);
     }
 }

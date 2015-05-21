@@ -8,8 +8,8 @@ use Yii;
  * This is the model class for table "currency".
  *
  * @property integer $currency_id
- * @property string $currency_name
  * @property string $currency_code
+ * @property string $currency_name
  *
  * @property Product[] $products
  */
@@ -29,8 +29,8 @@ class Currency extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['currency_name'], 'string', 'max' => 10],
-            [['currency_code'], 'string', 'max' => 3]
+            [['currency_code'], 'string', 'max' => 3],
+            [['currency_name'], 'string', 'max' => 10]
         ];
     }
 
@@ -41,8 +41,8 @@ class Currency extends \yii\db\ActiveRecord
     {
         return [
             'currency_id' => 'Currency ID',
-            'currency_name' => 'Currency Name',
             'currency_code' => 'Currency Code',
+            'currency_name' => 'Currency Name',
         ];
     }
 
