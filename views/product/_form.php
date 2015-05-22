@@ -36,7 +36,7 @@ use app\models\Client;
 
     <?= $form->field($model, 'currency_id')->dropDownList(
         ArrayHelper::map(Currency::find()->all(), 'currency_id', 'currency_name')
-    ) ?>
+    )?>
 
     <?= $form->field($model, 'minimum_stock')->textInput(['maxlength' => true]) ?>
 

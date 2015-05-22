@@ -21,9 +21,8 @@ use Yii;
  * @property string $max_cost_limit
  * @property string $remarks
  * @property integer $warehouse_type_id
- * @property integer $road_section_id
  *
- * @property RoadSection $roadSection
+ * @property RoadSection[] $roadSections
  * @property WarehouseType $warehouseType
  */
 class Warehouse extends \yii\db\ActiveRecord
@@ -42,9 +41,9 @@ class Warehouse extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['serial_number', 'name', 'warehouse_type_id', 'road_section_id'], 'required'],
+            [['serial_number', 'name', 'warehouse_type_id'], 'required'],
             [['longitude', 'altitude', 'area', 'rent', 'summary_salary', 'max_quantity_limit', 'max_cost_limit'], 'number'],
-            [['status', 'warehouse_type_id', 'road_section_id'], 'integer'],
+            [['status', 'warehouse_type_id'], 'integer'],
             [['serial_number', 'name', 'short_name'], 'string', 'max' => 255],
             [['remarks'], 'string', 'max' => 1000]
         ];
@@ -70,16 +69,15 @@ class Warehouse extends \yii\db\ActiveRecord
             'max_cost_limit' => 'Max Cost Limit',
             'remarks' => 'Remarks',
             'warehouse_type_id' => 'Warehouse Type ID',
-            'road_section_id' => 'Road Section ID',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRoadSection()
+    public function getRoadSections()
     {
-        return $this->hasOne(RoadSection::className(), ['road_section_id' => 'road_section_id']);
+        return $this->hasMany(RoadSection::className(), ['warehouse_id' => 'warehouse_id']);
     }
 
     /**

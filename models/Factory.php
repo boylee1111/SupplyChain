@@ -16,10 +16,9 @@ use Yii;
  * @property integer $status
  * @property integer $factory_type_id
  * @property string $remarks
- * @property integer $road_section_id
  *
- * @property RoadSection $roadSection
  * @property FactoryType $factoryType
+ * @property RoadSection[] $roadSections
  */
 class Factory extends \yii\db\ActiveRecord
 {
@@ -37,9 +36,9 @@ class Factory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['serial_number', 'name', 'factory_type_id', 'road_section_id'], 'required'],
+            [['serial_number', 'name', 'factory_type_id'], 'required'],
             [['longitude', 'altitude'], 'number'],
-            [['status', 'factory_type_id', 'road_section_id'], 'integer'],
+            [['status', 'factory_type_id'], 'integer'],
             [['serial_number', 'name', 'short_name'], 'string', 'max' => 255],
             [['remarks'], 'string', 'max' => 1000]
         ];
@@ -60,16 +59,7 @@ class Factory extends \yii\db\ActiveRecord
             'status' => 'Status',
             'factory_type_id' => 'Factory Type ID',
             'remarks' => 'Remarks',
-            'road_section_id' => 'Road Section ID',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRoadSection()
-    {
-        return $this->hasOne(RoadSection::className(), ['road_section_id' => 'road_section_id']);
     }
 
     /**
@@ -78,5 +68,13 @@ class Factory extends \yii\db\ActiveRecord
     public function getFactoryType()
     {
         return $this->hasOne(FactoryType::className(), ['factory_type_id' => 'factory_type_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRoadSections()
+    {
+        return $this->hasMany(RoadSection::className(), ['factory_id' => 'factory_id']);
     }
 }

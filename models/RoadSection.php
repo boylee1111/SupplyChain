@@ -18,12 +18,17 @@ use Yii;
  * @property string $maximum_volume_limit
  * @property string $remarks
  * @property integer $road_section_type_id
+ * @property integer $factory_id
+ * @property integer $station_id
+ * @property integer $transit_point_id
+ * @property integer $warehouse_id
  *
- * @property Factory[] $factories
+ * @property Factory $factory
+ * @property Station $station
+ * @property TransitPoint $transitPoint
+ * @property Warehouse $warehouse
  * @property RoadSectionType $roadSectionType
- * @property Station[] $stations
- * @property TransitPoint[] $transitPoints
- * @property Warehouse[] $warehouses
+ * @property Transportation[] $transportations
  */
 class RoadSection extends \yii\db\ActiveRecord
 {
@@ -43,7 +48,7 @@ class RoadSection extends \yii\db\ActiveRecord
         return [
             [['serial_number', 'road_section_name', 'road_section_type_id'], 'required'],
             [['time_cost', 'basic_cost', 'volume_based_cost', 'weight_based_cost', 'minimum_volume_limit', 'maximum_volume_limit'], 'number'],
-            [['road_section_type_id'], 'integer'],
+            [['road_section_type_id', 'factory_id', 'station_id', 'transit_point_id', 'warehouse_id'], 'integer'],
             [['serial_number', 'road_section_name'], 'string', 'max' => 255],
             [['remarks'], 'string', 'max' => 1000]
         ];
@@ -66,15 +71,43 @@ class RoadSection extends \yii\db\ActiveRecord
             'maximum_volume_limit' => 'Maximum Volume Limit',
             'remarks' => 'Remarks',
             'road_section_type_id' => 'Road Section Type ID',
+            'factory_id' => 'Factory ID',
+            'station_id' => 'Station ID',
+            'transit_point_id' => 'Transit Point ID',
+            'warehouse_id' => 'Warehouse ID',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getFactories()
+    public function getFactory()
     {
-        return $this->hasMany(Factory::className(), ['road_section_id' => 'road_section_id']);
+        return $this->hasOne(Factory::className(), ['factory_id' => 'factory_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStation()
+    {
+        return $this->hasOne(Station::className(), ['station_id' => 'station_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTransitPoint()
+    {
+        return $this->hasOne(TransitPoint::className(), ['transit_point_id' => 'transit_point_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getWarehouse()
+    {
+        return $this->hasOne(Warehouse::className(), ['warehouse_id' => 'warehouse_id']);
     }
 
     /**
@@ -88,24 +121,8 @@ class RoadSection extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStations()
+    public function getTransportations()
     {
-        return $this->hasMany(Station::className(), ['road_section_id' => 'road_section_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTransitPoints()
-    {
-        return $this->hasMany(TransitPoint::className(), ['road_section_id' => 'road_section_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getWarehouses()
-    {
-        return $this->hasMany(Warehouse::className(), ['road_section_id' => 'road_section_id']);
+        return $this->hasMany(Transportation::className(), ['road_section_id' => 'road_section_id']);
     }
 }

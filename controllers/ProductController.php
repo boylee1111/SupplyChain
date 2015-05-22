@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Product;
+use app\models\Currency;
 use app\models\ProductSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -80,8 +81,10 @@ class ProductController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            // $c = $model->getCurrency()->one();
+            // $c->currency_name = "aaa";
+            // $c->save();
             return $this->redirect(['view', 'id' => $model->product_id]);
         } else {
             return $this->render('update', [
