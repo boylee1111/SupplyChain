@@ -22,7 +22,6 @@ use Yii;
  * @property string $remarks
  * @property integer $warehouse_type_id
  *
- * @property RoadSection[] $roadSections
  * @property WarehouseType $warehouseType
  */
 class Warehouse extends \yii\db\ActiveRecord
@@ -70,14 +69,6 @@ class Warehouse extends \yii\db\ActiveRecord
             'remarks' => 'Remarks',
             'warehouse_type_id' => 'Warehouse Type ID',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRoadSections()
-    {
-        return $this->hasMany(RoadSection::className(), ['warehouse_id' => 'warehouse_id']);
     }
 
     /**

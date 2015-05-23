@@ -18,7 +18,6 @@ use Yii;
  * @property string $remarks
  * @property integer $vendor_id
  *
- * @property RoadSection[] $roadSections
  * @property StationType $stationType
  * @property Vendor $vendor
  */
@@ -63,14 +62,6 @@ class Station extends \yii\db\ActiveRecord
             'remarks' => 'Remarks',
             'vendor_id' => 'Vendor ID',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRoadSections()
-    {
-        return $this->hasMany(RoadSection::className(), ['station_id' => 'station_id']);
     }
 
     /**

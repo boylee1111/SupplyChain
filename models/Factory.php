@@ -18,7 +18,6 @@ use Yii;
  * @property string $remarks
  *
  * @property FactoryType $factoryType
- * @property RoadSection[] $roadSections
  */
 class Factory extends \yii\db\ActiveRecord
 {
@@ -68,13 +67,5 @@ class Factory extends \yii\db\ActiveRecord
     public function getFactoryType()
     {
         return $this->hasOne(FactoryType::className(), ['factory_type_id' => 'factory_type_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRoadSections()
-    {
-        return $this->hasMany(RoadSection::className(), ['factory_id' => 'factory_id']);
     }
 }

@@ -17,7 +17,6 @@ use Yii;
  * @property integer $transit_point_type_id
  * @property string $remarks
  *
- * @property RoadSection[] $roadSections
  * @property TransitPointType $transitPointType
  */
 class TransitPoint extends \yii\db\ActiveRecord
@@ -60,14 +59,6 @@ class TransitPoint extends \yii\db\ActiveRecord
             'transit_point_type_id' => 'Transit Point Type ID',
             'remarks' => 'Remarks',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRoadSections()
-    {
-        return $this->hasMany(RoadSection::className(), ['transit_point_id' => 'transit_point_id']);
     }
 
     /**

@@ -18,15 +18,11 @@ use Yii;
  * @property string $maximum_volume_limit
  * @property string $remarks
  * @property integer $road_section_type_id
- * @property integer $factory_id
- * @property integer $station_id
- * @property integer $transit_point_id
- * @property integer $warehouse_id
+ * @property integer $start_depot_id
+ * @property integer $end_depot_id
  *
- * @property Factory $factory
- * @property Station $station
- * @property TransitPoint $transitPoint
- * @property Warehouse $warehouse
+ * @property Depot $startDepot
+ * @property Depot $endDepot
  * @property RoadSectionType $roadSectionType
  * @property Transportation[] $transportations
  */
@@ -46,9 +42,9 @@ class RoadSection extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['serial_number', 'road_section_name', 'road_section_type_id'], 'required'],
+            [['serial_number', 'road_section_name', 'road_section_type_id', 'start_depot_id', 'end_depot_id'], 'required'],
             [['time_cost', 'basic_cost', 'volume_based_cost', 'weight_based_cost', 'minimum_volume_limit', 'maximum_volume_limit'], 'number'],
-            [['road_section_type_id', 'factory_id', 'station_id', 'transit_point_id', 'warehouse_id'], 'integer'],
+            [['road_section_type_id', 'start_depot_id', 'end_depot_id'], 'integer'],
             [['serial_number', 'road_section_name'], 'string', 'max' => 255],
             [['remarks'], 'string', 'max' => 1000]
         ];
@@ -71,43 +67,25 @@ class RoadSection extends \yii\db\ActiveRecord
             'maximum_volume_limit' => 'Maximum Volume Limit',
             'remarks' => 'Remarks',
             'road_section_type_id' => 'Road Section Type ID',
-            'factory_id' => 'Factory ID',
-            'station_id' => 'Station ID',
-            'transit_point_id' => 'Transit Point ID',
-            'warehouse_id' => 'Warehouse ID',
+            'start_depot_id' => 'Start Depot ID',
+            'end_depot_id' => 'End Depot ID',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getFactory()
+    public function getStartDepot()
     {
-        return $this->hasOne(Factory::className(), ['factory_id' => 'factory_id']);
+        return $this->hasOne(Depot::className(), ['depot_id' => 'start_depot_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStation()
+    public function getEndDepot()
     {
-        return $this->hasOne(Station::className(), ['station_id' => 'station_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTransitPoint()
-    {
-        return $this->hasOne(TransitPoint::className(), ['transit_point_id' => 'transit_point_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getWarehouse()
-    {
-        return $this->hasOne(Warehouse::className(), ['warehouse_id' => 'warehouse_id']);
+        return $this->hasOne(Depot::className(), ['depot_id' => 'end_depot_id']);
     }
 
     /**
