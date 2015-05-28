@@ -7,13 +7,12 @@ use Yii;
 /**
  * This is the model class for table "transit_point".
  *
- * @property integer $transit_point_id
  * @property integer $depot_id
  * @property integer $transit_point_type_id
  * @property string $remarks
  *
- * @property TransitPointType $transitPointType
  * @property Depot $depot
+ * @property TransitPointType $transitPointType
  */
 class TransitPoint extends \yii\db\ActiveRecord
 {
@@ -43,7 +42,6 @@ class TransitPoint extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'transit_point_id' => 'Transit Point ID',
             'depot_id' => 'Depot ID',
             'transit_point_type_id' => 'Transit Point Type ID',
             'remarks' => 'Remarks',
@@ -53,16 +51,16 @@ class TransitPoint extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTransitPointType()
+    public function getDepot()
     {
-        return $this->hasOne(TransitPointType::className(), ['transit_point_type_id' => 'transit_point_type_id']);
+        return $this->hasOne(Depot::className(), ['depot_id' => 'depot_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDepot()
+    public function getTransitPointType()
     {
-        return $this->hasOne(Depot::className(), ['depot_id' => 'depot_id']);
+        return $this->hasOne(TransitPointType::className(), ['transit_point_type_id' => 'transit_point_type_id']);
     }
 }

@@ -7,13 +7,12 @@ use Yii;
 /**
  * This is the model class for table "factory".
  *
- * @property integer $factory_id
  * @property integer $depot_id
  * @property integer $factory_type_id
  * @property string $remarks
  *
- * @property FactoryType $factoryType
  * @property Depot $depot
+ * @property FactoryType $factoryType
  */
 class Factory extends \yii\db\ActiveRecord
 {
@@ -31,8 +30,8 @@ class Factory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['factory_id', 'depot_id', 'factory_type_id'], 'required'],
-            [['factory_id', 'depot_id', 'factory_type_id'], 'integer'],
+            [['depot_id', 'factory_type_id'], 'required'],
+            [['depot_id', 'factory_type_id'], 'integer'],
             [['remarks'], 'string', 'max' => 1000]
         ];
     }
@@ -43,7 +42,6 @@ class Factory extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'factory_id' => 'Factory ID',
             'depot_id' => 'Depot ID',
             'factory_type_id' => 'Factory Type ID',
             'remarks' => 'Remarks',
@@ -53,16 +51,16 @@ class Factory extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getFactoryType()
+    public function getDepot()
     {
-        return $this->hasOne(FactoryType::className(), ['factory_type_id' => 'factory_type_id']);
+        return $this->hasOne(Depot::className(), ['depot_id' => 'depot_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDepot()
+    public function getFactoryType()
     {
-        return $this->hasOne(Depot::className(), ['depot_id' => 'depot_id']);
+        return $this->hasOne(FactoryType::className(), ['factory_type_id' => 'factory_type_id']);
     }
 }

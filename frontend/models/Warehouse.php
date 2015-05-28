@@ -7,7 +7,6 @@ use Yii;
 /**
  * This is the model class for table "warehouse".
  *
- * @property integer $warehouse_id
  * @property integer $depot_id
  * @property string $area
  * @property string $rent
@@ -17,8 +16,8 @@ use Yii;
  * @property string $remarks
  * @property integer $warehouse_type_id
  *
- * @property WarehouseType $warehouseType
  * @property Depot $depot
+ * @property WarehouseType $warehouseType
  */
 class Warehouse extends \yii\db\ActiveRecord
 {
@@ -49,7 +48,6 @@ class Warehouse extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'warehouse_id' => 'Warehouse ID',
             'depot_id' => 'Depot ID',
             'area' => 'Area',
             'rent' => 'Rent',
@@ -64,16 +62,16 @@ class Warehouse extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getWarehouseType()
+    public function getDepot()
     {
-        return $this->hasOne(WarehouseType::className(), ['warehouse_type_id' => 'warehouse_type_id']);
+        return $this->hasOne(Depot::className(), ['depot_id' => 'depot_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDepot()
+    public function getWarehouseType()
     {
-        return $this->hasOne(Depot::className(), ['depot_id' => 'depot_id']);
+        return $this->hasOne(WarehouseType::className(), ['warehouse_type_id' => 'warehouse_type_id']);
     }
 }

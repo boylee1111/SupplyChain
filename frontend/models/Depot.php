@@ -15,15 +15,15 @@ use Yii;
  * @property string $altitude
  * @property integer $status
  *
- * @property Factory[] $factories
+ * @property Factory $factory
  * @property Requirement[] $requirements
  * @property RequirementPassDepot[] $requirementPassDepots
  * @property Requirement[] $requirements0
  * @property RoadSection[] $roadSections
  * @property RoadSection[] $roadSections0
- * @property Station[] $stations
- * @property TransitPoint[] $transitPoints
- * @property Warehouse[] $warehouses
+ * @property Station $station
+ * @property TransitPoint $transitPoint
+ * @property Warehouse $warehouse
  */
 class Depot extends \yii\db\ActiveRecord
 {
@@ -67,9 +67,9 @@ class Depot extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getFactories()
+    public function getFactory()
     {
-        return $this->hasMany(Factory::className(), ['depot_id' => 'depot_id']);
+        return $this->hasOne(Factory::className(), ['depot_id' => 'depot_id']);
     }
 
     /**
@@ -115,24 +115,24 @@ class Depot extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStations()
+    public function getStation()
     {
-        return $this->hasMany(Station::className(), ['depot_id' => 'depot_id']);
+        return $this->hasOne(Station::className(), ['depot_id' => 'depot_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTransitPoints()
+    public function getTransitPoint()
     {
-        return $this->hasMany(TransitPoint::className(), ['depot_id' => 'depot_id']);
+        return $this->hasOne(TransitPoint::className(), ['depot_id' => 'depot_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getWarehouses()
+    public function getWarehouse()
     {
-        return $this->hasMany(Warehouse::className(), ['depot_id' => 'depot_id']);
+        return $this->hasOne(Warehouse::className(), ['depot_id' => 'depot_id']);
     }
 }

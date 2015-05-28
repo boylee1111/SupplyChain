@@ -7,14 +7,13 @@ use Yii;
 /**
  * This is the model class for table "station".
  *
- * @property integer $station_id
  * @property integer $depot_id
  * @property integer $station_type_id
  * @property string $remarks
  * @property integer $vendor_id
  *
- * @property StationType $stationType
  * @property Depot $depot
+ * @property StationType $stationType
  * @property Vendor $vendor
  */
 class Station extends \yii\db\ActiveRecord
@@ -45,7 +44,6 @@ class Station extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'station_id' => 'Station ID',
             'depot_id' => 'Depot ID',
             'station_type_id' => 'Station Type ID',
             'remarks' => 'Remarks',
@@ -56,17 +54,17 @@ class Station extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStationType()
+    public function getDepot()
     {
-        return $this->hasOne(StationType::className(), ['station_type_id' => 'station_type_id']);
+        return $this->hasOne(Depot::className(), ['depot_id' => 'depot_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDepot()
+    public function getStationType()
     {
-        return $this->hasOne(Depot::className(), ['depot_id' => 'depot_id']);
+        return $this->hasOne(StationType::className(), ['station_type_id' => 'station_type_id']);
     }
 
     /**
