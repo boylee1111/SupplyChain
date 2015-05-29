@@ -32,6 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'depot.serial_number',
             'depot.name',
             'depot.short_name',
+            'depot.longitude',
+            'depot.altitude',
             'area',
             'rent',
             'summary_salary',

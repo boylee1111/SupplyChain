@@ -65,7 +65,9 @@ class FactoryController extends Controller
         $model = new Factory();
         $depot = new Depot();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($depot->load(Yii::$app->request->post()) && $model->load(Yii::$app->request->post()) && $depot->save()) {
+            $model->depot_id = $depot->depot_id;
+            $model->save();
             return $this->redirect(['view', 'id' => $model->depot_id]);
         } else {
             return $this->render('create', [
@@ -84,12 +86,15 @@ class FactoryController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $depot = Depot::findOne($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save() &&
+            $depot->load(Yii::$app->request->post()) && $depot->save()) {
             return $this->redirect(['view', 'id' => $model->depot_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'depot' => $depot,
             ]);
         }
     }
@@ -103,6 +108,14 @@ class FactoryController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+        $depot = Depot::findOne($id);
+        foreach ($depot->getRoadSections()->all() as $roadSection) {
+            $roadSection->delete();
+        }
+        foreach ($depot->getRoadSections0()->all() as $roadSection) {
+            $roadSection->delete();
+        }
+        $depot->delete();
 
         return $this->redirect(['index']);
     }

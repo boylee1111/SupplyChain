@@ -9,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use app\models\Depot;
+
 /**
  * TransitPointController implements the CRUD actions for TransitPoint model.
  */
@@ -61,12 +63,16 @@ class TransitPointController extends Controller
     public function actionCreate()
     {
         $model = new TransitPoint();
+        $depot = new Depot();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $depot->load(Yii::$app->request->post()) && $depot->save()) {
+            $model->depot_id = $depot->depot_id;
+            $model->save();
             return $this->redirect(['view', 'id' => $model->depot_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'depot' => $depot,
             ]);
         }
     }
@@ -80,12 +86,15 @@ class TransitPointController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $depot = Depot::findOne($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save() &&
+            $depot->load(Yii::$app->request->post()) && $depot->save()) {
             return $this->redirect(['view', 'id' => $model->depot_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'depot' => $depot,
             ]);
         }
     }
@@ -99,6 +108,14 @@ class TransitPointController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+        $depot = Depot::findOne($id);
+        foreach ($depot->getRoadSections()->all() as $roadSection) {
+            $roadSection->delete();
+        }
+        foreach ($depot->getRoadSections0()->all() as $roadSection) {
+            $roadSection->delete();
+        }
+        $depot->delete();
 
         return $this->redirect(['index']);
     }

@@ -41,6 +41,7 @@ class Depot extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['serial_number'], 'unique'],
             [['serial_number', 'name'], 'required'],
             [['longitude', 'altitude'], 'number'],
             [['status'], 'integer'],

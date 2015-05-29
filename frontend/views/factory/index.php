@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'depot.name',
             'depot.short_name',
             'factoryType.factory_type_name',
-            'remarks',
+            // 'remarks',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

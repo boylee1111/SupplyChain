@@ -15,13 +15,19 @@ use app\models\FactoryType;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'depot_id')->textInput() ?>
+    <?= $form->field($depot, 'serial_number')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'factory_type_id')->dropDownList(
-    	ArrayHelper::map(FactoryType::find()->all(), 'factory_type_id', 'factory_type_name'))->label("Factory Type")
-    ?>
+    <?= $form->field($depot, 'name')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($depot, 'short_name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($depot, 'longitude')->textInput() ?>
+
+    <?= $form->field($depot, 'altitude')->textInput() ?>
+
+    <?= $form->field($model, 'factory_type_id')->dropDownList(
+    	ArrayHelper::map(FactoryType::find()->all(), 'factory_type_id', 'factory_type_name'))->label('Factory Type')
+    ?>
 
     <?= $form->field($model, 'remarks')->textInput(['maxlength' => true]) ?>
 
