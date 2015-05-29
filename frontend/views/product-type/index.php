@@ -4,19 +4,19 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\StationSearch */
+/* @var $searchModel app\models\ProductTypeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Stations';
+$this->title = 'Product Types';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="station-index">
+<div class="product-type-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Station', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Product Type', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,13 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            // 'depot_id',
-            'depot.serial_number',
-            'depot.name',
-            'depot.short_name',
-            ['attribute' => 'stationType.station_type_name', 'label' => 'Station Type'],
-            // 'remarks',
-            ['attribute' => 'vendor.primary_name', 'label' => 'Vendor'],
+            // 'product_type_id',
+            'product_type_name',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
