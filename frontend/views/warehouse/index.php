@@ -25,14 +25,17 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'depot_id',
-            'area',
-            'rent',
-            'summary_salary',
-            'max_quantity_limit',
+            // 'depot_id',
+            'depot.serial_number',
+            'depot.name',
+            'depot.short_name',
+            // 'area',
+            // 'rent',
+            // 'summary_salary',
+            // 'max_quantity_limit',
             // 'max_cost_limit',
             // 'remarks',
-            // 'warehouse_type_id',
+            'warehouseType.warehouse_type_name',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

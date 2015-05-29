@@ -9,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use app\models\Depot;
+
 /**
  * FactoryController implements the CRUD actions for Factory model.
  */
@@ -61,12 +63,14 @@ class FactoryController extends Controller
     public function actionCreate()
     {
         $model = new Factory();
+        $depot = new Depot();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->depot_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'depot' => $depot,
             ]);
         }
     }

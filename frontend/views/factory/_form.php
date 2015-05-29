@@ -21,6 +21,8 @@ use app\models\FactoryType;
     	ArrayHelper::map(FactoryType::find()->all(), 'factory_type_id', 'factory_type_name'))->label("Factory Type")
     ?>
 
+    <?= $form->field($depot, 'longitude')->textInput() ?>
+
     <?= $form->field($model, 'remarks')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">

@@ -29,6 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             // 'depot_id',
+            'depot.serial_number',
+            'depot.name',
+            'depot.short_name',
             'factoryType.factory_type_name',
             'remarks',
         ],

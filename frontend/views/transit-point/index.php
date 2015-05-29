@@ -25,9 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'depot_id',
-            'transit_point_type_id',
-            'remarks',
+            // 'depot_id',
+            'depot.serial_number',
+            'depot.name',
+            'depot.short_name',
+            'transitPointType.transit_point_type_name',
+            // 'remarks',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

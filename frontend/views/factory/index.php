@@ -26,6 +26,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             // 'depot_id',
+            'depot.serial_number',
+            'depot.name',
+            'depot.short_name',
             'factoryType.factory_type_name',
             'remarks',
 
