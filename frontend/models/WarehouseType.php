@@ -28,6 +28,7 @@ class WarehouseType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['warehouse_type_name'], 'required'],
             [['warehouse_type_name'], 'string', 'max' => 255]
         ];
     }

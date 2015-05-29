@@ -3,6 +3,10 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+use yii\helpers\ArrayHelper;
+use app\models\RoadSectionType;
+use app\models\Depot;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\RoadSection */
 /* @var $form yii\widgets\ActiveForm */
@@ -30,11 +34,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'remarks')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'road_section_type_id')->textInput() ?>
+    <?= $form->field($model, 'road_section_type_id')->dropdownList(
+        ArrayHelper::map(RoadSectionType::find()->all(), 'road_section_type_id', 'road_section_type_name'))->label('Road Section Type')
+    ?>
 
-    <?= $form->field($model, 'start_depot_id')->textInput() ?>
+    <?= $form->field($model, 'start_depot_id')->dropdownList(
+        ArrayHelper::map(Depot::find()->all(), 'depot_id', 'name'))->label('Start Depot')
+    ?>
 
-    <?= $form->field($model, 'end_depot_id')->textInput() ?>
+    <?= $form->field($model, 'end_depot_id')->dropdownList(
+        ArrayHelper::map(Depot::find()->all(), 'depot_id', 'name'))->label('End Depot')
+    ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

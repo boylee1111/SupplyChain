@@ -18,8 +18,7 @@ use Yii;
  * @property ClientVendor[] $clientVendors
  * @property Client[] $clients
  * @property Station[] $stations
- * @property Vendor $vendorType
- * @property Vendor[] $vendors
+ * @property VendorType $vendorType
  */
 class Vendor extends \yii\db\ActiveRecord
 {
@@ -89,14 +88,6 @@ class Vendor extends \yii\db\ActiveRecord
      */
     public function getVendorType()
     {
-        return $this->hasOne(Vendor::className(), ['vendor_id' => 'vendor_type_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getVendors()
-    {
-        return $this->hasMany(Vendor::className(), ['vendor_type_id' => 'vendor_id']);
+        return $this->hasOne(VendorType::className(), ['vendor_type_id' => 'vendor_type_id']);
     }
 }

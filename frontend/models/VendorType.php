@@ -9,6 +9,8 @@ use Yii;
  *
  * @property integer $vendor_type_id
  * @property string $vendor_type_name
+ *
+ * @property Vendor[] $vendors
  */
 class VendorType extends \yii\db\ActiveRecord
 {
@@ -26,6 +28,7 @@ class VendorType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['vendor_type_name'], 'required'],
             [['vendor_type_name'], 'string', 'max' => 255]
         ];
     }
@@ -39,5 +42,13 @@ class VendorType extends \yii\db\ActiveRecord
             'vendor_type_id' => 'Vendor Type ID',
             'vendor_type_name' => 'Vendor Type Name',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVendors()
+    {
+        return $this->hasMany(Vendor::className(), ['vendor_type_id' => 'vendor_type_id']);
     }
 }

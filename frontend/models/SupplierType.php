@@ -9,6 +9,8 @@ use Yii;
  *
  * @property integer $supplier_type_id
  * @property string $supplier_type_name
+ *
+ * @property Supplier[] $suppliers
  */
 class SupplierType extends \yii\db\ActiveRecord
 {
@@ -26,6 +28,7 @@ class SupplierType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['supplier_type_name'], 'required'],
             [['supplier_type_name'], 'string', 'max' => 255]
         ];
     }
@@ -39,5 +42,13 @@ class SupplierType extends \yii\db\ActiveRecord
             'supplier_type_id' => 'Supplier Type ID',
             'supplier_type_name' => 'Supplier Type Name',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSuppliers()
+    {
+        return $this->hasMany(Supplier::className(), ['supplier_type_id' => 'supplier_type_id']);
     }
 }

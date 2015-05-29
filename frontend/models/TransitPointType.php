@@ -28,6 +28,7 @@ class TransitPointType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['transit_point_type_name'], 'required'],
             [['transit_point_type_name'], 'string', 'max' => 255]
         ];
     }

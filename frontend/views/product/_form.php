@@ -3,6 +3,11 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+use yii\helpers\ArrayHelper;
+use app\models\Currency;
+use app\models\Client;
+use app\models\Supplier;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Product */
 /* @var $form yii\widgets\ActiveForm */
@@ -30,7 +35,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'amount')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'currency_id')->textInput() ?>
+    <?= $form->field($model, 'currency_id')->dropdownList(
+        ArrayHelper::map(Currency::find()->all(), 'currency_id', 'currency_name'))->label("Currency")
+    ?>
 
     <?= $form->field($model, 'minimum_stock')->textInput(['maxlength' => true]) ?>
 
@@ -38,9 +45,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'remarks')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'client_id')->textInput() ?>
+    <?= $form->field($model, 'client_id')->dropdownList(
+        ArrayHelper::map(Client::find()->all(), 'client_id', 'primary_name'))->label("Client")
+    ?>
 
-    <?= $form->field($model, 'supplier_id')->textInput() ?>
+    <?= $form->field($model, 'supplier_id')->dropdownList(
+        ArrayHelper::map(Supplier::find()->all(), 'supplier_id', 'primary_name'))->label('Supplier')
+    ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

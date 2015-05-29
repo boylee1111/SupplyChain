@@ -14,8 +14,8 @@ use Yii;
  * @property integer $end_depot_id
  * @property string $requirement_path
  *
- * @property RoadSection $startDepot
  * @property Depot $endDepot
+ * @property RoadSection $startDepot
  * @property RequirementPassDepot[] $requirementPassDepots
  * @property Depot[] $depots
  */
@@ -37,7 +37,7 @@ class Requirement extends \yii\db\ActiveRecord
         return [
             [['requirement_time_limit', 'requirement_cost'], 'number'],
             [['start_depot_id', 'end_depot_id'], 'integer'],
-            [['requirement_path'], 'string', 'max' => 255]
+            [['requirement_path'], 'string']
         ];
     }
 
@@ -59,17 +59,17 @@ class Requirement extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStartDepot()
+    public function getEndDepot()
     {
-        return $this->hasOne(RoadSection::className(), ['road_section_id' => 'start_depot_id']);
+        return $this->hasOne(Depot::className(), ['depot_id' => 'end_depot_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getEndDepot()
+    public function getStartDepot()
     {
-        return $this->hasOne(Depot::className(), ['depot_id' => 'end_depot_id']);
+        return $this->hasOne(RoadSection::className(), ['road_section_id' => 'start_depot_id']);
     }
 
     /**

@@ -9,6 +9,8 @@ use Yii;
  *
  * @property integer $road_section_type_id
  * @property string $road_section_type_name
+ *
+ * @property RoadSection[] $roadSections
  */
 class RoadSectionType extends \yii\db\ActiveRecord
 {
@@ -40,5 +42,13 @@ class RoadSectionType extends \yii\db\ActiveRecord
             'road_section_type_id' => 'Road Section Type ID',
             'road_section_type_name' => 'Road Section Type Name',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRoadSections()
+    {
+        return $this->hasMany(RoadSection::className(), ['road_section_type_id' => 'road_section_type_id']);
     }
 }

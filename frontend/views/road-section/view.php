@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'road_section_id',
+            // 'road_section_id',
             'serial_number',
             'road_section_name',
             'time_cost',
@@ -38,9 +38,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'minimum_volume_limit',
             'maximum_volume_limit',
             'remarks',
-            'road_section_type_id',
-            'start_depot_id',
-            'end_depot_id',
+            'roadSectionType.road_section_type_name',
+            'startDepot.name',
+            'endDepot.name',
         ],
     ]) ?>
 

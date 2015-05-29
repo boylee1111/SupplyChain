@@ -28,6 +28,7 @@ class FactoryType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['factory_type_name'], 'required'],
             [['factory_type_name'], 'string', 'max' => 255]
         ];
     }

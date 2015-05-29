@@ -22,8 +22,7 @@ use Yii;
  * @property integer $end_depot_id
  *
  * @property Requirement[] $requirements
- * @property RoadSection $roadSectionType
- * @property RoadSection[] $roadSections
+ * @property RoadSectionType $roadSectionType
  * @property Depot $endDepot
  * @property Depot $startDepot
  * @property Transportation[] $transportations
@@ -87,15 +86,7 @@ class RoadSection extends \yii\db\ActiveRecord
      */
     public function getRoadSectionType()
     {
-        return $this->hasOne(RoadSection::className(), ['road_section_id' => 'road_section_type_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRoadSections()
-    {
-        return $this->hasMany(RoadSection::className(), ['road_section_type_id' => 'road_section_id']);
+        return $this->hasOne(RoadSectionType::className(), ['road_section_type_id' => 'road_section_type_id']);
     }
 
     /**
