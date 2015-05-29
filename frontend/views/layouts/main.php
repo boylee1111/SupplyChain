@@ -26,7 +26,7 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
             NavBar::begin([
-                'brandLabel' => 'My Company',
+                'brandLabel' => 'Matrox',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
@@ -36,6 +36,18 @@ AppAsset::register($this);
                 ['label' => 'Home', 'url' => ['/site/index']],
                 ['label' => 'About', 'url' => ['/site/about']],
                 ['label' => 'Contact', 'url' => ['/site/contact']],
+                [
+                    'label' => 'Procurement',
+                    'items' => [
+                        ['label' => 'Supplier', 'url' => ['/supplier']],
+                        ['label' => 'Product', 'url' => ['/product']],
+                        '<li class="divider"></li>',
+                        '<li class="dropdown-header">Purchasing</li>',
+                        ['label' => 'Apply', 'url' => '#'],
+                        ['label' => 'Confirmation', 'url' => '#'],
+                        ['label' => 'Warehousing', 'url' => '#'],
+                    ],
+                ],
             ];
             if (Yii::$app->user->isGuest) {
                 $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
@@ -65,7 +77,7 @@ AppAsset::register($this);
 
     <footer class="footer">
         <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Matrox <?= date('Y') ?></p>
         <p class="pull-right"><?= Yii::powered() ?></p>
         </div>
     </footer>

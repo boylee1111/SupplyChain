@@ -11,12 +11,14 @@ use Yii;
  * @property string $primary_name
  * @property string $secondary_name
  * @property string $short_name
+ * @property integer $product_type_id
  * @property string $length
  * @property string $width
  * @property string $height
  * @property string $volume
  * @property string $weight
  * @property string $amount
+ * @property boolean $is_broken
  * @property integer $currency_id
  * @property string $minimum_stock
  * @property string $maximum_stock
@@ -24,8 +26,9 @@ use Yii;
  * @property integer $client_id
  * @property integer $supplier_id
  *
- * @property Currency $currency
  * @property Client $client
+ * @property Currency $currency
+ * @property ProductType $productType
  * @property Supplier $supplier
  */
 class Product extends \yii\db\ActiveRecord
@@ -44,9 +47,10 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['primary_name', 'currency_id', 'client_id', 'supplier_id'], 'required'],
+            [['primary_name', 'product_type_id', 'currency_id', 'client_id', 'supplier_id'], 'required'],
+            [['product_type_id', 'currency_id', 'client_id', 'supplier_id'], 'integer'],
             [['length', 'width', 'height', 'volume', 'weight', 'amount', 'minimum_stock', 'maximum_stock'], 'number'],
-            [['currency_id', 'client_id', 'supplier_id'], 'integer'],
+            [['is_broken'], 'boolean'],
             [['primary_name', 'secondary_name', 'short_name'], 'string', 'max' => 255],
             [['remarks'], 'string', 'max' => 1000]
         ];
@@ -62,12 +66,14 @@ class Product extends \yii\db\ActiveRecord
             'primary_name' => 'Primary Name',
             'secondary_name' => 'Secondary Name',
             'short_name' => 'Short Name',
+            'product_type_id' => 'Product Type ID',
             'length' => 'Length',
             'width' => 'Width',
             'height' => 'Height',
             'volume' => 'Volume',
             'weight' => 'Weight',
             'amount' => 'Amount',
+            'is_broken' => 'Is Broken',
             'currency_id' => 'Currency ID',
             'minimum_stock' => 'Minimum Stock',
             'maximum_stock' => 'Maximum Stock',
@@ -75,6 +81,14 @@ class Product extends \yii\db\ActiveRecord
             'client_id' => 'Client ID',
             'supplier_id' => 'Supplier ID',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getClient()
+    {
+        return $this->hasOne(Client::className(), ['client_id' => 'client_id']);
     }
 
     /**
@@ -88,9 +102,9 @@ class Product extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getClient()
+    public function getProductType()
     {
-        return $this->hasOne(Client::className(), ['client_id' => 'client_id']);
+        return $this->hasOne(ProductType::className(), ['product_type_id' => 'product_type_id']);
     }
 
     /**
