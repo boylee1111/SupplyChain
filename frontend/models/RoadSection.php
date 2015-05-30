@@ -47,7 +47,8 @@ class RoadSection extends \yii\db\ActiveRecord
             [['time_cost', 'basic_cost', 'volume_based_cost', 'weight_based_cost', 'minimum_volume_limit', 'maximum_volume_limit'], 'number'],
             [['road_section_type_id', 'start_depot_id', 'end_depot_id'], 'integer'],
             [['serial_number', 'road_section_name'], 'string', 'max' => 255],
-            [['remarks'], 'string', 'max' => 1000]
+            [['remarks'], 'string', 'max' => 1000],
+            ['end_depot_id', 'compare', 'compareAttribute' => 'start_depot_id', 'operator' => '!=', 'message' => 'End depot must not be the same as start depot.']
         ];
     }
 

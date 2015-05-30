@@ -36,6 +36,7 @@ class Requirement extends \yii\db\ActiveRecord
     {
         return [
             [['requirement_time_limit', 'requirement_cost'], 'number'],
+            [['start_depot_id', 'end_depot_id'], 'required'],
             [['start_depot_id', 'end_depot_id'], 'integer'],
             [['requirement_path'], 'string']
         ];

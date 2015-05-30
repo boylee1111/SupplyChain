@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'requirement_cost',
             'start_depot_id',
             'end_depot_id',
-            // 'requirement_path',
+            // 'requirement_path:ntext',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
