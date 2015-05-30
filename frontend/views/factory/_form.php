@@ -29,7 +29,7 @@ use app\models\FactoryType;
     	ArrayHelper::map(FactoryType::find()->all(), 'factory_type_id', 'factory_type_name'))->label('Factory Type')
     ?>
 
-    <?= $form->field($model, 'remarks')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'remarks')->textArea(['maxlength' => true, 'rows' => 4]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

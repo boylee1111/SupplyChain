@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\TransitPoint */
 
-$this->title = 'Update Transit Point: ' . ' ' . $model->depot_id;
+$this->title = 'Update Transit Point: ' . ' ' . $model->depot->name;
 $this->params['breadcrumbs'][] = ['label' => 'Transit Points', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->depot_id, 'url' => ['view', 'id' => $model->depot_id]];
+$this->params['breadcrumbs'][] = ['label' => $model->depot->name, 'url' => ['view', 'id' => $model->depot_id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="transit-point-update">

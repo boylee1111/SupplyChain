@@ -19,8 +19,13 @@ class SupplierSearch extends Supplier
     {
         return [
             [['supplier_id', 'supplier_type_id'], 'integer'],
-            [['serial_number', 'primary_name', 'secondary_name', 'short_name', 'remarkds'], 'safe'],
+            [['serial_number', 'primary_name', 'secondary_name', 'short_name', 'remarkds', 'supplierType.supplier_type_name'], 'safe'],
         ];
+    }
+
+    public function attributes()
+    {
+        return array_merge(parent::attributes(), ['supplierType.supplier_type_name']);
     }
 
     /**
@@ -47,6 +52,13 @@ class SupplierSearch extends Supplier
             'query' => $query,
         ]);
 
+        $dataProvider->sort->attributes['supplierType.supplier_type_name'] = [
+            'asc' => ['supplier_type.supplier_type_name' => SORT_ASC],
+            'desc' => ['supplier_type.supplier_type_name' => SORT_DESC],
+        ];
+
+        $query->joinWith(['supplierType']);
+
         $this->load($params);
 
         if (!$this->validate()) {
@@ -64,7 +76,8 @@ class SupplierSearch extends Supplier
             ->andFilterWhere(['like', 'primary_name', $this->primary_name])
             ->andFilterWhere(['like', 'secondary_name', $this->secondary_name])
             ->andFilterWhere(['like', 'short_name', $this->short_name])
-            ->andFilterWhere(['like', 'remarkds', $this->remarkds]);
+            ->andFilterWhere(['like', 'remarkds', $this->remarkds])
+            ->andFilterWhere(['like', 'supplier_type_name', $this->getAttribute('supplierType.supplier_type_name')]);
 
         return $dataProvider;
     }

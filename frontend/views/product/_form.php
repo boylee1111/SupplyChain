@@ -50,7 +50,7 @@ use app\models\Supplier;
 
     <?= $form->field($model, 'maximum_stock')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'remarks')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'remarks')->textArea(['maxlength' => true, 'rows' => 4]) ?>
 
     <?= $form->field($model, 'client_id')->dropdownList(
         ArrayHelper::map(Client::find()->all(), 'client_id', 'primary_name'))->label('Client')

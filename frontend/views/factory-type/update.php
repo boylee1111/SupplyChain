@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\FactoryType */
 
-$this->title = 'Update Factory Type: ' . ' ' . $model->factory_type_id;
+$this->title = 'Update Factory Type: ' . ' ' . $model->factory_type_name;
 $this->params['breadcrumbs'][] = ['label' => 'Factory Types', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->factory_type_id, 'url' => ['view', 'id' => $model->factory_type_id]];
+$this->params['breadcrumbs'][] = ['label' => $model->factory_type_name, 'url' => ['view', 'id' => $model->factory_type_id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="factory-type-update">

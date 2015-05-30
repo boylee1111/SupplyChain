@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\RoadSectionType */
 
-$this->title = 'Update Road Section Type: ' . ' ' . $model->road_section_type_id;
+$this->title = 'Update Road Section Type: ' . ' ' . $model->road_section_type_name;
 $this->params['breadcrumbs'][] = ['label' => 'Road Section Types', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->road_section_type_id, 'url' => ['view', 'id' => $model->road_section_type_id]];
+$this->params['breadcrumbs'][] = ['label' => $model->road_section_type_name, 'url' => ['view', 'id' => $model->road_section_type_id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="road-section-type-update">

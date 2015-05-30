@@ -9,11 +9,21 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use frontend\services\IProductService;
+
 /**
  * ProductController implements the CRUD actions for Product model.
  */
 class ProductController extends Controller
 {
+    protected $productService;
+
+    public function __construct($id, $module, IProductService $productService, $config = [])
+    {
+        $this->productService = $productService;
+        parent::__construct($id, $module, $config);
+    }
+
     public function behaviors()
     {
         return [
@@ -63,8 +73,7 @@ class ProductController extends Controller
         $model = new Product();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->volume = $model->length * $model->width * $model->height;
-            $model->save();
+            $this->productService->calculateVolume($id);
             return $this->redirect(['view', 'id' => $model->product_id]);
         } else {
             return $this->render('create', [
@@ -84,8 +93,7 @@ class ProductController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->volume = $model->length * $model->width * $model->height;
-            $model->save();
+            $this->productService->calculateVolume($id);
             return $this->redirect(['view', 'id' => $model->product_id]);
         } else {
             return $this->render('update', [

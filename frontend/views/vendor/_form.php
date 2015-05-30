@@ -23,11 +23,11 @@ use app\models\VendorType;
 
     <?= $form->field($model, 'short_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'remarks')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'vendor_type_id')->dropdownList(
         ArrayHelper::map(VendorType::find()->all(), 'vendor_type_id', 'vendor_type_name'))->label('Vendor Type')
     ?>
+
+    <?= $form->field($model, 'remarks')->textArea(['maxlength' => true, 'rows' => 4]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

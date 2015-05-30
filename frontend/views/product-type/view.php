@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\ProductType */
 
-$this->title = $model->product_type_id;
+$this->title = $model->product_type_name;
 $this->params['breadcrumbs'][] = ['label' => 'Product Types', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

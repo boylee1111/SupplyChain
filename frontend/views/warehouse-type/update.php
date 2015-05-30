@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\WarehouseType */
 
-$this->title = 'Update Warehouse Type: ' . ' ' . $model->warehouse_type_id;
+$this->title = 'Update Warehouse Type: ' . ' ' . $model->warehouse_type_name;
 $this->params['breadcrumbs'][] = ['label' => 'Warehouse Types', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->warehouse_type_id, 'url' => ['view', 'id' => $model->warehouse_type_id]];
+$this->params['breadcrumbs'][] = ['label' => $model->vendor_type_name, 'url' => ['view', 'id' => $model->warehouse_type_id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="warehouse-type-update">

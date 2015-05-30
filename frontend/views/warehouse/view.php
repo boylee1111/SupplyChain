@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Warehouse */
 
-$this->title = $model->depot_id;
+$this->title = $model->depot->name;
 $this->params['breadcrumbs'][] = ['label' => 'Warehouses', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -40,7 +40,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'max_quantity_limit',
             'max_cost_limit',
             'remarks',
-            'warehouseType.warehouse_type_name',
+            [
+                'attribute' => 'warehouseType.warehouse_type_name',
+                'label' => 'Warehouse Type',
+            ],
         ],
     ]) ?>
 

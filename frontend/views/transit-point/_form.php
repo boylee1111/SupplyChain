@@ -29,7 +29,7 @@ use app\models\TransitPointType;
     	ArrayHelper::map(TransitPointType::find()->all(), 'transit_point_type_id', 'transit_point_type_name'))->label('Transit Point Type')
     ?>
 
-    <?= $form->field($model, 'remarks')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'remarks')->textArea(['maxlength' => true, 'rows' => 4]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

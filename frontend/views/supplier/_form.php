@@ -23,7 +23,7 @@ use app\models\SupplierType;
 
     <?= $form->field($model, 'short_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'remarkds')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'remarkds')->textArea(['maxlength' => true, 'rows' => 4]) ?>
 
     <?= $form->field($model, 'supplier_type_id')->dropdownList(
         ArrayHelper::map(SupplierType::find()->all(), 'supplier_type_id', 'supplier_type_name'))->label('Supplier Type')

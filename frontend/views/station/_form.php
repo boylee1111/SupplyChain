@@ -30,7 +30,7 @@ use app\models\Vendor;
     	ArrayHelper::map(StationType::find()->all(), 'station_type_id', 'station_type_name'))->label("Station Type")
     ?>
 
-    <?= $form->field($model, 'remarks')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'remarks')->textArea(['maxlength' => true, 'rows' => 4]) ?>
 
     <?= $form->field($model, 'vendor_id')->dropDownList(
     	ArrayHelper::map(Vendor::find()->all(), 'vendor_id', 'primary_name'))->label('Vendor')

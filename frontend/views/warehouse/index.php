@@ -35,7 +35,10 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'max_quantity_limit',
             // 'max_cost_limit',
             // 'remarks',
-            'warehouseType.warehouse_type_name',
+            [
+                'attribute' => 'warehouseType.warehouse_type_name',
+                'label' => 'Warehouse Type',
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

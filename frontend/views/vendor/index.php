@@ -31,7 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'secondary_name',
             'short_name',
             // 'remarks',
-            'vendorType.vendor_type_name',
+            [
+                'attribute' => 'vendorType.vendor_type_name',
+                'label' => "Vendor Type",
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

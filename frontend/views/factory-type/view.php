@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\FactoryType */
 
-$this->title = $model->factory_type_id;
+$this->title = $model->factory_type_name;
 $this->params['breadcrumbs'][] = ['label' => 'Factory Types', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

@@ -31,7 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'secondary_name',
             'short_name',
             // 'remarks',
-            'clientType.client_type_name',
+            [
+                'attribute' => 'clientType.client_type_name',
+                'label' => 'Client Type',
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

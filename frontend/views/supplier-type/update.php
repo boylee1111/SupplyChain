@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\SupplierType */
 
-$this->title = 'Update Supplier Type: ' . ' ' . $model->supplier_type_id;
+$this->title = 'Update Supplier Type: ' . ' ' . $model->supplier_type_name;
 $this->params['breadcrumbs'][] = ['label' => 'Supplier Types', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->supplier_type_id, 'url' => ['view', 'id' => $model->supplier_type_id]];
+$this->params['breadcrumbs'][] = ['label' => $model->supplier_type_name, 'url' => ['view', 'id' => $model->supplier_type_id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="supplier-type-update">

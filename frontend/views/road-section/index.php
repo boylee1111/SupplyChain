@@ -34,7 +34,10 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'minimum_volume_limit',
             // 'maximum_volume_limit',
             // 'remarks',
-            'roadSectionType.road_section_type_name',
+            [
+                'attribute' => 'roadSectionType.road_section_type_name',
+                'label' => 'Road Section Type',
+            ],
             // 'start_depot_id',
             // 'end_depot_id',
 

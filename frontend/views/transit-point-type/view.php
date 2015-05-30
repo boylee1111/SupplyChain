@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\TransitPointType */
 
-$this->title = $model->transit_point_type_id;
+$this->title = $model->transit_point_type_name;
 $this->params['breadcrumbs'][] = ['label' => 'Transit Point Types', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

@@ -29,7 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'depot.serial_number',
             'depot.name',
             'depot.short_name',
-            'transitPointType.transit_point_type_name',
+            [
+                'attribute' => 'transitPointType.transit_point_type_name',
+                'label' => 'Transit Point Type',
+            ],
             // 'remarks',
 
             ['class' => 'yii\grid\ActionColumn'],

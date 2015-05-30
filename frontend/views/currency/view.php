@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Currency */
 
-$this->title = $model->currency_id;
+$this->title = $model->currency_code;
 $this->params['breadcrumbs'][] = ['label' => 'Currencies', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

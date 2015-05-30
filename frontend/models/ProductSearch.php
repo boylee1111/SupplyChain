@@ -12,8 +12,6 @@ use app\models\Product;
  */
 class ProductSearch extends Product
 {
-    public $productTypeName;
-
     /**
      * @inheritdoc
      */
@@ -21,10 +19,15 @@ class ProductSearch extends Product
     {
         return [
             [['product_id', 'product_type_id', 'currency_id', 'client_id', 'supplier_id'], 'integer'],
-            [['serial_number', 'primary_name', 'secondary_name', 'short_name', 'remarks', 'productTypeName'], 'safe'],
+            [['serial_number', 'primary_name', 'secondary_name', 'short_name', 'remarks', 'productType.product_type_name'], 'safe'],
             [['length', 'width', 'height', 'volume', 'weight', 'amount', 'minimum_stock', 'maximum_stock'], 'number'],
             [['is_broken'], 'boolean'],
         ];
+    }
+
+    public function attributes()
+    {
+        return array_merge(parent::attributes(), ['productType.product_type_name']);
     }
 
     /**
@@ -50,6 +53,13 @@ class ProductSearch extends Product
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['productType.product_type_name'] = [
+            'asc' => ['product_type.product_type_name' => SORT_ASC],
+            'desc' => ['product_type.product_type_name' => SORT_DESC],
+        ];
+
+        $query->joinWith(['productType']);
 
         $this->load($params);
 
@@ -80,7 +90,8 @@ class ProductSearch extends Product
             ->andFilterWhere(['like', 'primary_name', $this->primary_name])
             ->andFilterWhere(['like', 'secondary_name', $this->secondary_name])
             ->andFilterWhere(['like', 'short_name', $this->short_name])
-            ->andFilterWhere(['like', 'remarks', $this->remarks]);
+            ->andFilterWhere(['like', 'remarks', $this->remarks])
+            ->andFilterWhere(['like', 'product_type.product_type_name', $this->getAttribute('productType.product_type_name')]);
 
         return $dataProvider;
     }

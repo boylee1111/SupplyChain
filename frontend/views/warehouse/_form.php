@@ -39,7 +39,7 @@ use app\models\WarehouseType;
         ArrayHelper::map(WarehouseType::find()->all(), 'warehouse_type_id', 'warehouse_type_name'))->label('Warehouse Type')
     ?>
 
-    <?= $form->field($model, 'remarks')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'remarks')->textArea(['maxlength' => true, 'rows' => 4]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

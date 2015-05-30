@@ -20,8 +20,19 @@ class WarehouseSearch extends Warehouse
         return [
             [['depot_id', 'warehouse_type_id'], 'integer'],
             [['area', 'rent', 'summary_salary', 'max_quantity_limit', 'max_cost_limit'], 'number'],
-            [['remarks'], 'safe'],
+            [['remarks', 'depot.name', 'depot.short_name', 'warehouseType.warehouse_type_name'], 'safe'],
         ];
+    }
+
+    public function attributes()
+    {
+        return array_merge(parent::attributes(),
+            [
+                'depot.serial_number',
+                'depot.name', 
+                'depot.short_name', 
+                'warehouseType.warehouse_type_name',
+            ]);
     }
 
     /**
@@ -48,6 +59,25 @@ class WarehouseSearch extends Warehouse
             'query' => $query,
         ]);
 
+        $dataProvider->sort->attributes['depot.serial_number'] = [
+            'asc' => ['depot.serial_number' => SORT_ASC],
+            'desc' => ['depot.serial_number' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['depot.name'] = [
+            'asc' => ['depot.name' => SORT_ASC],
+            'desc' => ['depot.name' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['depot.short_name'] = [
+            'asc' => ['depot.short_name' => SORT_ASC],
+            'desc' => ['depot.short_name' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['warehouseType.warehouse_type_name'] = [
+            'asc' => ['warehouse_type.warehouse_type_name' => SORT_ASC],
+            'desc' => ['warehouse_type.warehouse_type_name' => SORT_DESC],
+        ];
+
+        $query->joinWith(['warehouseType', 'depot']);
+
         $this->load($params);
 
         if (!$this->validate()) {
@@ -66,7 +96,11 @@ class WarehouseSearch extends Warehouse
             'warehouse_type_id' => $this->warehouse_type_id,
         ]);
 
-        $query->andFilterWhere(['like', 'remarks', $this->remarks]);
+        $query->andFilterWhere(['like', 'remarks', $this->remarks])
+            ->andFilterWhere(['like', 'depot.serial_number', $this->getAttribute('depot.serial_number')])
+            ->andFilterWhere(['like', 'depot.name', $this->getAttribute('depot.name')])
+            ->andFilterWhere(['like', 'depot.short_name', $this->getAttribute('depot.short_name')])
+            ->andFilterWhere(['like', 'warehouse_type.warehouse_type_name', $this->getAttribute('warehouseType.warehouse_type_name')]);
 
         return $dataProvider;
     }

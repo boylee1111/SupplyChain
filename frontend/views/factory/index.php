@@ -29,7 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'depot.serial_number',
             'depot.name',
             'depot.short_name',
-            'factoryType.factory_type_name',
+            [
+                'attribute' => 'factoryType.factory_type_name',
+                'label' => 'Factory Type',
+            ],
             // 'remarks',
 
             ['class' => 'yii\grid\ActionColumn'],

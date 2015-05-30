@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Station */
 
-$this->title = $model->depot_id;
+$this->title = $model->depot->name;
 $this->params['breadcrumbs'][] = ['label' => 'Stations', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -34,9 +34,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'depot.short_name',
             'depot.longitude',
             'depot.altitude',
-            'stationType.station_type_name',
+            [
+                'attribute' => 'stationType.station_type_name',
+                'label' => 'Station Type'
+            ],
             'remarks',
-            'vendor.primary_name',
+            [
+                'attribute' => 'vendor.primary_name',
+                'label' => 'Vendor'
+            ],
         ],
     ]) ?>
 

@@ -19,8 +19,13 @@ class VendorSearch extends Vendor
     {
         return [
             [['vendor_id', 'vendor_type_id'], 'integer'],
-            [['serial_number', 'primary_name', 'secondary_name', 'short_name', 'remarks'], 'safe'],
+            [['serial_number', 'primary_name', 'secondary_name', 'short_name', 'remarks', 'vendorType.vendor_type_name'], 'safe'],
         ];
+    }
+
+    public function attributes()
+    {
+        return array_merge(parent::attributes(), ['vendorType.vendor_type_name']);
     }
 
     /**
@@ -47,6 +52,13 @@ class VendorSearch extends Vendor
             'query' => $query,
         ]);
 
+        $dataProvider->sort->attributes['vendorType.vendor_type_name'] = [
+            'asc' => ['vendor_type.vendor_type_name' => SORT_ASC],
+            'desc' => ['vendor_type.vendor_type_name' => SORT_DESC],
+        ];
+
+        $query->joinWith(['vendorType']);
+
         $this->load($params);
 
         if (!$this->validate()) {
@@ -64,7 +76,8 @@ class VendorSearch extends Vendor
             ->andFilterWhere(['like', 'primary_name', $this->primary_name])
             ->andFilterWhere(['like', 'secondary_name', $this->secondary_name])
             ->andFilterWhere(['like', 'short_name', $this->short_name])
-            ->andFilterWhere(['like', 'remarks', $this->remarks]);
+            ->andFilterWhere(['like', 'remarks', $this->remarks])
+            ->andFilterWhere(['like', 'vendor_type.vendor_type_name', $this->getAttribute('vendorType.vendor_type_name')]);
 
         return $dataProvider;
     }

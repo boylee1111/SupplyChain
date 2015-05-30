@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\StationType */
 
-$this->title = $model->station_type_id;
+$this->title = $model->station_type_name;
 $this->params['breadcrumbs'][] = ['label' => 'Station Types', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

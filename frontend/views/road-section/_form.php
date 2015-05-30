@@ -32,7 +32,7 @@ use app\models\Depot;
 
     <?= $form->field($model, 'maximum_volume_limit')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'remarks')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'remarks')->textArea(['maxlength' => true, 'rows' => 4]) ?>
 
     <?= $form->field($model, 'road_section_type_id')->dropdownList(
         ArrayHelper::map(RoadSectionType::find()->all(), 'road_section_type_id', 'road_section_type_name'))->label('Road Section Type')
