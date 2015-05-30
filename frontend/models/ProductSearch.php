@@ -12,15 +12,18 @@ use app\models\Product;
  */
 class ProductSearch extends Product
 {
+    public $productTypeName;
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['product_id', 'currency_id', 'client_id', 'supplier_id'], 'integer'],
-            [['primary_name', 'secondary_name', 'short_name', 'remarks'], 'safe'],
+            [['product_id', 'product_type_id', 'currency_id', 'client_id', 'supplier_id'], 'integer'],
+            [['serial_number', 'primary_name', 'secondary_name', 'short_name', 'remarks', 'productTypeName'], 'safe'],
             [['length', 'width', 'height', 'volume', 'weight', 'amount', 'minimum_stock', 'maximum_stock'], 'number'],
+            [['is_broken'], 'boolean'],
         ];
     }
 
@@ -58,12 +61,14 @@ class ProductSearch extends Product
 
         $query->andFilterWhere([
             'product_id' => $this->product_id,
+            'product_type_id' => $this->product_type_id,
             'length' => $this->length,
             'width' => $this->width,
             'height' => $this->height,
             'volume' => $this->volume,
             'weight' => $this->weight,
             'amount' => $this->amount,
+            'is_broken' => $this->is_broken,
             'currency_id' => $this->currency_id,
             'minimum_stock' => $this->minimum_stock,
             'maximum_stock' => $this->maximum_stock,
@@ -71,7 +76,8 @@ class ProductSearch extends Product
             'supplier_id' => $this->supplier_id,
         ]);
 
-        $query->andFilterWhere(['like', 'primary_name', $this->primary_name])
+        $query->andFilterWhere(['like', 'serial_number', $this->serial_number])
+            ->andFilterWhere(['like', 'primary_name', $this->primary_name])
             ->andFilterWhere(['like', 'secondary_name', $this->secondary_name])
             ->andFilterWhere(['like', 'short_name', $this->short_name])
             ->andFilterWhere(['like', 'remarks', $this->remarks]);

@@ -10,12 +10,21 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 use app\models\Depot;
+use frontend\services\IFactoryService;
 
 /**
  * FactoryController implements the CRUD actions for Factory model.
  */
 class FactoryController extends Controller
 {
+    protected $factoryService;
+
+    public function __construct($id, $module, IFactoryService $factoryService, $config = [])
+    {
+        $this->factoryService = $factoryService;
+        parent::__construct($id, $module, $config);
+    }
+
     public function behaviors()
     {
         return [
@@ -107,15 +116,7 @@ class FactoryController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-        $depot = Depot::findOne($id);
-        foreach ($depot->getRoadSections()->all() as $roadSection) {
-            $roadSection->delete();
-        }
-        foreach ($depot->getRoadSections0()->all() as $roadSection) {
-            $roadSection->delete();
-        }
-        $depot->delete();
+        $this->factoryService->deleteFactory($id);
 
         return $this->redirect(['index']);
     }

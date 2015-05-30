@@ -63,6 +63,8 @@ class ProductController extends Controller
         $model = new Product();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->volume = $model->length * $model->width * $model->height;
+            $model->save();
             return $this->redirect(['view', 'id' => $model->product_id]);
         } else {
             return $this->render('create', [
@@ -82,6 +84,8 @@ class ProductController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->volume = $model->length * $model->width * $model->height;
+            $model->save();
             return $this->redirect(['view', 'id' => $model->product_id]);
         } else {
             return $this->render('update', [

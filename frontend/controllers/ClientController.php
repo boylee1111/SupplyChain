@@ -9,11 +9,21 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use frontend\services\IUserService;
+
 /**
  * ClientController implements the CRUD actions for Client model.
  */
 class ClientController extends Controller
 {
+    protected $userService;
+
+    public function __construct($id, $module, IUserService $userService, $config = [])
+    {
+        $this->userService = $userService;
+        parent::__construct($id, $module, $config);
+    }
+
     public function behaviors()
     {
         return [

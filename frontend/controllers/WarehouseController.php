@@ -10,12 +10,21 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 use app\models\Depot;
+use frontend\services\IWarehouseService;
 
 /**
  * WarehouseController implements the CRUD actions for Warehouse model.
  */
 class WarehouseController extends Controller
 {
+    protected $warehouseService;
+
+    public function __construct($id, $module, IWarehouseService $warehouseService, $config = [])
+    {
+        $this->warehouseService = $warehouseService;
+        parent::__construct($id, $module, $config);
+    }
+
     public function behaviors()
     {
         return [

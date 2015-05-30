@@ -36,6 +36,7 @@ class Client extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['serial_number'], 'unique'],
             [['serial_number', 'primary_name', 'client_type_id'], 'required'],
             [['client_type_id'], 'integer'],
             [['serial_number', 'primary_name', 'secondary_name', 'short_name'], 'string', 'max' => 255],

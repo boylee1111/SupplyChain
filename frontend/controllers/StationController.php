@@ -10,12 +10,21 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 use app\models\Depot;
+use frontend\services\IStationService;
 
 /**
  * StationController implements the CRUD actions for Station model.
  */
 class StationController extends Controller
 {
+    protected $stationService;
+
+    public function __construct($id, $module, IStationService $stationService, $config = [])
+    {
+        $this->stationService = $stationService;
+        parent::__construct($id, $module, $config);
+    }
+
     public function behaviors()
     {
         return [

@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 use yii\helpers\ArrayHelper;
+use app\models\ProductType;
 use app\models\Currency;
 use app\models\Client;
 use app\models\Supplier;
@@ -17,11 +18,17 @@ use app\models\Supplier;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'serial_number')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'primary_name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'secondary_name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'short_name')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'product_type_id')->dropdownList(
+        ArrayHelper::map(ProductType::find()->all(), 'product_type_id', 'product_type_name'))->label('Product Type')
+    ?>
 
     <?= $form->field($model, 'length')->textInput(['maxlength' => true]) ?>
 
@@ -29,14 +36,14 @@ use app\models\Supplier;
 
     <?= $form->field($model, 'height')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'volume')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'weight')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'amount')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'is_broken')->checkbox() ?>
+
     <?= $form->field($model, 'currency_id')->dropdownList(
-        ArrayHelper::map(Currency::find()->all(), 'currency_id', 'currency_name'))->label("Currency")
+        ArrayHelper::map(Currency::find()->all(), 'currency_id', 'currency_name'))->label('Currency')
     ?>
 
     <?= $form->field($model, 'minimum_stock')->textInput(['maxlength' => true]) ?>
@@ -46,7 +53,7 @@ use app\models\Supplier;
     <?= $form->field($model, 'remarks')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'client_id')->dropdownList(
-        ArrayHelper::map(Client::find()->all(), 'client_id', 'primary_name'))->label("Client")
+        ArrayHelper::map(Client::find()->all(), 'client_id', 'primary_name'))->label('Client')
     ?>
 
     <?= $form->field($model, 'supplier_id')->dropdownList(

@@ -29,6 +29,7 @@ class Currency extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['currency_code'], 'unique'],
             [['currency_code'], 'string', 'max' => 3],
             [['currency_name'], 'string', 'max' => 10]
         ];

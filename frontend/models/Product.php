@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "product".
  *
  * @property integer $product_id
+ * @property string $serial_number
  * @property string $primary_name
  * @property string $secondary_name
  * @property string $short_name
@@ -47,11 +48,11 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['primary_name', 'product_type_id', 'currency_id', 'client_id', 'supplier_id'], 'required'],
+            [['serial_number', 'primary_name', 'product_type_id', 'currency_id', 'client_id', 'supplier_id'], 'required'],
             [['product_type_id', 'currency_id', 'client_id', 'supplier_id'], 'integer'],
             [['length', 'width', 'height', 'volume', 'weight', 'amount', 'minimum_stock', 'maximum_stock'], 'number'],
             [['is_broken'], 'boolean'],
-            [['primary_name', 'secondary_name', 'short_name'], 'string', 'max' => 255],
+            [['serial_number', 'primary_name', 'secondary_name', 'short_name'], 'string', 'max' => 255],
             [['remarks'], 'string', 'max' => 1000]
         ];
     }
@@ -63,6 +64,7 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             'product_id' => 'Product ID',
+            'serial_number' => 'Serial Number',
             'primary_name' => 'Primary Name',
             'secondary_name' => 'Secondary Name',
             'short_name' => 'Short Name',

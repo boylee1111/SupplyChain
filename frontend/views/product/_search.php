@@ -17,13 +17,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'product_id') ?>
 
+    <?= $form->field($model, 'serial_number') ?>
+
     <?= $form->field($model, 'primary_name') ?>
 
     <?= $form->field($model, 'secondary_name') ?>
 
     <?= $form->field($model, 'short_name') ?>
 
-    <?= $form->field($model, 'length') ?>
+    <?php // echo $form->field($model, 'product_type_id') ?>
+
+    <?php // echo $form->field($model, 'length') ?>
 
     <?php // echo $form->field($model, 'width') ?>
 
@@ -34,6 +38,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'weight') ?>
 
     <?php // echo $form->field($model, 'amount') ?>
+
+    <?php // echo $form->field($model, 'is_broken')->checkbox() ?>
 
     <?php // echo $form->field($model, 'currency_id') ?>
 

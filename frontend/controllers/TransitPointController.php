@@ -10,12 +10,21 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 use app\models\Depot;
+use frontend\services\ITransitPointService;
 
 /**
  * TransitPointController implements the CRUD actions for TransitPoint model.
  */
 class TransitPointController extends Controller
 {
+    protected $transitPointService;
+
+    public function __construct($id, $module, ITransitPointService $transitPointService, $config = [])
+    {
+        $this->transitPointService = $transitPointService;
+        parent::__construct($id, $module, $config);
+    }
+
     public function behaviors()
     {
         return [
@@ -107,15 +116,7 @@ class TransitPointController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-        $depot = Depot::findOne($id);
-        foreach ($depot->getRoadSections()->all() as $roadSection) {
-            $roadSection->delete();
-        }
-        foreach ($depot->getRoadSections0()->all() as $roadSection) {
-            $roadSection->delete();
-        }
-        $depot->delete();
+        $this->transitPointService->deleteTransitPoint($id);
 
         return $this->redirect(['index']);
     }
