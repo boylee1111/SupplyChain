@@ -10,8 +10,8 @@ use Yii;
  * @property integer $requirement_id
  * @property integer $depot_id
  *
- * @property Requirement $requirement
  * @property Depot $depot
+ * @property Requirement $requirement
  */
 class RequirementPassDepot extends \yii\db\ActiveRecord
 {
@@ -48,16 +48,16 @@ class RequirementPassDepot extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRequirement()
+    public function getDepot()
     {
-        return $this->hasOne(Requirement::className(), ['requirement_id' => 'requirement_id']);
+        return $this->hasOne(Depot::className(), ['depot_id' => 'depot_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDepot()
+    public function getRequirement()
     {
-        return $this->hasOne(Depot::className(), ['depot_id' => 'depot_id']);
+        return $this->hasOne(Requirement::className(), ['requirement_id' => 'requirement_id']);
     }
 }

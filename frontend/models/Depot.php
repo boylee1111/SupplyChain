@@ -17,8 +17,9 @@ use Yii;
  *
  * @property Factory $factory
  * @property Requirement[] $requirements
- * @property RequirementPassDepot[] $requirementPassDepots
  * @property Requirement[] $requirements0
+ * @property RequirementPassDepot[] $requirementPassDepots
+ * @property Requirement[] $requirements1
  * @property RoadSection[] $roadSections
  * @property RoadSection[] $roadSections0
  * @property Station $station
@@ -41,7 +42,7 @@ class Depot extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['serial_number'], 'unique'],
+            [['serial_number'], 'unique'], 
             [['serial_number', 'name'], 'required'],
             [['longitude', 'altitude'], 'number'],
             [['status'], 'integer'],
@@ -78,6 +79,14 @@ class Depot extends \yii\db\ActiveRecord
      */
     public function getRequirements()
     {
+        return $this->hasMany(Requirement::className(), ['start_depot_id' => 'depot_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRequirements0()
+    {
         return $this->hasMany(Requirement::className(), ['end_depot_id' => 'depot_id']);
     }
 
@@ -92,7 +101,7 @@ class Depot extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRequirements0()
+    public function getRequirements1()
     {
         return $this->hasMany(Requirement::className(), ['requirement_id' => 'requirement_id'])->viaTable('requirement_pass_depot', ['depot_id' => 'depot_id']);
     }

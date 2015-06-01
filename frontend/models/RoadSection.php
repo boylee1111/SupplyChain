@@ -21,9 +21,8 @@ use Yii;
  * @property integer $start_depot_id
  * @property integer $end_depot_id
  *
- * @property Requirement[] $requirements
- * @property RoadSectionType $roadSectionType
  * @property Depot $endDepot
+ * @property RoadSectionType $roadSectionType
  * @property Depot $startDepot
  * @property Transportation[] $transportations
  */
@@ -47,8 +46,8 @@ class RoadSection extends \yii\db\ActiveRecord
             [['time_cost', 'basic_cost', 'volume_based_cost', 'weight_based_cost', 'minimum_volume_limit', 'maximum_volume_limit'], 'number'],
             [['road_section_type_id', 'start_depot_id', 'end_depot_id'], 'integer'],
             [['serial_number', 'road_section_name'], 'string', 'max' => 255],
-            [['remarks'], 'string', 'max' => 1000],
-            ['end_depot_id', 'compare', 'compareAttribute' => 'start_depot_id', 'operator' => '!=', 'message' => 'End depot must not be the same as start depot.']
+            ['end_depot_id', 'compare', 'compareAttribute' => 'start_depot_id', 'operator' => '!=', 'message' => 'End depot must not be the same as start depot.'],
+            [['remarks'], 'string', 'max' => 1000]
         ];
     }
 
@@ -77,9 +76,9 @@ class RoadSection extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRequirements()
+    public function getEndDepot()
     {
-        return $this->hasMany(Requirement::className(), ['start_depot_id' => 'road_section_id']);
+        return $this->hasOne(Depot::className(), ['depot_id' => 'end_depot_id']);
     }
 
     /**
@@ -88,14 +87,6 @@ class RoadSection extends \yii\db\ActiveRecord
     public function getRoadSectionType()
     {
         return $this->hasOne(RoadSectionType::className(), ['road_section_type_id' => 'road_section_type_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getEndDepot()
-    {
-        return $this->hasOne(Depot::className(), ['depot_id' => 'end_depot_id']);
     }
 
     /**
