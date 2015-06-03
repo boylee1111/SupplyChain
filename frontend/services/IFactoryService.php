@@ -16,7 +16,7 @@ class FactoryService extends Object implements IFactoryService
 	function deleteFactory($id)
 	{
 		if (($model = Factory::findOne($id)) !== null) {
-			$model->delete();
+			// $model->delete();
 			$depot = Depot::findOne($id);
             foreach ($depot->getRoadSections()->all() as $roadSection) {
             	$roadSection->delete();
@@ -24,7 +24,9 @@ class FactoryService extends Object implements IFactoryService
         	foreach ($depot->getRoadSections0()->all() as $roadSection) {
             	$roadSection->delete();
         	}
-        	$depot->delete();
+        	// $depot->delete();
+            $depot->active = false;
+            $depot->save(); 
         } else {
         	throw new NotFoundHttpException('The requested page does not exist.');
         }

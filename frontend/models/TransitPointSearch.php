@@ -19,6 +19,7 @@ class TransitPointSearch extends TransitPoint
     {
         return [
             [['depot_id', 'transit_point_type_id'], 'integer'],
+            [['active'], 'boolean'],
             [['remarks', 'depot.serial_number', 'depot.name', 'depot.short_name', 'transitPointType.transit_point_type_name'], 'safe'],
         ];
     }
@@ -31,6 +32,7 @@ class TransitPointSearch extends TransitPoint
                 'depot.name', 
                 'depot.short_name', 
                 'transitPointType.transit_point_type_name',
+                'active',
             ]);
     }
 
@@ -88,6 +90,7 @@ class TransitPointSearch extends TransitPoint
         $query->andFilterWhere([
             'depot_id' => $this->depot_id,
             'transit_point_type_id' => $this->transit_point_type_id,
+            'active' => $this->active,
         ]);
 
         $query->andFilterWhere(['like', 'remarks', $this->remarks])

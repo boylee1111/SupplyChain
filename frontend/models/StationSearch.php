@@ -19,6 +19,7 @@ class StationSearch extends Station
     {
         return [
             [['depot_id', 'station_type_id', 'vendor_id'], 'integer'],
+            [['active'], 'boolean'],
             [['remarks', 'depot.serial_number', 'depot.name', 'depot.short_name', 'stationType.station_type_name', 'vendor.primary_name'], 'safe'],
         ];
     }
@@ -32,6 +33,7 @@ class StationSearch extends Station
                 'depot.short_name', 
                 'stationType.station_type_name',
                 'vendor.primary_name',
+                'active',
             ]);
     }
 
@@ -94,6 +96,7 @@ class StationSearch extends Station
             'depot_id' => $this->depot_id,
             'station_type_id' => $this->station_type_id,
             'vendor_id' => $this->vendor_id,
+            'active' => $this->active,
         ]);
 
         $query->andFilterWhere(['like', 'remarks', $this->remarks])

@@ -16,7 +16,7 @@ class WarehouseService extends Object implements IWarehouseService
 	function deleteWarehouse($id)
 	{
 		if (($model = Warehouse::findOne($id)) !== null) {
-			$model->delete();
+			// $model->delete();
 			$depot = Depot::findOne($id);
             foreach ($depot->getRoadSections()->all() as $roadSection) {
             	$roadSection->delete();
@@ -24,7 +24,9 @@ class WarehouseService extends Object implements IWarehouseService
         	foreach ($depot->getRoadSections0()->all() as $roadSection) {
             	$roadSection->delete();
         	}
-        	$depot->delete();
+        	// $depot->delete();
+            $depot->active = false;
+            $depot->save();
         } else {
         	throw new NotFoundHttpException('The requested page does not exist.');
         }

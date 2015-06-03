@@ -68,18 +68,14 @@ class ShippingOrderController extends Controller
     {
         $this->shippingOrderService->approveShippingOrder($id);
 
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        return $this->redirect(['view', 'id' => $this->findModel($id)->shipping_order_id]);
     }
 
     public function actionReject($id)
     {
         $this->shippingOrderService->rejectShippingOrder($id);
 
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        return $this->redirect(['view', 'id' => $this->findModel($id)->shipping_order_id]);
     }
 
     public function actionConfirmationList()
@@ -100,16 +96,15 @@ class ShippingOrderController extends Controller
         $model = $this->findModel($id);
 
         if (count(Yii::$app->request->post()) == 0) {
-            $model->shipping_date = date("Y-m-d");
+            $model->shipping_date = date("Y-m-d H:i:s");
             return $this->render('confirm', [
                 'model' => $model,
             ]);
         } else {
             $model->load(Yii::$app->request->post());
+            $model->save();
             $this->shippingOrderService->confirmShippingOrder($id);
-            return $this->render('view', [
-                'model' => $model,
-            ]);
+            return $this->redirect(['view', 'id' => $model->shipping_order_id]);
         }
     }
 
@@ -130,18 +125,14 @@ class ShippingOrderController extends Controller
     {
         $this->shippingOrderService->receivingShippingOrder($id);
 
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        return $this->redirect(['view', 'id' => $this->findModel($id)->shipping_order_id]);
     }
 
     public function actionDiscrepant($id)
     {
         $this->shippingOrderService->discrepantShippingOrder($id);
 
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        return $this->redirect(['view', 'id' => $this->findModel($id)->shipping_order_id]);
     }
 
     /**

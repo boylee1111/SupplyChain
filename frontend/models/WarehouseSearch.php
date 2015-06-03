@@ -19,6 +19,7 @@ class WarehouseSearch extends Warehouse
     {
         return [
             [['depot_id', 'warehouse_type_id'], 'integer'],
+            [['active'], 'boolean'],
             [['area', 'rent', 'summary_salary', 'max_quantity_limit', 'max_cost_limit'], 'number'],
             [['remarks', 'depot.name', 'depot.short_name', 'warehouseType.warehouse_type_name'], 'safe'],
         ];
@@ -32,6 +33,7 @@ class WarehouseSearch extends Warehouse
                 'depot.name', 
                 'depot.short_name', 
                 'warehouseType.warehouse_type_name',
+                'active',
             ]);
     }
 
@@ -94,6 +96,7 @@ class WarehouseSearch extends Warehouse
             'max_quantity_limit' => $this->max_quantity_limit,
             'max_cost_limit' => $this->max_cost_limit,
             'warehouse_type_id' => $this->warehouse_type_id,
+            'active' => $this->active,
         ]);
 
         $query->andFilterWhere(['like', 'remarks', $this->remarks])

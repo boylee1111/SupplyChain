@@ -44,7 +44,9 @@ class WarehouseController extends Controller
     public function actionIndex()
     {
         $searchModel = new WarehouseSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $queryParams = array_merge(array(), Yii::$app->request->queryParams);
+        $queryParams['WarehouseSearch']['active'] = 1;
+        $dataProvider = $searchModel->search($queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -59,9 +61,13 @@ class WarehouseController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if (Depot::isExist($id)) {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 
     /**

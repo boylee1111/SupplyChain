@@ -14,6 +14,7 @@ use Yii;
  * @property string $longitude
  * @property string $altitude
  * @property integer $status
+ * @property boolean $active
  *
  * @property Factory $factory
  * @property Requirement[] $requirements
@@ -22,6 +23,8 @@ use Yii;
  * @property Requirement[] $requirements1
  * @property RoadSection[] $roadSections
  * @property RoadSection[] $roadSections0
+ * @property ShippingOrder[] $shippingOrders
+ * @property ShippingOrder[] $shippingOrders0
  * @property Station $station
  * @property TransitPoint $transitPoint
  * @property Warehouse $warehouse
@@ -42,10 +45,11 @@ class Depot extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['serial_number'], 'unique'], 
+            [['serial_number'], 'unique'],
             [['serial_number', 'name'], 'required'],
             [['longitude', 'altitude'], 'number'],
             [['status'], 'integer'],
+            [['active'], 'boolean'],
             [['serial_number', 'name', 'short_name'], 'string', 'max' => 255]
         ];
     }
@@ -63,6 +67,7 @@ class Depot extends \yii\db\ActiveRecord
             'longitude' => 'Longitude',
             'altitude' => 'Altitude',
             'status' => 'Status',
+            'active' => 'Active',
         ];
     }
 
@@ -79,7 +84,7 @@ class Depot extends \yii\db\ActiveRecord
      */
     public function getRequirements()
     {
-        return $this->hasMany(Requirement::className(), ['start_depot_id' => 'depot_id']);
+        return $this->hasMany(Requirement::className(), ['end_depot_id' => 'depot_id']);
     }
 
     /**
@@ -87,7 +92,7 @@ class Depot extends \yii\db\ActiveRecord
      */
     public function getRequirements0()
     {
-        return $this->hasMany(Requirement::className(), ['end_depot_id' => 'depot_id']);
+        return $this->hasMany(Requirement::className(), ['start_depot_id' => 'depot_id']);
     }
 
     /**
@@ -125,6 +130,22 @@ class Depot extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getShippingOrders()
+    {
+        return $this->hasMany(ShippingOrder::className(), ['arrival_depot_id' => 'depot_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShippingOrders0()
+    {
+        return $this->hasMany(ShippingOrder::className(), ['depart_depot_id' => 'depot_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStation()
     {
         return $this->hasOne(Station::className(), ['depot_id' => 'depot_id']);
@@ -144,5 +165,13 @@ class Depot extends \yii\db\ActiveRecord
     public function getWarehouse()
     {
         return $this->hasOne(Warehouse::className(), ['depot_id' => 'depot_id']);
+    }
+
+    public static isExist($id)
+    {
+        if (($model = Depot::findOne($id)) !== null) {
+            return $model->active;
+        }
+        return false;
     }
 }

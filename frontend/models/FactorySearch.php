@@ -19,6 +19,7 @@ class FactorySearch extends Factory
     {
         return [
             [['depot_id', 'factory_type_id'], 'integer'],
+            [['active'], 'boolean'],
             [['remarks', 'depot.serial_number', 'depot.name', 'depot.short_name', 'factoryType.factory_type_name'], 'safe'],
         ];
     }
@@ -31,6 +32,7 @@ class FactorySearch extends Factory
                 'depot.name', 
                 'depot.short_name', 
                 'factoryType.factory_type_name',
+                'active',
             ]);
     }
 
@@ -88,6 +90,7 @@ class FactorySearch extends Factory
         $query->andFilterWhere([
             'depot_id' => $this->depot_id,
             'factory_type_id' => $this->factory_type_id,
+            'active' => $this->active,
         ]);
 
         $query->andFilterWhere(['like', 'remarks', $this->remarks])

@@ -21,6 +21,7 @@ class DepotSearch extends Depot
             [['depot_id', 'status'], 'integer'],
             [['serial_number', 'name', 'short_name'], 'safe'],
             [['longitude', 'altitude'], 'number'],
+            [['active'], 'boolean'],
         ];
     }
 
@@ -61,6 +62,7 @@ class DepotSearch extends Depot
             'longitude' => $this->longitude,
             'altitude' => $this->altitude,
             'status' => $this->status,
+            'active' => $this->active,
         ]);
 
         $query->andFilterWhere(['like', 'serial_number', $this->serial_number])
