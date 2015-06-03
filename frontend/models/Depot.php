@@ -167,7 +167,7 @@ class Depot extends \yii\db\ActiveRecord
         return $this->hasOne(Warehouse::className(), ['depot_id' => 'depot_id']);
     }
 
-    public static isExist($id)
+    public static function isDepotExist($id)
     {
         if (($model = Depot::findOne($id)) !== null) {
             return $model->active;

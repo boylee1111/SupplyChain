@@ -61,7 +61,7 @@ class WarehouseController extends Controller
      */
     public function actionView($id)
     {
-        if (Depot::isExist($id)) {
+        if (Depot::isDepotExist($id)) {
             return $this->render('view', [
                 'model' => $this->findModel($id),
             ]);

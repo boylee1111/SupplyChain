@@ -1,0 +1,31 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE client;
+TRUNCATE client_type;
+TRUNCATE client_vendor;
+TRUNCATE currency;
+TRUNCATE depot;
+TRUNCATE factory;
+TRUNCATE factory_type;
+TRUNCATE fault_rate_forecast;
+TRUNCATE fault_rate_forecast_data;
+TRUNCATE product;
+TRUNCATE product_type;
+TRUNCATE requirement;
+TRUNCATE requirement_pass_depot;
+TRUNCATE road_section;
+TRUNCATE road_section_type;
+TRUNCATE shipping_order;
+TRUNCATE station;
+TRUNCATE station_type;
+TRUNCATE supplier;
+TRUNCATE supplier_type;
+TRUNCATE transit_point;
+TRUNCATE transit_point_type;
+TRUNCATE transportation;
+TRUNCATE vendor;
+TRUNCATE vendor_type;
+TRUNCATE warehouse;
+TRUNCATE warehouse_type;
+
+SET FOREIGN_KEY_CHECKS = 1;
