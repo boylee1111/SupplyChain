@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\controllers;
+namespace frontend\controllers\api;
 
 use yii\rest\ActiveController;
 use yii\web\Response;
