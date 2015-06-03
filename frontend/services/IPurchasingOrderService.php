@@ -4,29 +4,29 @@ namespace frontend\services;
 
 use Yii;
 use yii\base\Object;
-use app\models\ShippingOrder;
+use app\models\Purchasing;
 use common\models\User;
 
-interface IShippingOrderService
+interface IPurchasingOrderService
 {
-	public function applyNewShippingOrder($id);
-	public function approveShippingOrder($id);
-	public function rejectShippingOrder($id);
-	public function confirmShippingOrder($id);
-	public function receivingShippingOrder($id);
-	public function discrepantShippingOrder($id);
+	public function applyNewPurchasingOrder($id);
+	public function approvePurchasingOrder($id);
+	public function rejectPurchasingOrder($id);
+	public function confirmPurchasingOrder($id);
+	public function receivingPurchasingOrder($id);
+	public function discrepantPurchasingOrder($id);
 }
 
-class ShippingOrderService extends Object implements IShippingOrderService
+class PurchasingOrderService extends Object implements IPurchasingOrderService
 {
-	function applyNewShippingOrder($id)
+	function applyNewPurchasingOrder($id)
 	{
 		$model = $this->findModel($id);
         $model->apply_date = date("Y-m-d H:i:s");
         $model->save();
 	}
 
-	function approveShippingOrder($id)
+	function approvePurchasingOrder($id)
 	{
 		$model = $this->findModel($id);
 		$model->status = 1;
@@ -34,7 +34,7 @@ class ShippingOrderService extends Object implements IShippingOrderService
 		$model->save();
 	}
 
-	function rejectShippingOrder($id)
+	function rejectPurchasingOrder($id)
 	{
 		$model = $this->findModel($id);
 		$model->status = 8;
@@ -46,26 +46,26 @@ class ShippingOrderService extends Object implements IShippingOrderService
 		Yii::$app->mailer->compose()
 			->setFrom(Yii::$app->params['systemEmail'])
 			->setTo($appliedUser->email)
-			->setSubject('Your application for shipping is rejected by'.$rejectUser->username)
+			->setSubject('Your application for purchasing is rejected by'.$rejectUser->username)
 			->setTextBody('This is auto sending, do not replay this email!')
 			->send();
 	}
 
-	function confirmShippingOrder($id)
+	function confirmPurchasingOrder($id)
 	{
 		$model = $this->findModel($id);
 		$model->status = 2;
 		$model->save();
 	}
 
-	public function receivingShippingOrder($id)
+	public function receivingPurchasingOrder($id)
 	{
 		$model = $this->findModel($id);
 		$model->status = 3;
 		$model->save();
 	}
 
-	public function discrepantShippingOrder($id)
+	public function discrepantPurchasingOrder($id)
 	{
 		$model = $this->findModel($id);
 		$model->status = 9;
@@ -76,14 +76,14 @@ class ShippingOrderService extends Object implements IShippingOrderService
 		Yii::$app->mailer->compose()
 			->setFrom(Yii::$app->params['systemEmail'])
 			->setTo($appliedUser->email)
-			->setSubject('Your application for shipping is mark as discrepancy by'.$discrepantUser->username)
+			->setSubject('Your application for purchasing is mark as discrepancy by'.$discrepantUser->username)
 			->setTextBody('This is auto sending, do not replay this email!')
 			->send();
 	}
 
 	protected function findModel($id)
     {
-        if (($model = ShippingOrder::findOne($id)) !== null) {
+        if (($model = PurchasingOrder::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
