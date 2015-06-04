@@ -51,7 +51,7 @@ class ShippingOrder extends \yii\db\ActiveRecord
             [['apply_user_id', 'approval_user_id', 'product_id', 'quantity', 'depart_depot_id', 'arrival_depot_id', 'status'], 'integer'],
             [['apply_date', 'expect_depart_date', 'shipping_date', 'expect_arrival_date', 'arrival_date'], 'safe'],
             [['shipping_order_code'], 'string', 'max' => 45],
-             ['arrival_depot_id', 'compare', 'compareAttribute' => 'depart_depot_id', 'operator' => '!=', 'message' => 'Destination must not be the same as departure depot.'],
+            ['arrival_depot_id', 'compare', 'compareAttribute' => 'depart_depot_id', 'operator' => '!=', 'message' => 'Destination must not be the same as departure depot.'],
             [['remarks'], 'string', 'max' => 1000]
         ];
     }
@@ -140,7 +140,7 @@ class ShippingOrder extends \yii\db\ActiveRecord
                 $description = "closed";
                 break;
             case 8:
-                $description = "reject";
+                $description = "rejected";
                 break;
             case 9:
                 $description = "discrepancy";

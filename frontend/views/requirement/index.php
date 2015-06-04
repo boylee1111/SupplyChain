@@ -26,11 +26,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'requirement_id',
-            'requirement_time_limit',
-            'requirement_cost',
-            'start_depot_id',
-            'end_depot_id',
-            // 'requirement_path:ntext',
+            // 'requirement_time_limit',
+            // 'requirement_cost',
+            // 'start_depot_id',
+            // 'end_depot_id',
+            'requirement_path:ntext',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

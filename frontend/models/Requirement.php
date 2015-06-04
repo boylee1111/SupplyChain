@@ -38,6 +38,7 @@ class Requirement extends \yii\db\ActiveRecord
             [['requirement_time_limit', 'requirement_cost'], 'number'],
             [['start_depot_id', 'end_depot_id'], 'required'],
             [['start_depot_id', 'end_depot_id'], 'integer'],
+            ['end_depot_id', 'compare', 'compareAttribute' => 'start_depot_id', 'operator' => '!=', 'message' => 'End depot must not be the same as start depot.'],
             [['requirement_path'], 'string']
         ];
     }
