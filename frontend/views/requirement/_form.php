@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 
 use yii\helpers\ArrayHelper;
 use app\models\Depot;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Requirement */
@@ -17,7 +18,7 @@ use app\models\Depot;
 
     <?= $form->field($model, 'requirement_time_limit')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'requirement_cost')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'requirement_cost')->textInput(['maxlength' => true])->label('Requirement Cost (0 or empty if unlimited)') ?>
 
     <?= $form->field($model, 'start_depot_id')->dropdownList(
         ArrayHelper::map(Depot::find()->all(), 'depot_id', 'name'))->label('Start Depot')
@@ -27,7 +28,16 @@ use app\models\Depot;
         ArrayHelper::map(Depot::find()->all(), 'depot_id', 'name'))->label('End Depot')
     ?>
 
-    <!--<?= $form->field($model, 'requirement_path')->textarea(['rows' => 6]) ?>-->
+    <?= $form->field($model, 'depots')->widget(Select2::className(), [
+        'data' => ArrayHelper::map(Depot::find()->all(), 'depot_id', 'name'),
+        'options' => [
+            'placeholder' => 'Select the pass depots ...',
+            'multiple' => true,
+        ],
+        'pluginOptions' => [
+            'allowClear' => true,
+        ]
+    ])?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

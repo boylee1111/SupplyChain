@@ -9,11 +9,22 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use app\models\Depot;
+use frontend\services\IRequirementService;
+
 /**
  * RequirementController implements the CRUD actions for Requirement model.
  */
 class RequirementController extends Controller
 {
+    protected $requirementService;
+
+    public function __construct($id, $module, IRequirementService $requirementService, $config = [])
+    {
+        $this->requirementService = $requirementService;
+        parent::__construct($id, $module, $config);
+    }
+
     public function behaviors()
     {
         return [
@@ -63,6 +74,7 @@ class RequirementController extends Controller
         $model = new Requirement();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $this->requirementService->savePassDepots($model->requirement_id, Yii::$app->request->post()['Requirement']['depots']);
             return $this->redirect(['view', 'id' => $model->requirement_id]);
         } else {
             return $this->render('create', [
@@ -98,7 +110,7 @@ class RequirementController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->requirementService->deleteRequirement($id);
 
         return $this->redirect(['index']);
     }

@@ -28,7 +28,7 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
             NavBar::begin([
-                'brandLabel' => 'Matrox',
+                'brandLabel' => 'Maitrox',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
@@ -99,9 +99,8 @@ AppAsset::register($this);
                         ['label' => 'Receiving Confirmation', 'url' => ['/shipping-order/receiving-list']],
                         '<li class="divider"></li>',
                         '<li class="dropdown-header">Transportation Planning</li>',
-                        ['label' => 'Requirement Apply', 'url' => '#'],
-                        ['label' => 'Planning Approval', 'url' => '#'],
-                        ['label' => 'Executing Confirmation', 'url' => '#'],
+                        ['label' => 'Requirements', 'url' => ['/requirement']],
+                        ['label' => 'Requirement Create', 'url' => ['/requirement/create']],
                     ],
                 ],
                 [
@@ -169,7 +168,7 @@ AppAsset::register($this);
 
     <footer class="footer">
         <div class="container">
-        <p class="pull-left">&copy; Matrox <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Maitrox <?= date('Y') ?></p>
         <p class="pull-right"></p>
         </div>
     </footer>
