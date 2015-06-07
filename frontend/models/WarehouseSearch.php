@@ -21,7 +21,7 @@ class WarehouseSearch extends Warehouse
             [['depot_id', 'warehouse_type_id'], 'integer'],
             [['active'], 'boolean'],
             [['area', 'rent', 'summary_salary', 'max_quantity_limit', 'max_cost_limit'], 'number'],
-            [['remarks', 'depot.name', 'depot.short_name', 'warehouseType.warehouse_type_name'], 'safe'],
+            [['remarks', 'depot.serial_number', 'depot.name', 'depot.short_name', 'warehouseType.warehouse_type_name'], 'safe'],
         ];
     }
 

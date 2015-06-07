@@ -74,7 +74,10 @@ class RequirementController extends Controller
         $model = new Requirement();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $this->requirementService->savePassDepots($model->requirement_id, Yii::$app->request->post()['Requirement']['depots']);
+            if (Yii::$app->request->post()['Requirement']['depots'] != null) {
+                $this->requirementService->savePassDepots($model->requirement_id, Yii::$app->request->post()['Requirement']['depots']);
+            }
+            $this->requirementService->calculatePath($model->requirement_id);
             return $this->redirect(['view', 'id' => $model->requirement_id]);
         } else {
             return $this->render('create', [

@@ -1,10 +1,10 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
 
 use yii\helpers\ArrayHelper;
 use app\models\WarehouseType;
+use kartik\form\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Warehouse */
@@ -13,7 +13,7 @@ use app\models\WarehouseType;
 
 <div class="warehouse-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_HORIZONTAL]); ?>
 
     <?= $form->field($depot, 'serial_number')->textInput(['maxlength' => true]) ?>
 

@@ -14,11 +14,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-    <br/>
 
-<!--     <p>
+    <p>
         <?= Html::a('Create Requirement', ['create'], ['class' => 'btn btn-success']) ?>
-    </p> -->
+    </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

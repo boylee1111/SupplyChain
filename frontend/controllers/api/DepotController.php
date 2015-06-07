@@ -4,16 +4,12 @@ namespace frontend\controllers\api;
 
 use yii\rest\ActiveController;
 use yii\web\Response;
+use yii\helpers\ArrayHelper;
 use app\models\Depot;
 
 class DepotController extends ActiveController
 {
 	public $modelClass = '\app\models\Depot';
-
-	// public $serializer = [
- //        'class' => 'yii\rest\Serializer',
- //        'collectionEnvelope' => 'items',
- //    ];
 
 	public function behaviors()
 	{
@@ -22,9 +18,12 @@ class DepotController extends ActiveController
 	    return $behaviors;
 	}
 
-	public function actionAll()
+	public function actionList()
 	{
-		return array_merge(['status' => 0], ['message' => 'success'], ['depot' => Depot::find()->all()]);
+		return array_merge(
+			['status' => 0],
+			['message' => 'success'],
+			['depots' => ArrayHelper::toArray(Depot::find()->all())]);
 	}
 
 	public function actionDetail($id)

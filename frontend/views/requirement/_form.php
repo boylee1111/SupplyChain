@@ -21,11 +21,11 @@ use kartik\select2\Select2;
     <?= $form->field($model, 'requirement_cost')->textInput(['maxlength' => true])->label('Requirement Cost (0 or empty if unlimited)') ?>
 
     <?= $form->field($model, 'start_depot_id')->dropdownList(
-        ArrayHelper::map(Depot::find()->all(), 'depot_id', 'name'))->label('Start Depot')
+        ArrayHelper::map(Depot::find()->all(), 'depot_id', 'name'), ['prompt' => 'Select the start depot'])->label('Start Depot')
     ?>
 
     <?= $form->field($model, 'end_depot_id')->dropdownList(
-        ArrayHelper::map(Depot::find()->all(), 'depot_id', 'name'))->label('End Depot')
+        ArrayHelper::map(Depot::find()->all(), 'depot_id', 'name'), ['prompt' => 'Select the end depot'])->label('End Depot')
     ?>
 
     <?= $form->field($model, 'depots')->widget(Select2::className(), [

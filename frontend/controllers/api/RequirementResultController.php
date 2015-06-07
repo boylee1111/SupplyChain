@@ -10,11 +10,6 @@ class RequirementResultController extends ActiveController
 {
 	public $modelClass = '\app\models\Requirement';
 
-	// public $serializer = [
- //        'class' => 'yii\rest\Serializer',
- //        'collectionEnvelope' => 'items',
- //    ];
-
 	public function behaviors()
 	{
 	    $behaviors = parent::behaviors();
