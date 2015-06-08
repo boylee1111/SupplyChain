@@ -14,10 +14,11 @@ use Yii;
  * @property integer $end_depot_id
  * @property string $requirement_path
  *
- * @property Depot $startDepot
  * @property Depot $endDepot
+ * @property Depot $startDepot
  * @property RequirementPassDepot[] $requirementPassDepots
  * @property Depot[] $depots
+ * @property RequirementResult[] $requirementResults
  */
 class Requirement extends \yii\db\ActiveRecord
 {
@@ -38,7 +39,7 @@ class Requirement extends \yii\db\ActiveRecord
             [['requirement_time_limit', 'requirement_cost'], 'number'],
             [['start_depot_id', 'end_depot_id'], 'required'],
             [['start_depot_id', 'end_depot_id'], 'integer'],
-            ['end_depot_id', 'compare', 'compareAttribute' => 'start_depot_id', 'operator' => '!=', 'message' => 'End depot must not be the same as start depot.'],
+            ['end_depot_id', 'compare', 'compareAttribute' => 'start_depot_id', 'operator' => '!=', 'message' => 'End depot must not be the same as start depot.'], 
             [['requirement_path'], 'string']
         ];
     }
@@ -61,17 +62,17 @@ class Requirement extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStartDepot()
+    public function getEndDepot()
     {
-        return $this->hasOne(Depot::className(), ['depot_id' => 'start_depot_id']);
+        return $this->hasOne(Depot::className(), ['depot_id' => 'end_depot_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getEndDepot()
+    public function getStartDepot()
     {
-        return $this->hasOne(Depot::className(), ['depot_id' => 'end_depot_id']);
+        return $this->hasOne(Depot::className(), ['depot_id' => 'start_depot_id']);
     }
 
     /**
@@ -88,5 +89,13 @@ class Requirement extends \yii\db\ActiveRecord
     public function getDepots()
     {
         return $this->hasMany(Depot::className(), ['depot_id' => 'depot_id'])->viaTable('requirement_pass_depot', ['requirement_id' => 'requirement_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRequirementResults()
+    {
+        return $this->hasMany(RequirementResult::className(), ['requirement_id' => 'requirement_id']);
     }
 }

@@ -24,4 +24,3 @@ class Depot
 		$this->name = $value;
 	}
 }
-?>

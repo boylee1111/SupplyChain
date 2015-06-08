@@ -7,6 +7,7 @@ use app\models\Depot;
 use app\models\RoadSection;
 use app\models\Requirement;
 use app\models\RequirementPassDepot;
+use app\models\RequirementResult;
 use app\models\transportation\Network;
 
 interface IRequirementService
@@ -93,11 +94,20 @@ class RequirementService extends Object implements IRequirementService
 	    for ($i = 0; $i < count($order->allpath); $i++) {
 			for ($j = 0; $j < count($order->alltrans[$i]); $j++) {
 				if ($requirement->requirement_time_limit < 0 || $requirement->requirement_time_limit < $order->alltrans[$i][$j][0]) continue;
+
+				$newResult = new RequirementResult();
+				$newResult->requirement_id = $requirement->requirement_id;
+				$newResult->result_time = $order->alltrans[$i][$j][0];
+				$newResult->result_cost = $order->alltrans[$i][$j][1];
 				$result = $result.' time:'.$order->alltrans[$i][$j][0].' cost:'.$order->alltrans[$i][$j][1].'  ';
+
+				$newResult->result_path = $network->depotList[$order->allpath[$i][0]]->name;
 				$result = $result.$network->depotList[$order->allpath[$i][0]]->name;
 				for ($k = 0; $k < count($order->alltrans[$i][$j])-2; $k++) {
+					$newResult->result_path = $newResult->result_path.'--'.$order->alltrans[$i][$j][$k + 2].'--'.$network->depotList[$order->allpath[$i][$k + 1]]->name;
 					$result = $result.'--'.$order->alltrans[$i][$j][$k + 2].'--'.$network->depotList[$order->allpath[$i][$k + 1]]->name;
 				}
+				$newResult->save();
 				$result = $result.PHP_EOL;
 			}	
 		}

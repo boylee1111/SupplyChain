@@ -2,6 +2,8 @@
 
 namespace app\models\transportation;
 
+use app\helpers\Stack;
+
 class Network
 {
 	var $depotNum;
@@ -14,7 +16,7 @@ class Network
 	public function __construct($_depotnum) {
 		$this->depotNum = $_depotnum;
 		$this->roadNum = 0;
-		$this->stack = new Stack($this->depotNum+1);
+		$this->stack = new Stack($this->depotNum + 1);
 		$this->depotList = array();
 		$this->roadList = array();
 		$this->link = array();
@@ -62,15 +64,15 @@ class Network
 		
 		$passNum = count($order->passId);
 		$passDepot[0] = $startId;
-		$passDepot[$passNum+1] = $endId;
+		$passDepot[$passNum + 1] = $endId;
 
 		for ($i = 0; $i < $passNum; $i++) {
-			$passDepot[$i+1] = $order->passId[$i];
+			$passDepot[$i + 1] = $order->passId[$i];
 		}
 
-		for ($i = 0; $i < $passNum+1; $i++) {
+		for ($i = 0; $i < $passNum + 1; $i++) {
 			$order->allChild[$i] = array();
-			$this->getPaths($passDepot[$i], -1, $passDepot[$i], $passDepot[$i+1], $order->allChild[$i]);
+			$this->getPaths($passDepot[$i], -1, $passDepot[$i], $passDepot[$i + 1], $order->allChild[$i]);
 			$this->stack->Reset();
 		}
 		$this->combine($order);		
@@ -102,7 +104,7 @@ class Network
 		
 	}	 
 	public function change(&$con, &$cur, $start, $end ){
-		if ($end >= $start && $cur[$end] == ($con[$end]-1)) {
+		if ($end >= $start && $cur[$end] == ($con[$end] - 1)) {
 			$cur[$end] = 0;
 			$this->change($con, $cur, $start, $end - 1);
 		} else if ($end >= 0) {
@@ -120,13 +122,10 @@ class Network
 			$i = 0;
 			$this->stack->Push($cur);
 	
-			if ($cur == $end)
-			{
+			if ($cur == $end) {
 				$this->savePath($start, $end, $pathChild);
 				return 1;
-			}
-			else
-			{
+			} else {
 				if ($i<count($this->depotList[$cur]->next)) {
 					$next = $this->depotList[$cur]->next[$i];
 				}
@@ -140,14 +139,13 @@ class Network
 						}
 						continue;
 					}
-					if ($this->getPaths($next, $cur, $start, $end,$pathChild))
-					{
+					if ($this->getPaths($next, $cur, $start, $end,$pathChild)) {
 						$this->stack->Pop();
 					}
 					$i++;
-					if ($i >= count($this->depotList[$cur]->next))
+					if ($i >= count($this->depotList[$cur]->next)) {
 						$next = -1;
-					else {
+					} else {
 						$next = $this->depotList[$cur]->next[$i];
 					}
 				}
@@ -155,8 +153,9 @@ class Network
 				$this->stack->Pop();
 				return 0;
 			}
-		} else
+		} else {
 			return 0;
+		}
 	}
 	
 	public function computeCost($order) {
@@ -178,13 +177,14 @@ class Network
 		$road = array();
 		$all = array();
 		$start;
-		$end; 
+		$end;
+		
 		for ($i = 0; $i < count($order->allpath[$pathi]) - 1; $i++) {
 			$start = $order->allpath[$pathi][$i];
-			$end = $order->allpath[$pathi][$i+1];
+			$end = $order->allpath[$pathi][$i + 1];
 			$road[$i] = $this->link[$start][$end];
 			$con[$i] = count($this->roadList[$road[$i]]->transportation);
-			$num*=$con[$i];
+			$num *= $con[$i];
 			$cur[$i] = 0;
 		}
 		$count = 0;
@@ -196,12 +196,14 @@ class Network
 			$cost = 0;
 			$time = 0;
 			for ($i = 0; $i < count($con); $i++) {
-				$order->alltrans[$pathi][$count][$i+2] = $this->roadList[$road[$i]]->transportation[$cur[$i]][0];
-				$time+=$this->roadList[$road[$i]]->transportation[$cur[$i]][1];
-				$cost+=$this->roadList[$road[$i]]->transportation[$cur[$i]][2];
+				$order->alltrans[$pathi][$count][$i + 2] = $this->roadList[$road[$i]]->transportation[$cur[$i]][0];
+				$time += $this->roadList[$road[$i]]->transportation[$cur[$i]][1];
+				$cost += $this->roadList[$road[$i]]->transportation[$cur[$i]][2];
 			}
+
 			$order->alltrans[$pathi][$count][0] = $time;
 			$order->alltrans[$pathi][$count][1] = $cost;
+
 			if ($time <= $order->timeLimit) {
 				if ($mincost < 0||($mincost > 0 && $mincost > $cost)) {
 					$mincost = $cost;
@@ -213,7 +215,7 @@ class Network
 				}
 			}
 			$count++;
-			$this->change($con, $cur, 0, count($con)-1);
+			$this->change($con, $cur, 0, count($con) - 1);
 		}
 
 		if ($order->expense < 0 || ($order->expense > 0 && $order->expense > $mincost)) {

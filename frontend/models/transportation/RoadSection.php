@@ -8,9 +8,9 @@ class RoadSection
 	var $startId;
 	var $endId;
 	var $next;
-	var $transportation;  //保存该路段的运输方式(name,time,cost);
+	var $transportation;
 
-	public function __construct($_id,$_startId, $_endId) {
+	public function __construct($_id, $_startId, $_endId) {
 		$this->id = $_id;
 		$this->startId = $_startId;
 		$this->endId = $_endId;

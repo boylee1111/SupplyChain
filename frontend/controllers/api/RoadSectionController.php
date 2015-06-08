@@ -42,4 +42,9 @@ class RoadSectionController extends ActiveController
 			RestfulHelper::successfulStatusEnvolop(),
 			['road_section' => RestfulHelper::roadSectionsToJsonFormat(RoadSection::find()->all())]);
 	}
+
+	public function actionSync()
+	{
+		
+	}
 }
