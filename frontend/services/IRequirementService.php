@@ -14,6 +14,7 @@ interface IRequirementService
 	public function savePassDepots($id, $depotIds);
 	public function deleteRequirement($id);
 	public function calculatePath($id);
+	public function findByRequirementId($id);
 }
 
 class RequirementService extends Object implements IRequirementService
@@ -106,4 +107,13 @@ class RequirementService extends Object implements IRequirementService
 
 		return $result;
 	}
+
+	function findByRequirementId($id)
+    {
+        if (($model = Requirement::findOne($id)) !== null) {
+            return $model;
+        } else {
+            return null;
+        }
+    }
 }

@@ -5,18 +5,18 @@ namespace frontend\controllers\api;
 use yii\rest\ActiveController;
 use yii\web\Response;
 use frontend\helpers\RestfulHelper;
-use frontend\services\IDepotService;
-use app\models\Depot;
+use frontend\services\IRoadSectionService;
+use app\models\RoadSection;
 
-class DepotController extends ActiveController
+class RoadSectionController extends ActiveController
 {
-	public $modelClass = '\app\models\Depot';
+	public $modelClass = '\app\models\RoadSection';
 
-	protected $depotService;
+	protected $roadSectionService;
 
-	public function __construct($id, $module, IDepotService $depotService, $config = [])
+	public function __construct($id, $module, IRoadSectionService $roadSectionService, $config = [])
 	{
-		$this->depotService = $depotService;
+		$this->roadSectionService = $roadSectionService;
 		parent::__construct($id, $module, $config);
 	}
 
@@ -30,16 +30,16 @@ class DepotController extends ActiveController
 	public function actionList($serial_number = null)
 	{
 		if ($serial_number != null) {
-			if (($model = $this->depotService->findBySerialNumber($serial_number)) !== null) {
+			if (($model = $this->roadSectionService->findBySerialNumber($serial_number)) !== null) {
 				return array_merge(
 					RestfulHelper::successfulStatusEnvolop(),
-					['depots' => RestfulHelper::depotToJsonFormat($model)]);
+					['road_section' => RestfulHelper::roadSectionToJsonFormat($model)]);
 			} else {
 				throw new NotFoundHttpException();
 			}
 		}
 		return array_merge(
 			RestfulHelper::successfulStatusEnvolop(),
-			['depots' => RestfulHelper::depotsToJsonFormat(Depot::find()->all())]);
+			['road_section' => RestfulHelper::roadSectionsToJsonFormat(RoadSection::find()->all())]);
 	}
 }
