@@ -42,4 +42,40 @@ class DepotController extends ActiveController
 			RestfulHelper::successfulStatusEnvolop(),
 			['depots' => RestfulHelper::depotsToJsonFormat(Depot::find()->all())]);
 	}
+
+	public function actionSync()
+	{
+		$params = $_REQUEST;
+
+		if (!array_key_exists('replace', $params) || !array_key_exists('depots', $params)) {
+			return RestfulHelper::parameterRequireStatusEnvolop(['replace', 'depots']);
+		}
+		$isReplace = $params['replace'];
+		$depots = $params['depots'];
+
+		$updatedCount = 0;
+		$updatedResult = array();
+		foreach ($depots as $depot) {
+			$model = $this->depotService->findBySerialNumber($depot['serial_number']);
+			if ($model == null) {
+				$model = new Depot();
+				$model->serial_number = $depot['serial_number'];
+			}
+
+			$model->country = $depot['country'];
+			$model->name = $depot['name'];
+			$model->short_name = $depot['short_name'];
+			$model->longitude = $depot['longitude'];
+			$model->altitude = $depot['altitude'];
+
+			if ($model->save()) {
+				$updatedCount++;
+				$updatedResult = array_merge($updatedResult, RestfulHelper::depotToJsonFormat($model));
+			}
+		}
+
+		return array_merge(
+			RestfulHelper::successfulStatusEnvolop(), 
+			['depots' => $updatedResult]);
+	}
 }

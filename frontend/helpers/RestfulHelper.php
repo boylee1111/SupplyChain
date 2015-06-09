@@ -14,6 +14,14 @@ class RestfulHelper
 		];
 	}
 
+	public static function parameterRequireStatusEnvolop($paramsName)
+	{
+		return [
+			'status' => 1,
+			'message' => 'parameter \''.implode('\', \'', $paramsName).'\' missing.',
+		];
+	}
+
 	public static function requirementsToJsonFormat($requirements)
 	{
 		$result = array();

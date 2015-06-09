@@ -11,12 +11,14 @@ use Yii;
  * @property string $serial_number
  * @property string $name
  * @property string $short_name
+ * @property string $country
  * @property string $longitude
  * @property string $altitude
  * @property integer $status
  * @property boolean $active
  *
  * @property Factory $factory
+ * @property PurchasingOrder[] $purchasingOrders
  * @property Requirement[] $requirements
  * @property Requirement[] $requirements0
  * @property RequirementPassDepot[] $requirementPassDepots
@@ -45,12 +47,11 @@ class Depot extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['serial_number'], 'unique'],
             [['serial_number', 'name'], 'required'],
             [['longitude', 'altitude'], 'number'],
             [['status'], 'integer'],
             [['active'], 'boolean'],
-            [['serial_number', 'name', 'short_name'], 'string', 'max' => 255]
+            [['serial_number', 'name', 'short_name', 'country'], 'string', 'max' => 255]
         ];
     }
 
@@ -64,6 +65,7 @@ class Depot extends \yii\db\ActiveRecord
             'serial_number' => 'Serial Number',
             'name' => 'Name',
             'short_name' => 'Short Name',
+            'country' => 'Country',
             'longitude' => 'Longitude',
             'altitude' => 'Altitude',
             'status' => 'Status',
@@ -77,6 +79,14 @@ class Depot extends \yii\db\ActiveRecord
     public function getFactory()
     {
         return $this->hasOne(Factory::className(), ['depot_id' => 'depot_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPurchasingOrders()
+    {
+        return $this->hasMany(PurchasingOrder::className(), ['destination_depot_id' => 'depot_id']);
     }
 
     /**
@@ -165,13 +175,5 @@ class Depot extends \yii\db\ActiveRecord
     public function getWarehouse()
     {
         return $this->hasOne(Warehouse::className(), ['depot_id' => 'depot_id']);
-    }
-
-    public static function isDepotExist($id)
-    {
-        if (($model = Depot::findOne($id)) !== null) {
-            return $model->active;
-        }
-        return false;
     }
 }

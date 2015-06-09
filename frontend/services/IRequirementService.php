@@ -12,6 +12,7 @@ use app\models\transportation\Network;
 
 interface IRequirementService
 {
+	public function savePassDepot($id, $depotId);
 	public function savePassDepots($id, $depotIds);
 	public function deleteRequirement($id);
 	public function calculatePath($id);
@@ -20,13 +21,18 @@ interface IRequirementService
 
 class RequirementService extends Object implements IRequirementService
 {
+	function savePassDepot($id, $depotId)
+	{
+		$requirementPassDepot = new RequirementPassDepot();
+		$requirementPassDepot->requirement_id = $id;
+		$requirementPassDepot->depot_id = $depotId;
+		$requirementPassDepot->save();
+	}
+
 	function savePassDepots($id, $depotIds)
 	{
 		foreach ($depotIds as $depotId) {
-			$requirementPassDepot = new RequirementPassDepot();
-			$requirementPassDepot->requirement_id = $id;
-			$requirementPassDepot->depot_id = $depotId;
-			$requirementPassDepot->save();
+			$this->savePassDepot($id, $depotId);
 		}
 	}
 
