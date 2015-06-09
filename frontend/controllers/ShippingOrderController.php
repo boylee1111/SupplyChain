@@ -37,6 +37,27 @@ class ShippingOrderController extends Controller
     }
 
     /**
+     * Creates a new ShippingOrder model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionApply()
+    {
+        $model = new ShippingOrder();
+    
+        if ($model->load(Yii::$app->request->post())) {
+            $model->apply_user_id = Yii::$app->user->getId();
+            $model->save();
+            $this->shippingOrderService->applyNewShippingOrder($model->shipping_order_id);
+            return $this->redirect(['view', 'id' => $model->shipping_order_id]);
+        } else {
+            return $this->render('apply', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    /**
      * Lists all ShippingOrder models.
      * @return mixed
      */
@@ -145,27 +166,6 @@ class ShippingOrderController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
-    }
-
-    /**
-     * Creates a new ShippingOrder model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionApply()
-    {
-        $model = new ShippingOrder();
-    
-        if ($model->load(Yii::$app->request->post())) {
-            $model->apply_user_id = Yii::$app->user->getId();
-            $model->save();
-            $this->shippingOrderService->applyNewShippingOrder($model->shipping_order_id);
-            return $this->redirect(['view', 'id' => $model->shipping_order_id]);
-        } else {
-            return $this->render('apply', [
-                'model' => $model,
-            ]);
-        }
     }
 
     /**

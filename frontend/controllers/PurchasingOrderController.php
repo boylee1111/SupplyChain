@@ -9,11 +9,21 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use frontend\services\IPurchasingOrderService;
+
 /**
  * PurchasingOrderController implements the CRUD actions for PurchasingOrder model.
  */
 class PurchasingOrderController extends Controller
 {
+    protected $purchasingOrderService;
+
+    public function __construct($id, $module, IPurchasingOrderService $purchasingOrderService, $config = [])
+    {
+        $this->purchasingOrderService = $purchasingOrderService;
+        parent::__construct($id, $module, $config);
+    }
+
     public function behaviors()
     {
         return [
@@ -24,6 +34,27 @@ class PurchasingOrderController extends Controller
                 ],
             ],
         ];
+    }
+
+    /**
+     * Creates a new PurchasingOrder model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionApply()
+    {
+        $model = new PurchasingOrder();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->apply_user_id = Yii::$app->user->getId();
+            $model->save();
+            $this->purchasingOrderService->applyNewPurchasingOrder($model->purchasing_order_id);
+            return $this->redirect(['view', 'id' => $model->purchasing_order_id]);
+        } else {
+            return $this->render('apply', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -41,6 +72,83 @@ class PurchasingOrderController extends Controller
         ]);
     }
 
+    public function actionApproveList()
+    {
+        $searchModel = new PurchasingOrderSearch();
+        $queryParams = array_merge(array(), Yii::$app->request->queryParams);
+        $queryParams['PurchasingOrderSearch']['status'] = 0;
+        $dataProvider = $searchModel->search($queryParams);
+
+        return $this->render('approve-list', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionApprove($id)
+    {
+        $this->purchasingOrderService->approvePurchasingOrder($id);
+
+        return $this->redirect(['view', 'id' => $this->findModel($id)->purchasing_order_id]);
+    }
+
+    public function actionReject($id)
+    {
+        $this->purchasingOrderService->rejectPurchasingOrder($id);
+
+        return $this->redirect(['view', 'id' => $this->findModel($id)->purchasing_order_id]);
+    }
+
+    public function actionConfirmationList()
+    {
+        $searchModel = new PurchasingOrderSearch();
+        $queryParams = array_merge(array(), Yii::$app->request->queryParams);
+        $queryParams['PurchasingOrderSearch']['status'] = 1;
+        $dataProvider = $searchModel->search($queryParams);
+
+        return $this->render('confirm-list', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionConfirm($id)
+    {
+        $model = $this->findModel($id);
+
+        if (count(Yii::$app->request->post()) == 0) {
+            $model->shipping_date = date("Y-m-d H:i:s");
+            return $this->render('confirm', [
+                'model' => $model,
+            ]);
+        } else {
+            $model->load(Yii::$app->request->post());
+            $model->save();
+            $this->purchasingOrderService->confirmPurchasingOrder($id);
+            return $this->redirect(['view', 'id' => $model->purchasing_order_id]);
+        }
+    }
+
+    public function actionWarehousingList()
+    {
+        $searchModel = new PurchasingOrderSearch();
+        $queryParams = array_merge(array(), Yii::$app->request->queryParams);
+        $queryParams['PurchasingOrderSearch']['status'] = 2;
+        $dataProvider = $searchModel->search($queryParams);
+
+        return $this->render('receiving-list', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionWarehousing($id)
+    {
+        $this->purchasingOrderService->warehousingPurchasingOrder($id);
+
+        return $this->redirect(['view', 'id' => $this->findModel($id)->purchasing_order_id]);
+    }
+
     /**
      * Displays a single PurchasingOrder model.
      * @param integer $id
@@ -51,24 +159,6 @@ class PurchasingOrderController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
-    }
-
-    /**
-     * Creates a new PurchasingOrder model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new PurchasingOrder();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->purchasing_order_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
     }
 
     /**

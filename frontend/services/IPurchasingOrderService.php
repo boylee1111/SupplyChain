@@ -4,7 +4,7 @@ namespace frontend\services;
 
 use Yii;
 use yii\base\Object;
-use app\models\Purchasing;
+use app\models\PurchasingOrder;
 use common\models\User;
 
 interface IPurchasingOrderService
@@ -13,7 +13,7 @@ interface IPurchasingOrderService
 	public function approvePurchasingOrder($id);
 	public function rejectPurchasingOrder($id);
 	public function confirmPurchasingOrder($id);
-	public function receivingPurchasingOrder($id);
+	public function warehousingPurchasingOrder($id);
 	public function discrepantPurchasingOrder($id);
 }
 
@@ -58,7 +58,7 @@ class PurchasingOrderService extends Object implements IPurchasingOrderService
 		$model->save();
 	}
 
-	public function receivingPurchasingOrder($id)
+	public function warehousingPurchasingOrder($id)
 	{
 		$model = $this->findModel($id);
 		$model->status = 3;
