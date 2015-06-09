@@ -73,7 +73,7 @@ class ProductController extends Controller
         $model = new Product();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $this->productService->calculateVolume($id);
+            $this->productService->calculateVolume($model->id);
             return $this->redirect(['view', 'id' => $model->product_id]);
         } else {
             return $this->render('create', [

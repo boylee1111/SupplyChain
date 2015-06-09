@@ -9,18 +9,21 @@ use app\models\PurchasingOrder;
 /* @var $searchModel app\models\PurchasingOrderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Purchasing Orders';
+$this->title = 'Approve List';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="purchasing-order-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <br/>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'filterRowOptions' => [
+            'style' => 'display: none',
+        ],
+
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -38,8 +41,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'destinationDepot.name',
                 'label' => 'Destination Depot',
             ],
-            // 'apply_date',
-            // 'expect_arrival_date',
             // 'arrival_date',
             [
                 'attribute' => 'status',
@@ -47,11 +48,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     return PurchasingOrder::purchasingStatusDescription($model->status);
                 },
             ],
-            // 'remarks',
 
+            // ['class' => 'yii\grid\ActionColumn'],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view}',
+                'template' => '{view} {update} {discrepant}',
+                'buttons' => [
+                    'update' => function ($url, $model) {
+                        return Html::a('<span class="glyphicon glyphicon-ok"></span>', ['warehousing', 'id' => $model->purchasing_order_id]);
+                    },
+                    'discrepant' => function ($url, $model) {
+                        return Html::a('<span class="glyphicon glyphicon-remove"></span>', ['discrepant', 'id' => $model->purchasing_order_id], [
+                            'data' => [
+                                'confirm' => 'Are you sure you want to mark this shipping order as discrepancy?',
+                                'method' => 'post',
+                            ],
+                        ]);
+                    },
+                ],
             ],
         ],
     ]); ?>

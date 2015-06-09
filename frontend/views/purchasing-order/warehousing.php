@@ -2,21 +2,27 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\widgets\ActiveForm;
 
 use common\models\User;
 use app\models\PurchasingOrder;
+use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\PurchasingOrder */
 
-$this->title = $model->purchasing_order_code;
+$this->title = 'Warehousing Purchasing Order: ' . ' ' . $model->purchasing_order_code;
 $this->params['breadcrumbs'][] = ['label' => 'Purchasing Orders', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => $model->purchasing_order_code, 'url' => ['view', 'id' => $model->purchasing_order_id]];
+$this->params['breadcrumbs'][] = 'Warehousing';
 ?>
-<div class="purchasing-order-view">
+<div class="purchasing-order-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <br/>
+
+    <div class="purchasing-order-form">
+
+    <?php $form = ActiveForm::begin(); ?>
 
     <?= DetailView::widget([
         'model' => $model,
@@ -33,12 +39,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'product.primary_name',
-                'label' => 'Product'
+                'label' => 'Product',
             ],
             'quantity',
             [
                 'attribute' => 'destinationDepot.name',
-                'label' => 'Destination Depot',
+                'label' => 'Destination Deport',
             ],
             [
                 'attribute' => 'apply_date',
@@ -54,10 +60,25 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'status',
-                'value' => PurchasingOrder::purchasingStatusDescription($model->status).($model->status == 8 ? '. Applier notified already' : ''),
+                'value' => PurchasingOrder::purchasingStatusDescription($model->status),
             ],
-            'remarks',
         ],
     ]) ?>
+
+    <?= $form->field($model, 'arrival_date')->widget(DatePicker::className(), [
+        'removeButton' => false,
+        'pluginOptions' => [
+            'autoclose'=>true,
+            'format' => 'yyyy-mm-dd',
+        ]
+    ])?>
+
+    <div class="form-group">
+        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
+
+</div>
 
 </div>

@@ -117,7 +117,7 @@ class ShippingOrderController extends Controller
         $model = $this->findModel($id);
 
         if (count(Yii::$app->request->post()) == 0) {
-            $model->shipping_date = date("Y-m-d H:i:s");
+            $model->shipping_date = date("Y-m-d");
             return $this->render('confirm', [
                 'model' => $model,
             ]);

@@ -4,6 +4,8 @@ namespace app\models;
 
 use Yii;
 
+use common\models\User;
+
 /**
  * This is the model class for table "purchasing_order".
  *
@@ -100,5 +102,34 @@ class PurchasingOrder extends \yii\db\ActiveRecord
     public function getDestinationDepot()
     {
         return $this->hasOne(Depot::className(), ['depot_id' => 'destination_depot_id']);
+    }
+    
+    public static function purchasingStatusDescription($code)
+    {
+        $description = "";
+        switch ($code) {
+            case 0:
+                $description = "applying";
+                break;
+            case 1:
+                $description = "approval";
+                break;
+            case 2:
+                $description = "in transaction";
+                break;
+            case 4:
+                $description = "warehoused";
+                break;
+            case 8:
+                $description = "rejected";
+                break;
+            case 9:
+                $description = "discrepancy";
+                break;
+            case 10:
+                $description = "returned";
+                break;
+        }
+        return $description;
     }
 }

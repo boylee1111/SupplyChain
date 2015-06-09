@@ -61,7 +61,7 @@ class PurchasingOrderService extends Object implements IPurchasingOrderService
 	public function warehousingPurchasingOrder($id)
 	{
 		$model = $this->findModel($id);
-		$model->status = 3;
+		$model->status = 4;
 		$model->save();
 	}
 

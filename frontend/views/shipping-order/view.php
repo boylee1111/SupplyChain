@@ -11,11 +11,12 @@ use app\models\ShippingOrder;
 
 $this->title = 'Order: '.$model->shipping_order_code;
 $this->params['breadcrumbs'][] = ['label' => 'Shipping Orders', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $model->shipping_order_code;
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="shipping-order-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <br/>
 
     <?= DetailView::widget([
         'model' => $model,
@@ -65,8 +66,9 @@ $this->params['breadcrumbs'][] = $model->shipping_order_code;
             ],
             [
                 'attribute' => 'status',
-                'value' => ShippingOrder::shippingStatusDescription($model->status).($model->status == 8 | $model->status ? '. Applier notified already' : ''),
+                'value' => ShippingOrder::shippingStatusDescription($model->status).($model->status == 8 ? '. Applier notified already' : ''),
             ],
+            'remarks',
         ],
     ]) ?>
 

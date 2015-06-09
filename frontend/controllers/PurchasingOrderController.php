@@ -47,6 +47,7 @@ class PurchasingOrderController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->apply_user_id = Yii::$app->user->getId();
+            $model->apply_date = date("Y-m-d H:i:s");
             $model->save();
             $this->purchasingOrderService->applyNewPurchasingOrder($model->purchasing_order_id);
             return $this->redirect(['view', 'id' => $model->purchasing_order_id]);
@@ -114,19 +115,9 @@ class PurchasingOrderController extends Controller
 
     public function actionConfirm($id)
     {
-        $model = $this->findModel($id);
+        $this->purchasingOrderService->confirmPurchasingOrder($id);
 
-        if (count(Yii::$app->request->post()) == 0) {
-            $model->shipping_date = date("Y-m-d H:i:s");
-            return $this->render('confirm', [
-                'model' => $model,
-            ]);
-        } else {
-            $model->load(Yii::$app->request->post());
-            $model->save();
-            $this->purchasingOrderService->confirmPurchasingOrder($id);
-            return $this->redirect(['view', 'id' => $model->purchasing_order_id]);
-        }
+        return $this->redirect(['view', 'id' => $this->findModel($id)->purchasing_order_id]);        
     }
 
     public function actionWarehousingList()
@@ -136,7 +127,7 @@ class PurchasingOrderController extends Controller
         $queryParams['PurchasingOrderSearch']['status'] = 2;
         $dataProvider = $searchModel->search($queryParams);
 
-        return $this->render('receiving-list', [
+        return $this->render('warehousing-list', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -144,7 +135,24 @@ class PurchasingOrderController extends Controller
 
     public function actionWarehousing($id)
     {
-        $this->purchasingOrderService->warehousingPurchasingOrder($id);
+        $model = $this->findModel($id);
+
+        if (count(Yii::$app->request->post()) == 0) {
+            $model->arrival_date = date("Y-m-d");
+            return $this->render('warehousing', [
+                'model' => $model,
+            ]);
+        } else {
+            $model->load(Yii::$app->request->post());
+            $model->save();
+            $this->purchasingOrderService->warehousingPurchasingOrder($id);
+            return $this->redirect(['view', 'id' => $model->purchasing_order_id]);
+        }
+    }
+
+    public function actionDiscrepant($id)
+    {
+        $this->purchasingOrderService->discrepantPurchasingOrder($id);
 
         return $this->redirect(['view', 'id' => $this->findModel($id)->purchasing_order_id]);
     }

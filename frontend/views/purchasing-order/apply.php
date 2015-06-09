@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\PurchasingOrder */
 
-$this->title = 'Create Purchasing Order';
-$this->params['breadcrumbs'][] = ['label' => 'Purchasing Orders', 'url' => ['index']];
+$this->title = 'New Purchasing Order';
+// $this->params['breadcrumbs'][] = ['label' => 'Purchasing Orders', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="purchasing-order-create">
