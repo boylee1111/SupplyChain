@@ -18,7 +18,7 @@ class ReturningOrderSearch extends ReturningOrder
     public function rules()
     {
         return [
-            [['returning_order_id', 'purchasing_order_id', 'apply_user', 'approve_user', 'quantity', 'status'], 'integer'],
+            [['returning_order_id', 'purchasing_order_id', 'apply_user_id', 'approval_user_id', 'status'], 'integer'],
             [['apply_date', 'expect_returning_date', 'returning_date', 'reason', 'remarks'], 'safe'],
         ];
     }
@@ -58,9 +58,8 @@ class ReturningOrderSearch extends ReturningOrder
         $query->andFilterWhere([
             'returning_order_id' => $this->returning_order_id,
             'purchasing_order_id' => $this->purchasing_order_id,
-            'apply_user' => $this->apply_user,
-            'approve_user' => $this->approve_user,
-            'quantity' => $this->quantity,
+            'apply_user_id' => $this->apply_user_id,
+            'approval_user_id' => $this->approval_user_id,
             'apply_date' => $this->apply_date,
             'expect_returning_date' => $this->expect_returning_date,
             'returning_date' => $this->returning_date,

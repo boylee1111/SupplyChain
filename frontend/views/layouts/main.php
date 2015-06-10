@@ -58,9 +58,10 @@ AppAsset::register($this);
                         ['label' => 'Warehousing Confirmation', 'url' => ['/purchasing-order/warehousing-list']],
                         '<li class="divider"></li>',
                         '<li class="dropdown-header">Returning</li>',
-                        ['label' => 'Returning Apply', 'url' => '#'],
-                        ['label' => 'Returning Approval', 'url' => '#'],
-                        ['label' => 'Returning Confirmation', 'url' => '#'],
+                        ['label' => 'Returning Orders', 'url' => ['/returning-order']],
+                        ['label' => 'Returning Apply', 'url' => ['/returning-order/apply-list']],
+                        ['label' => 'Returning Approval', 'url' => ['/returning-order/approve-list']],
+                        ['label' => 'Returning Confirmation', 'url' => ['/returning-order/confirmation-list']],
                     ],
                 ],
                 [

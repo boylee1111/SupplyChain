@@ -15,6 +15,7 @@ interface IPurchasingOrderService
 	public function confirmPurchasingOrder($id);
 	public function warehousingPurchasingOrder($id);
 	public function discrepantPurchasingOrder($id);
+	public function findModel($id);
 }
 
 class PurchasingOrderService extends Object implements IPurchasingOrderService
@@ -58,14 +59,14 @@ class PurchasingOrderService extends Object implements IPurchasingOrderService
 		$model->save();
 	}
 
-	public function warehousingPurchasingOrder($id)
+	function warehousingPurchasingOrder($id)
 	{
 		$model = $this->findModel($id);
 		$model->status = 4;
 		$model->save();
 	}
 
-	public function discrepantPurchasingOrder($id)
+	function discrepantPurchasingOrder($id)
 	{
 		$model = $this->findModel($id);
 		$model->status = 9;
@@ -81,7 +82,7 @@ class PurchasingOrderService extends Object implements IPurchasingOrderService
 			->send();
 	}
 
-	protected function findModel($id)
+	function findModel($id)
     {
         if (($model = PurchasingOrder::findOne($id)) !== null) {
             return $model;

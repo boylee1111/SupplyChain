@@ -3,16 +3,14 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-use app\models\ShippingOrder;
-
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ShippingOrderSearch */
+/* @var $searchModel app\models\ReturningOrderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Confirmation List';
+$this->title = 'Returning Orders';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="shipping-order-index">
+<div class="returning-order-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -21,14 +19,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        'filterRowOptions' => [
-            'style' => 'display: none',
-        ],
-
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'shipping_order_code',
+            'purchasing_order_code',
             [
                 'attribute' => 'applyUser.username',
                 'label' => 'Apply User',
@@ -39,29 +33,25 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'quantity',
             [
-                'attribute' => 'departDepot.name',
-                'label' => 'Depart Depot',
+                'attribute' => 'destinationDepot.name',
+                'label' => 'Destination Depot',
             ],
-            [
-                'attribute' => 'arrivalDepot.name',
-                'label' => 'Arrival Depot',
-            ],
-            // 'shipping_date',
-            // 'arrival_date',
-            [
-                'attribute' => 'status',
-                'value' => function ($model, $key, $index, $column) {
-                    return ShippingOrder::shippingStatusDescription($model->status);
-                },
-            ],
+            // 'apply_date',
+            // 'expect_returning_date',
+            // 'returning_date',
+            // 'status',
+            // 'reason',
+            // 'remarks',
 
-            // ['class' => 'yii\grid\ActionColumn'],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update}',
                 'buttons' => [
+                    'view' => function ($url, $model) {
+                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['/purchasing-order/view', 'id' => $model->purchasing_order_id]);
+                    },
                     'update' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-ok"></span>', ['confirm', 'id' => $model->shipping_order_id]);
+                        return Html::a('<span class="glyphicon glyphicon-ok"></span>', ['apply', 'id' => $model->purchasing_order_id]);
                     },
                 ],
             ],

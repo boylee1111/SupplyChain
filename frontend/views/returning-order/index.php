@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
+use app\models\ReturningOrder;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ReturningOrderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -14,10 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Create Returning Order', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <br/>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -25,19 +24,32 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'returning_order_id',
-            'purchasing_order_id',
-            'apply_user',
-            'approve_user',
-            'quantity',
+            'returning_order_code',
+            [
+                'attribute' => 'applyUser.username',
+                'label' => 'Apply User',
+            ],
+            [
+                'attribute' => 'purchasingOrder.product.primary_name',
+                'label' => 'Product',
+            ],
+            'purchasingOrder.quantity',
             // 'apply_date',
             // 'expect_returning_date',
             // 'returning_date',
-            // 'status',
+            [
+                'attribute' => 'status',
+                'value' => function ($model, $key, $index, $column) {
+                    return ReturningOrder::returningStatusDescription($model->status);
+                },
+            ],
             // 'reason',
             // 'remarks',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view}',
+            ],
         ],
     ]); ?>
 

@@ -12,7 +12,7 @@ use app\models\PurchasingOrder;
 $this->title = 'Purchasing Orders';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="purchasing-order-index">
+<div class="purchasing-order-approval-list">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <br/>

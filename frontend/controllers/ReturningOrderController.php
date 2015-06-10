@@ -9,11 +9,30 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use frontend\services\IPurchasingOrderService;
+use frontend\services\IReturningOrderService;
+use app\models\PurchasingOrder;
+use app\models\PurchasingOrderSearch;
+
 /**
  * ReturningOrderController implements the CRUD actions for ReturningOrder model.
  */
 class ReturningOrderController extends Controller
 {
+    protected $purchasingOrderService;
+    protected $returningOrderService;
+
+    public function __construct($id,
+                                $module,
+                                IPurchasingOrderService $purchasingOrderService,
+                                IReturningOrderService $returningOrderService,
+                                $config = [])
+    {
+        $this->purchasingOrderService = $purchasingOrderService;
+        $this->returningOrderService = $returningOrderService;
+        parent::__construct($id, $module, $config);
+    }
+
     public function behaviors()
     {
         return [
@@ -24,6 +43,99 @@ class ReturningOrderController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function actionApplyList()
+    {
+        $searchModel = new PurchasingOrderSearch();
+        $queryParams = array_merge(array(), Yii::$app->request->queryParams);
+        $queryParams['PurchasingOrderSearch']['status'] = 9;
+        $dataProvider = $searchModel->search($queryParams);
+
+        return $this->render('apply-list', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionApply($id)
+    {
+        $purchasingModel = $this->purchasingOrderService->findModel($id);
+        $model = new ReturningOrder();
+
+        if (count(Yii::$app->request->post()) == 0) {
+            $model->purchasing_order_id = $id;
+            return $this->render('apply', [
+                'model' => $model,
+                'purchasingModel' => $purchasingModel,
+            ]);
+        } else {
+            $model->load(Yii::$app->request->post());
+            $model->returning_order_code = str_replace('PO', 'RO', $purchasingModel->purchasing_order_code);
+            $model->purchasing_order_id = $id;
+            $model->apply_user_id = Yii::$app->user->getId();
+            $model->apply_date = date("Y-m-d");
+            $model->save();
+            $this->returningOrderService->applyNewReturningOrder($model->returning_order_id);
+            return $this->redirect(['view', 'id' => $model->returning_order_id]);
+        }
+    }
+
+    public function actionApproveList()
+    {
+        $searchModel = new ReturningOrderSearch();
+        $queryParams = array_merge(array(), Yii::$app->request->queryParams);
+        $queryParams['ReturningOrderSearch']['status'] = 0;
+        $dataProvider = $searchModel->search($queryParams);
+
+        return $this->render('approve-list', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionApprove($id)
+    {
+        $this->returningOrderService->approveReturningOrder($id);
+
+        return $this->redirect(['view', 'id' => $this->findModel($id)->returning_order_id]);
+    }
+
+    public function actionReject($id)
+    {
+        $this->returningOrderService->rejectReturningOrder($id);
+
+        return $this->redirect(['view', 'id' => $this->findModel($id)->returning_order_id]);
+    }
+
+    public function actionConfirmationList()
+    {
+        $searchModel = new ReturningOrderSearch();
+        $queryParams = array_merge(array(), Yii::$app->request->queryParams);
+        $queryParams['ReturningOrderSearch']['status'] = 1;
+        $dataProvider = $searchModel->search($queryParams);
+
+        return $this->render('confirm-list', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionConfirm($id)
+    {
+        $model = $this->findModel($id);
+
+        if (count(Yii::$app->request->post()) == 0) {
+            $model->returning_date = date("Y-m-d");
+            return $this->render('confirm', [
+                'model' => $model,
+            ]);
+        } else {
+            $model->load(Yii::$app->request->post());
+            $model->save();
+            $this->returningOrderService->confirmReturningOrder($id);
+            return $this->redirect(['view', 'id' => $model->returning_order_id]);
+        }
     }
 
     /**
