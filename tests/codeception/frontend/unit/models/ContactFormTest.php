@@ -8,7 +8,6 @@ use frontend\models\ContactForm;
 
 class ContactFormTest extends TestCase
 {
-
     use \Codeception\Specify;
 
     protected function setUp()
