@@ -2,12 +2,22 @@
 
 namespace tests\codeception\frontend\unit;
 
+use common\models\User;
+use app\models\Client;
+use app\models\ClientType;
 use app\models\Currency;
 use app\models\Depot;
 use app\models\Factory;
+use app\models\FactoryType;
+use app\models\Product;
+use app\models\ProductType;
+use app\models\RoadSectionType;
 use app\models\Station;
+use app\models\Supplier;
+use app\models\SupplierType;
 use app\models\Vendor;
 use app\models\VendorType;
+use app\models\WarehouseType;
 
 /**
  * @inheritdoc

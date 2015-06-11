@@ -5,7 +5,7 @@ namespace tests\codeception\frontend\functional;
 use tests\codeception\frontend\_pages\ShippingOrderApplyPage;
 use app\models\ShippingOrder;
 
-class ShippingOrderFunctionalCept extends FunctionalCeptBase
+class ShippingOrderFunctionalCest extends FunctionalCestBase
 {
     protected $product;
     protected $departDepot;
@@ -84,6 +84,8 @@ class ShippingOrderFunctionalCept extends FunctionalCeptBase
 
     public function testApproveShippingOrder($I, $scenario)
     {
+        $I->wantTo('ensure that shipping order approve works');
+
 
     }
 
@@ -104,6 +106,6 @@ class ShippingOrderFunctionalCept extends FunctionalCeptBase
 
     public function testDiscrepantShippingOrder($I, $scenario)
     {
-        
+
     }
 }

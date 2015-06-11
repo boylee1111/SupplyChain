@@ -4,7 +4,7 @@ namespace tests\codeception\frontend\models;
 
 use tests\codeception\frontend\unit\DbTestCase;
 use Codeception\Specify;
-use app\models\User;
+use common\models\User;
 
 class UserTest extends DbTestCase
 {

@@ -2,7 +2,7 @@
 
 namespace tests\codeception\frontend\functional;
 
-class FunctionalCeptBase
+class FunctionalCestBase
 {
     /**
      * This method is called before each cest class test method

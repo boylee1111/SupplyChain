@@ -13,7 +13,10 @@ return [
     ],
     'components' => [
         'db' => [
-            'dsn' => 'mysql:host=localhost;dbname=yii2_advanced_tests',
+            'dsn' => 'mysql:host=localhost;port=8889;dbname=yii2_advanced_tests;unix_socket=/Applications/MAMP/tmp/mysql/mysql.sock',
+            'username' => 'root',
+            'password' => 'root',
+            'charset' => 'utf8',
         ],
         'mailer' => [
             'useFileTransport' => true,
