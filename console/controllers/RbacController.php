@@ -11,31 +11,101 @@ class RbacController extends Controller
     {
         $auth = Yii::$app->authManager;
 
-        // add "createPost" permission
-        $createPost = $auth->createPermission('createPost');
-        $createPost->description = 'Create a post';
-        $auth->add($createPost);
+        // Create Permissions
+        $vendorManagement = $auth->createPermission('vendorManagement');
+        $vendorManagement->description = 'Vendor Management';
+        $auth->add($vendorManagement);
 
-        // add "updatePost" permission
-        $updatePost = $auth->createPermission('updatePost');
-        $updatePost->description = 'Update post';
-        $auth->add($updatePost);
+        $clientManagement = $auth->createPermission('clientManagement');
+        $clientManagement->description = 'Client Management';
+        $auth->add($clientManagement);
 
-        // add "author" role and give this role the "createPost" permission
-        $author = $auth->createRole('author');
-        $auth->add($author);
-        $auth->addChild($author, $createPost);
+        $productManagement = $auth->createPermission('productManagement');
+        $productManagement->description = 'Product Management';
+        $auth->add($productManagement);
 
-        // add "admin" role and give this role the "updatePost" permission
-        // as well as the permissions of the "author" role
+        $purchasingOrderManagement = $auth->createPermission('purchasingOrderManagement');
+        $purchasingOrderManagement->description = 'Purchasing Order Management';
+        $auth->add($purchasingOrderManagement);
+
+        $returningOrderManagement = $auth->createPermission('returningOrderManagement');
+        $returningOrderManagement->description = 'Returning Order Management';
+        $auth->add($returningOrderManagement);
+
+        $supplierManagement = $auth->createPermission('supplierManagement');
+        $supplierManagement->description = 'Supplier Management';
+        $auth->add($supplierManagement);
+
+        $reviewOrder = $auth->createPermission('reviewOrder');
+        $reviewOrder->description = 'Review and Approve Order';
+        $auth->add($reviewOrder);
+
+        $userManagement = $auth->createPermission('userManagement');
+        $userManagement->description = 'User Management';
+        $auth->add($userManagement);
+
+        $depotManagement = $auth->createPermission('depotManagement');
+        $depotManagement->description = 'Depot Management';
+        $auth->add($depotManagement);
+
+        $roadSectionManagement = $auth->createPermission('roadSectionManagement');
+        $roadSectionManagement->description = 'Road Section Management';
+        $auth->add($roadSectionManagement);
+
+        $shippingOrderManagement = $auth->createPermission('shippingOrderManagement');
+        $shippingOrderManagement->description = 'Shipping Order Management';
+        $auth->add($shippingOrderManagement);
+
+        $requirementManagement = $auth->createPermission('requirementManagement');
+        $requirementManagement->description = 'Requirement Management';
+        $auth->add($requirementManagement);
+
+        // Permission Parent-Child
+        $auth->addChild($purchasingOrderManagement, $returningOrderManagement);
+
+        // Create Roles
+        $marketing = $auth->createRole('marketing');
+        $auth->add($marketing);
+
+        $purchasing = $auth->createRole('purchasing');
+        $auth->add($purchasing);
+
+        $manager = $auth->createRole('manager');
+        $auth->add($manager);
+
         $admin = $auth->createRole('admin');
         $auth->add($admin);
-        $auth->addChild($admin, $updatePost);
-        $auth->addChild($admin, $author);
 
-        // Assign roles to users. 1 and 2 are IDs returned by IdentityInterface::getId()
-        // usually implemented in your User model.
-        $auth->assign($author, 2);
-        $auth->assign($admin, 1);
+        $transporting = $auth->createRole('transporting');
+        $auth->add($transporting);
+
+        $superadmin = $auth->createRole('superadmin');
+        $auth->add($superadmin);
+
+        // Roles Parent-Child
+        $auth->addChild($superadmin, $marketing);
+        $auth->addChild($superadmin, $purchasing);
+        $auth->addChild($superadmin, $manager);
+        $auth->addChild($superadmin, $admin);
+        $auth->addChild($superadmin, $transporting);
+
+        // Roles-Permissions Parent-Child
+        $auth->addChild($marketing, $vendorManagement);
+        $auth->addChild($marketing, $clientManagement);
+        $auth->addChild($marketing, $productManagement);
+
+        $auth->addChild($purchasing, $productManagement);
+        $auth->addChild($purchasing, $purchasingOrderManagement);
+        $auth->addChild($purchasing, $supplierManagement);
+
+        $auth->addChild($manager, $reviewOrder);
+
+        $auth->addChild($admin, $userManagement);
+
+        $auth->addChild($transporting, $depotManagement);
+        $auth->addChild($transporting, $requirementManagement);
+        $auth->addChild($transporting, $roadSectionManagement);
+
+        $auth->assign($superadmin, 1);
     }
 }

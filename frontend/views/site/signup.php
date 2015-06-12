@@ -3,6 +3,10 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
 
+use yii\helpers\ArrayHelper;
+use app\models\AuthItem;
+use kartik\select2\Select2;
+
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \frontend\models\SignupForm */
@@ -21,6 +25,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'username') ?>
                 <?= $form->field($model, 'email') ?>
                 <?= $form->field($model, 'password')->passwordInput() ?>
+                <?= $form->field($model, 'authItems')->widget(Select2::className(), [
+                    'data' => ArrayHelper::map(AuthItem::find()->where(['type' => 1])->all(), 'name', 'name'),
+                    'options' => [
+                        'placeholder' => 'Select the role ...',
+                        'multiple' => true,
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                    ]
+                ])?>
                 <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
                     'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
                 ]) ?>

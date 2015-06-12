@@ -14,6 +14,7 @@ class SignupForm extends Model
     public $email;
     public $password;
     public $verifyCode;
+    public $authItems;
 
     /**
      * @inheritdoc

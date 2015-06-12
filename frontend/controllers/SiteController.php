@@ -13,11 +13,22 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
+use frontend\services\IUserService;
+use app\models\AuthItem;
+
 /**
  * Site controller
  */
 class SiteController extends Controller
 {
+    protected $userService;
+
+    public function __construct($id, $module, IUserService $userService, $config = [])
+    {
+        $this->userService = $userService;
+        parent::__construct($id, $module, $config);
+    }
+
     /**
      * @inheritdoc
      */
@@ -121,6 +132,7 @@ class SiteController extends Controller
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
+                $this->userService->saveAuthItemsToUser($user->id, Yii::$app->request->post()['SignupForm']['authItems']);
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();
                 }
