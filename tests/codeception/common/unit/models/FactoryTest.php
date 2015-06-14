@@ -16,56 +16,56 @@ class FactoryTest extends DbTestCase
 
 	protected function setUp()
     {
-        // parent::setUp();
+        parent::setUp();
 
-        // $this->depot = parent::fakeDepot();
-        // $this->factoryType = parent::fakeFactoryType();
+        $this->depot = parent::fakeDepot();
+        $this->factoryType = parent::fakeFactoryType();
     }
 
     protected function tearDown()
     {
-    	// $this->depot = null;
-    	// $this->factoryType = null;
+    	$this->depot = null;
+    	$this->factoryType = null;
 
-     //    parent::tearDown();
+        parent::tearDown();
     }
 
 	public function testValidation()
 	{
-		// $factory = new Factory();
+		$factory = new Factory();
 
-		// $this->assertInstanceOf('Model', $depot);
+		$this->assertInstanceOf('Model', $depot);
 
-		// $this->specify('\'depot_id and\' \'factory_type_id\' is required', function() {
-		// 	$factory->depot_id = null;
-		// 	$factory->factory_type_id = null;
-  //           verify($factory->validate(['depot_id', 'factory_type_id'])->false());
-		// });
+		$this->specify('\'depot_id and\' \'factory_type_id\' is required', function() {
+			$factory->depot_id = null;
+			$factory->factory_type_id = null;
+            verify($factory->validate(['depot_id', 'factory_type_id'])->false());
+		});
 
-		// $this->specify('factory', function() {
-		// 	$factory->depot_id = $this->depot->depot_id;
-		// 	$factory->factory_type_id = $this->factoryType->factory_type_id;
-		// 	verify($factory->validate()->true());
-		// });
+		$this->specify('factory', function() {
+			$factory->depot_id = $this->depot->depot_id;
+			$factory->factory_type_id = $this->factoryType->factory_type_id;
+			verify($factory->validate()->true());
+		});
 	}
 
 	public function testPersistence()
 	{
-		// $factory = new Factory();
-		// $factory->depot_id = $this->depot->depot_id;
-		// $factory->factory_type_id = $this->factoryType->factory_type_id;
-		// $factory->save();
+		$factory = new Factory();
+		$factory->depot_id = $this->depot->depot_id;
+		$factory->factory_type_id = $this->factoryType->factory_type_id;
+		$factory->save();
 
-		// $this->assertTrue(Factory::findOne($factory->depot_id) !== null);
+		$this->assertTrue(Factory::findOne($factory->depot_id) !== null);
 
-		// $factory->remarks = "Remarks";
-		// $factory->save();
+		$factory->remarks = "Remarks";
+		$factory->save();
 
-		// $this->assertTrue(Factory::findOne($factory->depot_id)->remarks == 'Remarks');
+		$this->assertTrue(Factory::findOne($factory->depot_id)->remarks == 'Remarks');
 
-		// $factoryId = $factory->depot_id;
-		// $factory->delete();
+		$factoryId = $factory->depot_id;
+		$factory->delete();
 
-		// $this->assertTrue(Factory::findOne($factoryId) === null);
+		$this->assertTrue(Factory::findOne($factoryId) === null);
 	}
 }

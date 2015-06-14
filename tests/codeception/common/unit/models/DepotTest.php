@@ -12,48 +12,48 @@ class DepotTest extends DbTestCase
 
 	public function testValidation()
 	{
-		// $depot = new Depot();
+		$depot = new Depot();
 
-		// $this->assertInstanceOf('Model', $depot);
+		$this->assertInstanceOf('Model', $depot);
 
-		// $this->specify('\'serial_number\' and \'name\' is required', function() {
-		// 	$depot->serial_number = null;
-		// 	$depot->name = null;
-  //           verify($depot->validate(['serial_number', 'name'])->false());
-		// });
+		$this->specify('\'serial_number\' and \'name\' is required', function() {
+			$depot->serial_number = null;
+			$depot->name = null;
+            verify($depot->validate(['serial_number', 'name'])->false());
+		});
 
-		// $this->specify('\'longitude\' and \'altitude\' must be number', function() {
-		// 	$depot->longitude = 'abc';
-		// 	$depot->altitude = "ccd";
-		// 	verify($depot->validate(['longitude', 'altitude'])->false());
-		// });
+		$this->specify('\'longitude\' and \'altitude\' must be number', function() {
+			$depot->longitude = 'abc';
+			$depot->altitude = "ccd";
+			verify($depot->validate(['longitude', 'altitude'])->false());
+		});
 
-		// $this->specify('depot', function() {
-		// 	$depot->serial_number = "WH42144";
-		// 	$depot->name = "Warehouse";
-		// 	$depot->longitude = '23.34';
-		// 	$depot->altitude = '24.3';
-		// 	verify($depot->validate()->true());
-		// });
+		$this->specify('depot', function() {
+			$depot->serial_number = "WH42144";
+			$depot->name = "Warehouse";
+			$depot->longitude = '23.34';
+			$depot->altitude = '24.3';
+			verify($depot->validate()->true());
+		});
 	}
 
 	public function testPersistence()
 	{
-		// $depot = new Depot();
-		// $depot->serial_number = 'WH21844';
-		// $depot->name = 'HK Hub Warehouse';
-		// $depot->save();
+		$depot = new Depot();
+		$depot->serial_number = 'WH21844';
+		$depot->name = 'HK Hub Warehouse';
+		$depot->save();
 
-		// $this->assertTrue(Depot::findOne($depot->depot_id) !== null);
+		$this->assertTrue(Depot::findOne($depot->depot_id) !== null);
 
-		// $depot->name = 'MY Hub Warehouse';
-		// $depot->save();
+		$depot->name = 'MY Hub Warehouse';
+		$depot->save();
 
-		// $this->assertTrue(Depot::findOne($dpeot->depot_id)->name == 'MY Hub Warehouse');
+		$this->assertTrue(Depot::findOne($dpeot->depot_id)->name == 'MY Hub Warehouse');
 
-		// $depotId = $depot->depot_id;
-		// $depot->delete();
+		$depotId = $depot->depot_id;
+		$depot->delete();
 
-		// $this->assertTrue(Depot::findOne($depotId) === null);
+		$this->assertTrue(Depot::findOne($depotId) === null);
 	}
 }

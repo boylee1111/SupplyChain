@@ -132,9 +132,9 @@ class SiteController extends Controller
             if ($user = $model->signup()) {
                 $this->userService->saveAuthItemsToUser($user->id, Yii::$app->request->post()['SignupForm']['authItems']);
                 
-                if (Yii::$app->getUser()->login($user)) {
+                // if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();
-                }
+                // }
             }
         }
 
