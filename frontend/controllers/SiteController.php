@@ -35,22 +35,20 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-            // 'access' => [
-            //     'class' => AccessControl::className(),
-            //     'only' => ['logout', 'signup'],
-            //     'rules' => [
-            //         [
-            //             'actions' => ['signup'],
-            //             'allow' => true,
-            //             'roles' => ['?'],
-            //         ],
-            //         [
-            //             'actions' => ['logout'],
-            //             'allow' => true,
-            //             'roles' => ['@'],
-            //         ],
-            //     ],
-            // ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'about', 'contact'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['new-user', 'captcha'],
+                        'roles' => ['userManagement'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -127,7 +125,7 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-    public function actionSignup()
+    public function actionNewUser()
     {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {

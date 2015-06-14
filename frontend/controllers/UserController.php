@@ -8,6 +8,7 @@ use common\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -17,6 +18,16 @@ class UserController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'delete'],
+                        'roles' => ['userManagement'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -33,7 +44,8 @@ class UserController extends Controller
     public function actionIndex()
     {
         $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $queryParams = array_merge(array(), Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search($queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -41,17 +53,17 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single User model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
+    // /**
+    //  * Displays a single User model.
+    //  * @param integer $id
+    //  * @return mixed
+    //  */
+    // public function actionView($id)
+    // {
+    //     return $this->render('view', [
+    //         'model' => $this->findModel($id),
+    //     ]);
+    // }
 
     // /**
     //  * Creates a new User model.
@@ -90,18 +102,18 @@ class UserController extends Controller
     //     }
     // }
 
-    // /**
-    //  * Deletes an existing User model.
-    //  * If deletion is successful, the browser will be redirected to the 'index' page.
-    //  * @param integer $id
-    //  * @return mixed
-    //  */
-    // public function actionDelete($id)
-    // {
-    //     $this->findModel($id)->delete();
+    /**
+     * Deletes an existing User model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
 
-    //     return $this->redirect(['index']);
-    // }
+        return $this->redirect(['index']);
+    }
 
     /**
      * Finds the User model based on its primary key value.

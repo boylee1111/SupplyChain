@@ -8,6 +8,7 @@ use app\models\PurchasingOrderSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 use frontend\services\IPurchasingOrderService;
 
@@ -27,6 +28,25 @@ class PurchasingOrderController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['apply', 'index', 'confirmation-list', 'confirm', 'warehousing-list', 'warehousing', 'discrepant', 'view', 'update'],
+                        'roles' => ['shippingOrderManagement'],
+                    ],
+                    [
+                        'allow' => false,
+                        'actions' => ['delete'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['approve-list', 'approve'],
+                        'roles' => ['reviewOrder'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

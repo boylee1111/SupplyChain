@@ -19,6 +19,9 @@ AppAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" 
+      type="image/png" 
+      href="http://example.com/myicon.png">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -202,7 +205,7 @@ AppAsset::register($this);
                     'label' => 'User',
                     'items' => [
                         ['label' => 'Users', 'url' => '/user'],
-                        ['label' => 'New User', 'url' => ['/site/signup']],
+                        ['label' => 'New User', 'url' => ['/site/new-user']],
                     ],
                 ];
             }
