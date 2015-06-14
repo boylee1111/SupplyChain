@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
+use app\models\Requirement;
+use yii\helpers\ArrayHelper;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RequirementSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -26,11 +29,21 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'requirement_id',
-            // 'requirement_time_limit',
-            // 'requirement_cost',
-            // 'start_depot_id',
-            // 'end_depot_id',
-            'requirement_path:ntext',
+            'requirement_time_limit',
+            'requirement_cost',
+            [
+                'attribute' => 'startDepot.name',
+                'label' => 'Start Depot',
+            ],
+            [
+                'attribute' => 'endDepot.name',
+                'label' => 'End Depot',
+            ],
+            // [
+            //     'attribute' => 'depots',
+            //     'value' => implode(', ', ArrayHelper::getColumn(Requirement::getPassDepotsById($searchModel->requirement_id), 'name')),
+            // ],
+            // 'requirement_path:ntext',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

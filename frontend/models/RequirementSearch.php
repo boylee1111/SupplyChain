@@ -20,7 +20,7 @@ class RequirementSearch extends Requirement
         return [
             [['requirement_id', 'start_depot_id', 'end_depot_id'], 'integer'],
             [['requirement_time_limit', 'requirement_cost'], 'number'],
-            [['requirement_path'], 'safe'],
+            [['requirement_path', 'startDepot.name', 'endDepot.name'], 'safe'],
         ];
     }
 
@@ -31,6 +31,11 @@ class RequirementSearch extends Requirement
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
+    }
+
+    public function attributes()
+    {
+        return array_merge(parent::attributes(), ['startDepot.name', 'endDepot.name']);
     }
 
     /**
@@ -48,6 +53,18 @@ class RequirementSearch extends Requirement
             'query' => $query,
         ]);
 
+        $dataProvider->sort->attributes['startDepot.name'] = [
+            'asc' => ['depot.name' => SORT_ASC],
+            'desc' => ['depot.name' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['endDepot.name'] = [
+            'asc' => ['depot.name' => SORT_ASC],
+            'desc' => ['depot.name' => SORT_DESC],
+        ];
+
+        $query->joinWith(['startDepot']);
+
         $this->load($params);
 
         if (!$this->validate()) {
@@ -64,7 +81,9 @@ class RequirementSearch extends Requirement
             'end_depot_id' => $this->end_depot_id,
         ]);
 
-        $query->andFilterWhere(['like', 'requirement_path', $this->requirement_path]);
+        $query->andFilterWhere(['like', 'requirement_path', $this->requirement_path])
+            ->andFilterWhere(['like', 'depot.name', $this->getAttribute('startDepot.name')])
+            ->andFilterWhere(['like', 'depot.name', $this->getAttribute('endDepot.name')]);
 
         return $dataProvider;
     }

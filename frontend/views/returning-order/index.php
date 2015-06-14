@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'purchasingOrder.product.primary_name',
                 'label' => 'Product',
             ],
-            'purchasingOrder.quantity',
+            'quantity',
             // 'apply_date',
             // 'expect_returning_date',
             // 'returning_date',

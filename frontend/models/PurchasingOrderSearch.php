@@ -19,7 +19,7 @@ class PurchasingOrderSearch extends PurchasingOrder
     {
         return [
             [['purchasing_order_id', 'apply_user_id', 'approval_user_id', 'product_id', 'quantity', 'destination_depot_id', 'status'], 'integer'],
-            [['purchasing_order_code', 'apply_date', 'expect_arrival_date', 'arrival_date', 'remarks'], 'safe'],
+            [['purchasing_order_code', 'apply_date', 'expect_arrival_date', 'arrival_date', 'remarks', 'applyUser.username', 'product.primary_name', 'destinationDepot.name'], 'safe'],
         ];
     }
 
@@ -30,6 +30,11 @@ class PurchasingOrderSearch extends PurchasingOrder
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
+    }
+
+    public function attributes()
+    {
+        return array_merge(parent::attributes(), ['applyUser.username', 'product.primary_name', 'destinationDepot.name']);
     }
 
     /**
@@ -46,6 +51,23 @@ class PurchasingOrderSearch extends PurchasingOrder
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['applyUser.username'] = [
+            'asc' => ['user.username' => SORT_ASC],
+            'desc' => ['user.username' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['product.primary_name'] = [
+            'asc' => ['product.primary_name' => SORT_ASC],
+            'desc' => ['product.primary_name' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['destinationDepot.name'] = [
+            'asc' => ['depot.name' => SORT_ASC],
+            'desc' => ['depot.name' => SORT_DESC],
+        ];
+
+        $query->joinWith(['applyUser', 'product', 'destinationDepot']);
 
         $this->load($params);
 
@@ -65,11 +87,14 @@ class PurchasingOrderSearch extends PurchasingOrder
             'apply_date' => $this->apply_date,
             'expect_arrival_date' => $this->expect_arrival_date,
             'arrival_date' => $this->arrival_date,
-            'status' => $this->status,
+            'purchasing_order.status' => $this->status,
         ]);
 
         $query->andFilterWhere(['like', 'purchasing_order_code', $this->purchasing_order_code])
-            ->andFilterWhere(['like', 'remarks', $this->remarks]);
+            ->andFilterWhere(['like', 'remarks', $this->remarks])
+            ->andFilterWhere(['like', 'user.username', $this->getAttribute('applyUser.username')])
+            ->andFilterWhere(['like', 'product.primary_name', $this->getAttribute('product.primary_name')])
+            ->andFilterWhere(['like', 'depot.name', $this->getAttribute('destinationDepot.name')]);
 
         return $dataProvider;
     }

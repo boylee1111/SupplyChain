@@ -19,7 +19,7 @@ class ShippingOrderSearch extends ShippingOrder
     {
         return [
             [['shipping_order_id', 'apply_user_id', 'approval_user_id', 'product_id', 'quantity', 'depart_depot_id', 'arrival_depot_id', 'status'], 'integer'],
-            [['shipping_order_code', 'apply_date', 'expect_depart_date', 'shipping_date', 'expect_arrival_date', 'arrival_date', 'remarks'], 'safe'],
+            [['shipping_order_code', 'apply_date', 'expect_depart_date', 'shipping_date', 'expect_arrival_date', 'arrival_date', 'remarks', 'applyUser.username', 'product.primary_name', 'departDepot.name', 'arrivalDepot.name'], 'safe'],
         ];
     }
 
@@ -30,6 +30,11 @@ class ShippingOrderSearch extends ShippingOrder
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
+    }
+
+    public function attributes()
+    {
+        return array_merge(parent::attributes(), ['applyUser.username', 'product.primary_name', 'departDepot.name', 'arrivalDepot.name']);
     }
 
     /**
@@ -46,6 +51,28 @@ class ShippingOrderSearch extends ShippingOrder
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['applyUser.username'] = [
+            'asc' => ['user.username' => SORT_ASC],
+            'desc' => ['user.username' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['product.primary_name'] = [
+            'asc' => ['product.primary_name' => SORT_ASC],
+            'desc' => ['product.primary_name' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['departDepot.name'] = [
+            'asc' => ['depot.name' => SORT_ASC],
+            'desc' => ['depot.name' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['arrivalDepot.name'] = [
+            'asc' => ['depot.name' => SORT_ASC],
+            'desc' => ['depot.name' => SORT_DESC],
+        ];
+
+        $query->joinWith(['applyUser', 'product', 'departDepot']);
 
         $this->load($params);
 
@@ -68,11 +95,15 @@ class ShippingOrderSearch extends ShippingOrder
             'shipping_date' => $this->shipping_date,
             'expect_arrival_date' => $this->expect_arrival_date,
             'arrival_date' => $this->arrival_date,
-            'status' => $this->status,
+            'shipping_order.status' => $this->status,
         ]);
 
         $query->andFilterWhere(['like', 'shipping_order_code', $this->shipping_order_code])
-            ->andFilterWhere(['like', 'remarks', $this->remarks]);
+            ->andFilterWhere(['like', 'remarks', $this->remarks])
+            ->andFilterWhere(['like', 'user.username', $this->getAttribute('applyUser.username')])
+            ->andFilterWhere(['like', 'product.primary_name', $this->getAttribute('product.primary_name')])
+            ->andFilterWhere(['like', 'depot.name', $this->getAttribute('departDepot.name')])
+            ->andFilterWhere(['like', 'depot.name', $this->getAttribute('arrivalDepot.name')]);
 
         return $dataProvider;
     }

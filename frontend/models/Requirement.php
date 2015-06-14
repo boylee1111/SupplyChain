@@ -98,4 +98,9 @@ class Requirement extends \yii\db\ActiveRecord
     {
         return $this->hasMany(RequirementResult::className(), ['requirement_id' => 'requirement_id']);
     }
+
+    public static function getPassDepotsById($id)
+    {
+        return static::findOne($id)->depots;
+    }
 }

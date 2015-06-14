@@ -20,7 +20,7 @@ use kartik\date\DatePicker;
     <?= $form->field($model, 'shipping_order_code')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'product_id')->dropdownList(
-        ArrayHelper::map(Product::find()->all(), 'product_id', 'primary_name'))->label('Shipping Product')
+        ArrayHelper::map(Product::find()->all(), 'product_id', 'primary_name'), ['prompt' => 'Select shipping product'])->label('Shipping Product')
     ?>
 
     <?= $form->field($model, 'quantity')->textInput() ?>

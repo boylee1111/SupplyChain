@@ -47,6 +47,10 @@ return [
                 'application/json' => 'yii\web\JsonParser',
             ],
         ],
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'nullDisplay' => '',
+        ],
     ],
     'params' => $params,
 ];

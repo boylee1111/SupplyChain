@@ -42,10 +42,14 @@ class RequirementService extends Object implements IRequirementService
 		foreach ($requirementPassDepots as $requirementPassDepot) {
 			$requirementPassDepot->delete();
 		}
+		$requirementResults = RequirementResult::find()->where(['requirement_id' => $id])->all();
+		foreach ($requirementResults as $requirementResult) {
+			$requirementResult->delete();
+		}
 		Requirement::findOne($id)->delete();
 	}
 
-	function calculatePath($id)
+	function calculatePath($id, $count = 20)
 	{
 		$requirement = Requirement::findOne($id);
 
@@ -97,6 +101,7 @@ class RequirementService extends Object implements IRequirementService
 	    $network->computeCost($order);
 
 	    $result = '';
+	    $currentCount = 0;
 	    for ($i = 0; $i < count($order->allpath); $i++) {
 			for ($j = 0; $j < count($order->alltrans[$i]); $j++) {
 				if ($requirement->requirement_time_limit < 0 || $requirement->requirement_time_limit < $order->alltrans[$i][$j][0]) continue;
@@ -115,9 +120,14 @@ class RequirementService extends Object implements IRequirementService
 				}
 				$newResult->save();
 				$result = $result.PHP_EOL;
+				$currentCount++;
+				if ($currentCount == 20) {
+					goto finish;
+				}
 			}	
 		}
 
+		finish:
 		$requirement->requirement_path = $result;
 		$requirement->save();
 

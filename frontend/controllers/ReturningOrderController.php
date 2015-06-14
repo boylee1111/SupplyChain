@@ -75,6 +75,7 @@ class ReturningOrderController extends Controller
             $model->purchasing_order_id = $id;
             $model->apply_user_id = Yii::$app->user->getId();
             $model->apply_date = date("Y-m-d");
+            $model->quantity = $model->purchasingOrder->quantity;
             $model->save();
             $this->returningOrderService->applyNewReturningOrder($model->returning_order_id);
             return $this->redirect(['view', 'id' => $model->returning_order_id]);
