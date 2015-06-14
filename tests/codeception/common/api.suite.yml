@@ -1,0 +1,14 @@
+class_name: ApiTester
+modules:
+    enabled: 
+      - Yii2
+      - PhpBrowser
+      - REST
+      - tests\codeception\common\_support\ApiHelper
+    config:
+        Yii2:
+            configFile: '../config/frontend/api.php'
+        PhpBrowser:
+            url: http://localhost:8888/
+        REST:
+            url: http://localhost:8888/api

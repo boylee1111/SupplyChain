@@ -40,7 +40,7 @@ class SiteController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'about', 'contact'],
+                        'actions' => ['index', 'about', 'contact', 'login', 'logout'],
                     ],
                     [
                         'allow' => true,
