@@ -1,7 +1,9 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+
+use kartik\grid\GridView;
+use kartik\export\ExportMenu;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RoadSectionSearch */
@@ -15,9 +17,35 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Road Section', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <?= Html::a('Create Road Section', ['create'], ['class' => 'btn btn-success']) ?>
+    <?= ExportMenu::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [            
+                    'serial_number',
+                    'road_section_name',
+                    'time_cost',
+                    'basic_cost',
+                    'volume_based_cost',
+                    'weight_based_cost',
+                    'minimum_volume_limit',
+                    'maximum_volume_limit',
+                    [
+                        'attribute' => 'startDepot.name',
+                        'label' => 'Start Depot',
+                    ],
+                    [
+                        'attribute' => 'endDepot.name',
+                        'label' => 'End Depot',
+                    ],
+                    [
+                        'attribute' => 'roadSectionType.road_section_type_name',
+                        'label' => 'Road Section Type',
+                    ],
+                    'remarks',
+                ],
+            'fontAwesome' => true,
+        ]); ?>
+        <p></p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

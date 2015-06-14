@@ -1,9 +1,10 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
 
 use app\models\PurchasingOrder;
+use kartik\grid\GridView;
+use kartik\export\ExportMenu;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PurchasingOrderSearch */
@@ -15,8 +16,48 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="purchasing-order-approval-list">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <br/>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <?= ExportMenu::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [            
+                    'purchasing_order_code',
+                    [
+                        'attribute' => 'applyUser.username',
+                        'label' => 'Apply User',
+                    ],
+                    [
+                        'attribute' => 'product.primary_name',
+                        'label' => 'Product',
+                    ],
+                    'quantity',
+                    [
+                        'attribute' => 'destinationDepot.name',
+                        'label' => 'Destination Depot',
+                    ],
+                    [
+                        'attribute' => 'apply_date',
+                        'format' => ['date', 'php:Y-m-d']
+                    ],
+                    [
+                        'attribute' => 'expect_arrival_date',
+                        'format' => ['date', 'php:Y-m-d']
+                    ],
+                    [
+                        'attribute' => 'arrival_date',
+                        'format' => ['date', 'php:Y-m-d']
+                    ],
+                    [
+                        'attribute' => 'status',
+                        'value' => function ($model, $key, $index, $column) {
+                            return PurchasingOrder::purchasingStatusDescription($model->status);
+                        },
+                    ],
+                    'remarks',
+                ],
+            'fontAwesome' => true,
+        ]); ?>
+        <p></p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

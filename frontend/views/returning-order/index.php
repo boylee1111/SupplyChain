@@ -1,9 +1,10 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
 
 use app\models\ReturningOrder;
+use kartik\grid\GridView;
+use kartik\export\ExportMenu;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ReturningOrderSearch */
@@ -16,7 +17,44 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-    <br/>
+
+    <?= ExportMenu::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [            
+                    'returning_order_code',
+                    [
+                        'attribute' => 'applyUser.username',
+                        'label' => 'Apply User',
+                    ],
+                    [
+                        'attribute' => 'purchasingOrder.product.primary_name',
+                        'label' => 'Product',
+                    ],
+                    'quantity',
+                    [
+                        'attribute' => 'apply_date',
+                        'format' => ['date', 'php:Y-m-d']
+                    ],
+                    [
+                        'attribute' => 'expect_returning_date',
+                        'format' => ['date', 'php:Y-m-d']
+                    ],
+                    [
+                        'attribute' => 'returning_date',
+                        'format' => ['date', 'php:Y-m-d']
+                    ],
+                    [
+                        'attribute' => 'status',
+                        'value' => function ($model, $key, $index, $column) {
+                            return ReturningOrder::returningStatusDescription($model->status);
+                        },
+                    ],
+                    'reason',
+                    'remarks',
+                ],
+            'fontAwesome' => true,
+        ]); ?>
+        <p></p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

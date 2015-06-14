@@ -1,7 +1,9 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+
+use kartik\grid\GridView;
+use kartik\export\ExportMenu;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ClientTypeSearch */
@@ -15,9 +17,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Client Type', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <?= Html::a('Create Client Type', ['create'], ['class' => 'btn btn-success']) ?>
+    <?= ExportMenu::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [            
+                    'client_type_name',
+                ],
+            'fontAwesome' => true,
+        ]); ?>
+        <p></p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

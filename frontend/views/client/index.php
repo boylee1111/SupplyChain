@@ -1,7 +1,9 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+
+use kartik\grid\GridView;
+use kartik\export\ExportMenu;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ClientSearch */
@@ -15,29 +17,44 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Client', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <?= Html::a('Create Client', ['create'], ['class' => 'btn btn-success']) ?>
+    <?= ExportMenu::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [            
+                    // 'client_id',
+                    'serial_number',
+                    'primary_name',
+                    'secondary_name',
+                    'short_name',
+                    'remarks',
+                    [
+                        'attribute' => 'clientType.client_type_name',
+                        'label' => 'Client Type',
+                    ],
+                ],
+            'fontAwesome' => true,
+        ]); ?>
+        <p></p>
 
     <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            // 'client_id',
-            'serial_number',
-            'primary_name',
-            'secondary_name',
-            'short_name',
-            // 'remarks',
-            [
-                'attribute' => 'clientType.client_type_name',
-                'label' => 'Client Type',
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+    
+                // 'client_id',
+                'serial_number',
+                'primary_name',
+                'secondary_name',
+                'short_name',
+                // 'remarks',
+                [
+                    'attribute' => 'clientType.client_type_name',
+                    'label' => 'Client Type',
+                ],
+    
+                ['class' => 'yii\grid\ActionColumn'],
             ],
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+        ]); ?>
 
 </div>

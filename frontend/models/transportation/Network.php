@@ -190,7 +190,7 @@ class Network
 		$count = 0;
 		$mincost = -1;
 		$timeOfCost = -1;
-		$transport;
+		$transport = array();
 		while ($count < $num) {
 			$order->alltrans[$pathi][$count] = array();
 			$cost = 0;
