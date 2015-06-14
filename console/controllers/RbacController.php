@@ -62,6 +62,7 @@ class RbacController extends Controller
 
         // Permission Parent-Child
         $auth->addChild($purchasingOrderManagement, $returningOrderManagement);
+        $auth->addChild($requirementManagement, $shippingOrderManagement);
 
         // Create Roles
         $marketing = $auth->createRole('marketing');
@@ -103,8 +104,9 @@ class RbacController extends Controller
         $auth->addChild($admin, $userManagement);
 
         $auth->addChild($transporting, $depotManagement);
-        $auth->addChild($transporting, $requirementManagement);
         $auth->addChild($transporting, $roadSectionManagement);
+        $auth->addChild($transporting, $requirementManagement);
+        $auth->addChild($transporting, $shippingOrderManagement);
 
         $auth->assign($superadmin, 1);
     }

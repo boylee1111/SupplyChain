@@ -47,7 +47,7 @@ class UserTest extends DbTestCase
 		$user->email = "newuser@maitrox.com";
 		$user->save();
 
-		$this->assertTrue(User::findOne($user->id)->username == 'newuser@maitrox.com');
+		$this->assertFlase(User::findOne($user->id)->username == 'newuser@maitrox.com');
 
 		$userId = $user->id;
 		$user->delete();
