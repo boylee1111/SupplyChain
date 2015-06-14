@@ -16,17 +16,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    </br >
-   <!--  <p>
+    <p>
         <?= Html::a('Update', ['update', 'id' => $model->requirement_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->requirement_id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p> -->
+    </p>
 
     <?= DetailView::widget([
         'model' => $model,
@@ -37,17 +29,20 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'startDepot.name',
                 'label' => 'Start Depot',
-                'format' => 'url',
+                'format' => 'html',
+                'value' => '<a href=../warehouse/'.$model->startDepot->depot_id.'>'.$model->startDepot->name.'</a>',
             ],
             [
                 'attribute' => 'endDepot.name',
                 'label' => 'End Depot',
-                'format' => 'url',
+                'format' => 'html',
+                'value' => '<a href=../warehouse/'.$model->endDepot->depot_id.'>'.$model->endDepot->name.'</a>',
             ],
             [
                 'attribute' => 'depots',
                 'value' => implode(', ', ArrayHelper::getColumn($model->depots, 'name')),
                 'format' => 'html',
+                'label' => 'Pass Depots',
             ],
             'requirement_path:ntext',
         ],

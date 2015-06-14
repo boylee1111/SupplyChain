@@ -72,13 +72,13 @@ class WarehouseController extends Controller
      */
     public function actionView($id)
     {
-        if (Depot::isDepotExist($id)) {
+        // if (Depot::isDepotExist($id)) {
             return $this->render('view', [
                 'model' => $this->findModel($id),
             ]);
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
+        // } else {
+        //     throw new NotFoundHttpException('The requested page does not exist.');
+        // }
     }
 
     /**

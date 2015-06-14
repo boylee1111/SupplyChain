@@ -108,6 +108,7 @@ class RequirementController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $this->requirementService->calculatePath($model->requirement_id);
             return $this->redirect(['view', 'id' => $model->requirement_id]);
         } else {
             return $this->render('update', [

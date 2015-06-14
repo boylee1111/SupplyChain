@@ -38,6 +38,7 @@ use kartik\select2\Select2;
             'allowClear' => true,
         ]
     ])?>
+    <?= $form->field($model, 'result_count')->dropdownList([5 => 5, 10 => 10, 15 => 15, 20 => 20]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -12,6 +12,7 @@ use Yii;
  * @property string $requirement_cost
  * @property integer $start_depot_id
  * @property integer $end_depot_id
+ * @property integer $result_count
  * @property string $requirement_path
  *
  * @property Depot $endDepot
@@ -37,9 +38,9 @@ class Requirement extends \yii\db\ActiveRecord
     {
         return [
             [['requirement_time_limit', 'requirement_cost'], 'number'],
-            [['start_depot_id', 'end_depot_id'], 'required'],
-            [['start_depot_id', 'end_depot_id'], 'integer'],
-            ['end_depot_id', 'compare', 'compareAttribute' => 'start_depot_id', 'operator' => '!=', 'message' => 'End depot must not be the same as start depot.'], 
+            [['start_depot_id', 'end_depot_id', 'result_count'], 'required'],
+            [['start_depot_id', 'end_depot_id', 'result_count'], 'integer'],
+            ['end_depot_id', 'compare', 'compareAttribute' => 'start_depot_id', 'operator' => '!=', 'message' => 'End depot must not be the same as start depot.'],
             [['requirement_path'], 'string']
         ];
     }
@@ -55,6 +56,7 @@ class Requirement extends \yii\db\ActiveRecord
             'requirement_cost' => 'Requirement Cost',
             'start_depot_id' => 'Start Depot ID',
             'end_depot_id' => 'End Depot ID',
+            'result_count' => 'Result Count',
             'requirement_path' => 'Requirement Path',
         ];
     }
@@ -99,8 +101,8 @@ class Requirement extends \yii\db\ActiveRecord
         return $this->hasMany(RequirementResult::className(), ['requirement_id' => 'requirement_id']);
     }
 
-    public static function getPassDepotsById($id)
-    {
-        return static::findOne($id)->depots;
-    }
+    public static function getPassDepotsById($id) 
+    { 
+        return static::findOne($id)->depots; 
+    } 
 }

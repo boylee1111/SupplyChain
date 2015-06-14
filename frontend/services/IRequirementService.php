@@ -49,7 +49,7 @@ class RequirementService extends Object implements IRequirementService
 		Requirement::findOne($id)->delete();
 	}
 
-	function calculatePath($id, $count = 20)
+	function calculatePath($id)
 	{
 		$requirement = Requirement::findOne($id);
 
@@ -105,6 +105,7 @@ class RequirementService extends Object implements IRequirementService
 	    for ($i = 0; $i < count($order->allpath); $i++) {
 			for ($j = 0; $j < count($order->alltrans[$i]); $j++) {
 				if ($requirement->requirement_time_limit < 0 || $requirement->requirement_time_limit < $order->alltrans[$i][$j][0]) continue;
+				if ($requirement->requirement_cost > 0 && $requirement->requirement_cost < $order->alltrans[$i][$j][1]) continue;
 
 				$newResult = new RequirementResult();
 				$newResult->requirement_id = $requirement->requirement_id;
@@ -120,14 +121,23 @@ class RequirementService extends Object implements IRequirementService
 				}
 				$newResult->save();
 				$result = $result.PHP_EOL;
-				$currentCount++;
-				if ($currentCount == 20) {
-					goto finish;
-				}
 			}	
 		}
 
 		finish:
+		$requirement->requirement_path = $result;
+		$requirement->save();
+
+		$orderedResults = RequirementResult::find()
+			->where(['requirement_id' => $requirement->requirement_id])
+			->orderBy('result_cost')
+			->limit($requirement->result_count)
+			->all();
+		$result = '';
+		foreach ($orderedResults as $singleResult) {
+			$result = $result = $result.'cost: '.$singleResult->result_cost.', time: '.$singleResult->result_time.', path: '.$singleResult->result_path;
+			$result = $result.PHP_EOL;
+		}
 		$requirement->requirement_path = $result;
 		$requirement->save();
 
